@@ -21,7 +21,8 @@ class CartViewModel with ChangeNotifier {
   num _cartTotalPrice = 0;
   num _promoCodeDiscount = 0;
   num _subTotal = 0;
-PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
+  PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
+
   //num _vatValue = 0;
   double _pawPoints = 0;
   double _pawPointsAed = 0;
@@ -43,11 +44,13 @@ PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
 
   num get getVat => _vat;
 
-  void setVat (num value){
+  void setVat(num value) {
     _vat = value;
   }
 
   double get getPawPointDiscount => _pawPointDiscount;
+
+  PromoCodeResponse get getPromoCodeResponse => _promoCodeResponse;
 
   void setPawPointDiscount() {
     _pawPointDiscount = _pawSelectedPoints * _aedPerPoint;
@@ -138,7 +141,11 @@ PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
   void setPromoCodeDiscount(int value) {
     // _pawSelectedPoints = 0;
     // _requiredPawPoints = 0;
-    _promoCodeDiscount = value /*_cartTotalPrice * (value / 100)*/;
+    if (_promoCodeResponse.data!.type == 'percentage') {
+      _promoCodeDiscount = _cartTotalPrice * (value / 100);
+    } else {
+      _promoCodeDiscount = value;
+    }
     setCheckOutTotal();
   }
 
@@ -149,8 +156,13 @@ PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
   void setCheckOutTotal() {
     _subTotal = _cartTotalPrice - _promoCodeDiscount - _pawPointDiscount;
     final num totalPrice = _subTotal + _deliveryFee;
-    final num vatValue = navigatorKey.currentContext!.read<AuthViewModel>().getAuthResponse.data!.discounts![6].aggregate!;
-    setVat((vatValue/100)*totalPrice);
+    final num vatValue = navigatorKey.currentContext!
+        .read<AuthViewModel>()
+        .getAuthResponse
+        .data!
+        .discounts![6]
+        .aggregate!;
+    setVat((vatValue / 100) * totalPrice);
 
     // _vatValue = totalPrice * 5 / 100;
 
@@ -195,7 +207,8 @@ PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
           .paymentMethodId!,
       discount: _promoCodeDiscount + _pawPointDiscount,
       deliveryDate: DateTimeFormatter.showDateFormat3(_selectedDay),
-      promoCodeId: _promoCodeResponse.data != null? _promoCodeResponse.data!.sId! : '',
+      promoCodeId:
+          _promoCodeResponse.data != null ? _promoCodeResponse.data!.sId! : '',
       cartItems: _cartList,
       cartTotal: _cartTotalPrice,
       shippingFees: _deliveryFee,
@@ -205,7 +218,9 @@ PromoCodeResponse _promoCodeResponse = PromoCodeResponse();
           .read<AuthViewModel>()
           .getAuthResponse
           .data!
-          .discounts![4].aggregate!, vat: _vat,
+          .discounts![4]
+          .aggregate!,
+      vat: _vat,
     );
     navigatorKey.currentContext!
         .read<OrderViewModel>()

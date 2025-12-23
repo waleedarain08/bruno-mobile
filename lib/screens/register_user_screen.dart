@@ -90,14 +90,14 @@ class RegisterUserScreen extends StatelessWidget {
                               }
                             },
                             colored: true),
-                        SizedBox(
+                       /* SizedBox(
                           height: 20.h,
                         ),
                         Center(child: grey14w400(data: 'Or continue with')),
                         SizedBox(
                           height: 20.h,
                         ),
-                        googleFacebookButtonWidget(context: context),
+                        googleFacebookButtonWidget(context: context),*/
                       ],
                     ),
                     SizedBox(

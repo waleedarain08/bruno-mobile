@@ -188,10 +188,10 @@ class AddressViewModel with ChangeNotifier {
       EasyLoading.showToast('Please Select Address');
       return false;
     }
-    else if (_mapCountry != 'United Arab Emirates'){
-      EasyLoading.showToast('Address must be of UAE');
-      return false;
-    }
+    // else if (_mapCountry != 'United Arab Emirates'){
+    //   EasyLoading.showToast('Address must be of UAE');
+    //   return false;
+    // }
     else {
       return await callValidateAddressRadius();
     }

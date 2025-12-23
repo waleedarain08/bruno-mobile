@@ -52,7 +52,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      left: 20.0, right: 20, top: 20, bottom: 300).w,
+                          left: 20.0, right: 20, top: 20, bottom: 300)
+                      .w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -157,7 +158,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       .coordinates![1])),
                                               icon: BitmapDescriptor
                                                   .defaultMarkerWithHue(
-                                                      BitmapDescriptor.hueOrange),
+                                                      BitmapDescriptor
+                                                          .hueOrange),
                                               infoWindow: const InfoWindow(
                                                 title: '',
                                               ),
@@ -174,11 +176,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 height: 10.h,
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                           width: 240.w,
@@ -197,36 +201,36 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                                       .address!
                                                   : 'Click to add Address')),
                                       context
-                                          .read<AuthViewModel>()
-                                          .getAuthResponse
-                                          .data!
-                                          .location !=
-                                          null
-                                          ?SizedBox(
-                                          width: 240.w,
-                                          child: lightBlack14w400Centre(
-                                              left: true,
-                                              data: context
+                                                  .read<AuthViewModel>()
+                                                  .getAuthResponse
+                                                  .data!
+                                                  .location !=
+                                              null
+                                          ? SizedBox(
+                                              width: 240.w,
+                                              child: lightBlack14w400Centre(
+                                                  left: true,
+                                                  data: context
                                                       .read<AuthViewModel>()
                                                       .getAuthResponse
                                                       .data!
                                                       .location!
-                                                      .flatHouseNumber!
-                                                 )):SizedBox(),
+                                                      .flatHouseNumber!))
+                                          : SizedBox(),
                                       context
-                                          .read<AuthViewModel>()
-                                          .getAuthResponse
-                                          .data!
-                                          .location !=
-                                          null
+                                                  .read<AuthViewModel>()
+                                                  .getAuthResponse
+                                                  .data!
+                                                  .location !=
+                                              null
                                           ? orange18w500(
-                                          data: context
-                                              .read<AuthViewModel>()
-                                              .getAuthResponse
-                                              .data!
-                                              .location!
-                                              .label!):
-                                          SizedBox()
+                                              data: context
+                                                  .read<AuthViewModel>()
+                                                  .getAuthResponse
+                                                  .data!
+                                                  .location!
+                                                  .label!)
+                                          : SizedBox()
                                     ],
                                   ),
                                   InkWell(
@@ -243,12 +247,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           ? Navigator.pushNamed(
                                               context, addressRoute)
                                           : {
-                                        context
-                                            .read<AddressViewModel>()
-                                            .setIsAddressAdd(true),
-                                        Navigator.pushNamed(
-                                            context, addAddressRoute)
-                                      };
+                                              context
+                                                  .read<AddressViewModel>()
+                                                  .setIsAddressAdd(true),
+                                              Navigator.pushNamed(
+                                                  context, addAddressRoute)
+                                            };
                                     },
                                     child: Container(
                                       decoration: ShapeDecoration(
@@ -258,7 +262,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               width: 0.75,
                                               color:
                                                   CustomColors.greyMediumColor),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                       ),
                                       child: Padding(
@@ -292,16 +297,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         onChanged: (text) {},
                         keyboardType: TextInputType.multiline,
                         maxLines: 5,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           enabledBorder: const OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                             borderSide: BorderSide(
                                 color: CustomColors.greyColor, width: 0.50),
                           ),
                           hintText: 'Special Instructions',
-                          hintStyle: const TextStyle(color: CustomColors.blackColor),
+                          hintStyle:
+                              const TextStyle(color: CustomColors.blackColor),
                           contentPadding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15.0).w,
+                                  horizontal: 15, vertical: 15.0)
+                              .w,
                         ),
                       ),
                       SizedBox(
@@ -518,7 +525,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                             'You don\'t have any accumulated Paw Points'),
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       black12w500Centre(
                                           data: 'Your accumulated Paw Points'),
@@ -601,7 +609,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 height: 10.h,
                               ),*/
                               TextField(
-                                controller: cartViewModel.getPromoCodeController,
+                                controller:
+                                    cartViewModel.getPromoCodeController,
                                 onChanged: (value) {
                                   // puppyViewModel.searchBreeds(value);
                                 },
@@ -615,7 +624,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               Icons.keyboard_arrow_down,
                               size: 25,
                             ),*/
-                                    contentPadding: const EdgeInsets.all(20.0).w,
+                                    contentPadding:
+                                        const EdgeInsets.all(20.0).w,
                                     hintText: 'Code'),
                               ),
                               /* Container(
@@ -646,7 +656,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               InkWell(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
-                                  cartViewModel.callPromoCodeApi().then((value) {
+                                  cartViewModel
+                                      .callPromoCodeApi()
+                                      .then((value) {
                                     if (value) {
                                       /* if (cartViewModel.getPromoCodeDiscount >
                                           cartViewModel.getCartTotalPrice) {
@@ -731,16 +743,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 width: 2.w,
                               ),
                               lightBlack14w400Centre(
-                                  data: 'AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
+                                  data:
+                                      'AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
                             ],
                           ),
-                          Visibility(
-                            visible: cartViewModel.getPawSelectedPoints != 0,
-                            child: Padding(
+                          if (cartViewModel.getPawSelectedPoints != 0)
+                            Padding(
                               padding: const EdgeInsets.only(top: 16).w,
                               child: Row(
                                 children: [
-                                  lightBlack14w400Centre(data: 'Loyalty Points Discount'),
+                                  lightBlack14w400Centre(
+                                      data: 'Loyalty Points Discount'),
                                   const Spacer(),
                                   orange14w500(
                                       data:
@@ -748,15 +761,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ],
                               ),
                             ),
-                          ),
-                          Visibility(
-                            visible: cartViewModel.getPromoCodeDiscount != 0,
-                            child: Padding(
+                          if (cartViewModel.getPromoCodeDiscount != 0)
+                            Padding(
                               padding: const EdgeInsets.only(top: 16).w,
                               child: Row(
                                 children: [
                                   lightBlack14w400Centre(
-                                      data: 'Promo Code Discount'),
+                                      data: 'Promo Code Discount${cartViewModel.getPromoCodeResponse.data!.type == 'percentage' ? ' (${cartViewModel.getPromoCodeResponse.data!.discount} %)' : ''}'),
                                   const Spacer(),
                                   orange14w500(
                                       data:
@@ -764,7 +775,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 ],
                               ),
                             ),
-                          ),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -807,7 +817,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               lightBlack14w400Centre(
                                   data:
-                                  'AED ${cartViewModel.getVat.toStringAsFixed(2)} '),
+                                      'AED ${cartViewModel.getVat.toStringAsFixed(2)} '),
                             ],
                           ),
                           SizedBox(
@@ -833,7 +843,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               lightBlack14w400Centre(data: 'Total'),
                               const Spacer(),
                               black16w500(
-                                  data: 'AED ${cartViewModel.getCheckOutTotal.toStringAsFixed(2)}')
+                                  data:
+                                      'AED ${cartViewModel.getCheckOutTotal.toStringAsFixed(2)}')
                             ],
                           ),
                           SizedBox(
@@ -850,7 +861,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                     null) {
                                   descriptionDialog(
                                       context: context,
-                                      description: 'Kindly Select Payment Method',
+                                      description:
+                                          'Kindly Select Payment Method',
                                       height: 200.h,
                                       title: 'Alert');
                                 } else if (context

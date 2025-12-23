@@ -1,3 +1,4 @@
+/*
 import 'dart:io';
 
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
@@ -59,7 +60,8 @@ Widget googleFacebookButtonWidget({required BuildContext context}) {
         ),
       ),
       const Spacer(),
-     /* InkWell(
+     */
+/* InkWell(
         onTap: () {
           context.read<AuthViewModel>().signInWithFacebook().then((value) => {
                 if (value)
@@ -88,9 +90,13 @@ Widget googleFacebookButtonWidget({required BuildContext context}) {
                   width: 23,
                   height: 23,
                 ),
-                *//*SizedBox(
+                *//*
+*/
+/*SizedBox(
                   width: 12.w,
                 ),*//*
+*/
+/*
                 Visibility(
                     visible: Platform.isAndroid,
                     child: Padding(
@@ -102,7 +108,8 @@ Widget googleFacebookButtonWidget({required BuildContext context}) {
           ),
         ),
       ),
-      const Spacer(),*/
+      const Spacer(),*//*
+
       Visibility(
         visible: Platform.isIOS,
         child: InkWell(
@@ -145,3 +152,4 @@ Widget googleFacebookButtonWidget({required BuildContext context}) {
     ],
   );
 }
+*/

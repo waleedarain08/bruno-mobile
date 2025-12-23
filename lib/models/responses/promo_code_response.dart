@@ -28,14 +28,16 @@ class PromoData {
   String? name;
   int? expireOnDate;
   int? discount;
+  String? type;
 
-  PromoData({this.sId,this.name, this.expireOnDate, this.discount});
+  PromoData({this.sId,this.name, this.expireOnDate, this.discount,this.type});
 
   PromoData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
     expireOnDate = json['expireOnDate'];
     discount = json['discount'];
+    type = json['type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -44,6 +46,7 @@ class PromoData {
     data['name'] = name;
     data['expireOnDate'] = expireOnDate;
     data['discount'] = discount;
+    data['type'] = type;
     return data;
   }
 }

@@ -20,11 +20,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../models/requests/sign_in_request.dart';
 import '../models/requests/social_sign_in_request.dart';
@@ -324,8 +321,8 @@ class AuthViewModel with ChangeNotifier {
     if (_passwordController.text.isEmpty) {
       setPasswordFieldError('Please Enter Password');
       return false;
-    } else if (_passwordController.text.length != 8) {
-      setPasswordFieldError('Password length must be of 8 characters');
+    } else if (_passwordController.text.length < 8) {
+      setPasswordFieldError('Password length must be of at least 8 characters');
       return false;
     } else {
       setPasswordFieldError('');
@@ -451,7 +448,7 @@ class AuthViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool> signInWithGoogle() async {
+ /* Future<bool> signInWithGoogle() async {
     EasyLoading.show(status: 'Please Wait...');
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -490,8 +487,9 @@ class AuthViewModel with ChangeNotifier {
       EasyLoading.showError('Something Went Wrong');
       return false;
     }
-  }
+  }*/
 
+/*
   Future<bool> signInWithFacebook() async {
     EasyLoading.show(status: 'Please Wait...');
 
@@ -528,7 +526,9 @@ class AuthViewModel with ChangeNotifier {
       return false;
     }
   }
+*/
 
+/*
   Future<bool> signInWithApple() async {
     EasyLoading.show(status: 'Please Wait...');
 
@@ -582,6 +582,7 @@ class AuthViewModel with ChangeNotifier {
       return false;
     }
   }
+*/
 
   Future<bool> callSocialMediaLoginApi(
       {required SocialSignInRequest userDetails}) async {
