@@ -302,7 +302,7 @@ class AddressDetailScreen extends StatelessWidget {
                           data: addressViewModel
                                   .getEditAddress.contactName!.isNotEmpty ||
                           addressViewModel
-                              .getEditAddress.contactNumber == null
+                              .getEditAddress.contactName == null
                               ? addressViewModel.getEditAddress.contactName!
                               : 'N/A')
                     ],

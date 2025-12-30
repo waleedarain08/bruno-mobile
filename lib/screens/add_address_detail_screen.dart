@@ -24,6 +24,15 @@ class AddAddressDetailScreen extends StatefulWidget {
 
 class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<AddressViewModel>().setUserNameNumber();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<AddressViewModel>(
         builder: (context, addressViewModel, child) {
@@ -34,7 +43,8 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 30, bottom: 120, left: 20, right: 20).w,
+                          top: 30, bottom: 120, left: 20, right: 20)
+                      .w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,10 +82,11 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                         children: [
                           Expanded(
                             child: TextField(
-                              controller: addressViewModel.getFlatHouseNumberController,
+                              controller:
+                                  addressViewModel.getFlatHouseNumberController,
                               onChanged: (text) {},
                               keyboardType: TextInputType.streetAddress,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(20.0).w,
                                 hintText: 'Flat/House No#',
                               ),
@@ -89,7 +100,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                               controller: addressViewModel.getStreetController,
                               onChanged: (text) {},
                               keyboardType: TextInputType.streetAddress,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(20.0).w,
                                 hintText: 'Street',
                               ),
@@ -107,7 +118,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                               controller: addressViewModel.getAreaController,
                               onChanged: (text) {},
                               keyboardType: TextInputType.streetAddress,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(20.0).w,
                                 hintText: 'Area',
                               ),
@@ -121,7 +132,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                               controller: addressViewModel.getFloorController,
                               onChanged: (text) {},
                               keyboardType: TextInputType.streetAddress,
-                              decoration:  InputDecoration(
+                              decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(20.0).w,
                                 hintText: 'Floor/Unit#',
                               ),
@@ -146,7 +157,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                             addressViewModel.getDeliveryInstructionController,
                         keyboardType: TextInputType.multiline,
                         maxLength: 300,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(20).w,
                           hintText: 'Note to rider - eg. landmark',
                         ),
@@ -156,11 +167,12 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                       ),
                       TextField(
                         inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]")),
+                          FilteringTextInputFormatter.allow(
+                              RegExp("[0-9a-zA-Z]")),
                         ],
                         controller: addressViewModel.getContactNameController,
                         keyboardType: TextInputType.name,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(20.0).w,
                           hintText: 'Contact Person Name ',
                         ),
@@ -174,7 +186,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                         ],
                         controller: addressViewModel.getContactNumberController,
                         keyboardType: TextInputType.phone,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(20.0).w,
                           hintText: 'Contact person number ',
                         ),
@@ -443,7 +455,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                               Navigator.of(context)
                                 ..pop()
                                 ..pop();
-          /*
+                              /*
                                       if (value) {
                                         context
                                             .read<AuthViewModel>()

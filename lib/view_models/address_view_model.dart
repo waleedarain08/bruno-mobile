@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/models/base_response_model.dart';
 import 'package:brunos_kitchen/models/requests/add_address_request.dart';
 import 'package:brunos_kitchen/models/requests/address_radius_request.dart';
@@ -11,6 +12,7 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:location/location.dart' as locator;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:provider/provider.dart';
 
 import '../models/address_model.dart';
 import '../models/responses/address_radius_response.dart';
@@ -20,6 +22,7 @@ import '../services/api_base_helper.dart';
 import '../utils/conversions.dart';
 import '../utils/enums.dart';
 import '../utils/images.dart';
+import 'auth_view_model.dart';
 
 class AddressViewModel with ChangeNotifier {
   final AddressApiServices _addressApiServices = AddressApiServices();
@@ -60,6 +63,16 @@ class AddressViewModel with ChangeNotifier {
   TextEditingController get getFloorController => _floorController;
   TextEditingController get getFlatHouseNumberController => _flatHouseNumberController;
   TextEditingController get getDeliveryInstructionController => _deliveryInstructionController;
+
+
+
+  void setUserNameNumber() {
+    _contactNumberController.text = navigatorKey.currentContext!.read<AuthViewModel>().getAuthResponse.data!.phoneNumber!;
+    _contactNameController.text = navigatorKey.currentContext!.read<AuthViewModel>().getAuthResponse.data!.fullName!;
+    notifyListeners();
+  }
+
+
 
   Timer? get getDebounce => _debounce;
 
