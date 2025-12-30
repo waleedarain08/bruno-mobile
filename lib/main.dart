@@ -1,4 +1,5 @@
 import 'package:brunos_kitchen/route_generator.dart';
+import 'package:brunos_kitchen/utils/screen_size.dart';
 import 'package:brunos_kitchen/view_models/address_view_model.dart';
 import 'package:brunos_kitchen/utils/custom_colors.dart';
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
@@ -125,7 +126,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return ScreenUtilInit(
-        designSize: const Size(375, 812),
+        designSize: getDesignSize(context: context),
         //useInheritedMediaQuery: true,
         minTextAdapt: true,
         splitScreenMode: true,
