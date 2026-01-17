@@ -14,11 +14,27 @@
       },
       "oauth_client": [
         {
+          "client_id": "469529767335-9hapi53j6lskfg6urssl7cb3ikstn90t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brunoskitchen.brunos_kitchen",
+            "certificate_hash": "ce4c01f34113b8968dd161c56938767304b252b3"
+          }
+        },
+        {
           "client_id": "469529767335-ghlju26s32brl42flkkqiekkq8s57b9r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.brunoskitchen.brunos_kitchen",
             "certificate_hash": "25dd4ac8db9c4c2e4f24fc3d5b718d68b3ff50c8"
+          }
+        },
+        {
+          "client_id": "469529767335-hukmtrdfegb6ohqlvt4t7iios9lv0qra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brunoskitchen.brunos_kitchen",
+            "certificate_hash": "e27ce0e1c406677ceead6a4e1b8562803ac11631"
           }
         },
         {
@@ -30,7 +46,7 @@
           }
         },
         {
-          "client_id": "469529767335-0np0ovi9f7d62duqbs7umv7lep2b31c9.apps.googleusercontent.com",
+          "client_id": "469529767335-f5t2k57oa30jpq9ns2jknislg1dluk0o.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -47,10 +63,10 @@
               "client_type": 3
             },
             {
-              "client_id": "469529767335-mvgei95g9dg0070mm4t1u1jcfu66eq8m.apps.googleusercontent.com",
+              "client_id": "469529767335-3bougrnnu8c125svb06u9nndodjgso14.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.brunoskitchen.brunosKitchen"
+                "bundle_id": "com.sshhs.jjsjsj"
               }
             }
           ]

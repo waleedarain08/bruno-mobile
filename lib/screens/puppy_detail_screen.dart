@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:brunos_kitchen/utils/custom_buttons.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:brunos_kitchen/widgets/dialogs/discription_dialog.dart';
@@ -10,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
+
 import '../utils/custom_colors.dart';
 import '../utils/enums.dart';
 import '../utils/images.dart';
@@ -17,8 +17,8 @@ import '../view_models/auth_view_model.dart';
 import '../view_models/puppy_view_model.dart';
 import '../widgets/app_bar_with_back_widget.dart';
 import '../widgets/bottomSheet/image_taking_bottom_sheet_widget.dart';
-import '../widgets/dialogs/delete_pet_confirmation_dialog.dart';
 import '../widgets/circular_network_image_widget.dart';
+import '../widgets/dialogs/delete_pet_confirmation_dialog.dart';
 
 class PuppyDetailScreen extends StatelessWidget {
   const PuppyDetailScreen({super.key});
@@ -67,8 +67,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                     onTap: () {
                                       deletePetConfirmationDialog(
                                         context: context,
-                                        name:
-                                            puppyViewModel.getPuppyDetail!.name!,
+                                        name: puppyViewModel
+                                            .getPuppyDetail!.name!,
                                       );
                                     },
                                     child: Container(
@@ -78,7 +78,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                           side: const BorderSide(
                                               width: 0.75,
                                               color: CustomColors.orangeColor),
-                                          borderRadius: BorderRadius.circular(12),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
                                         ),
                                       ),
                                       child: Padding(
@@ -150,14 +151,16 @@ class PuppyDetailScreen extends StatelessWidget {
                                     child: CircleAvatar(
                                       backgroundColor: CustomColors.greyColor,
                                       backgroundImage: Image.file(File(
-                                              puppyViewModel.getImageFile!.path))
+                                              puppyViewModel
+                                                  .getImageFile!.path))
                                           .image,
                                     ),
                                   )
-                                : puppyViewModel.getPuppyDetail!.media!.isNotEmpty
+                                : puppyViewModel
+                                        .getPuppyDetail!.media!.isNotEmpty
                                     ? circularNetworkImageWidget(
-                                        image:
-                                            puppyViewModel.getPuppyDetail!.media!,
+                                        image: puppyViewModel
+                                            .getPuppyDetail!.media!,
                                         size: 130.h)
                                     : SizedBox(
                                         height: 130.h,
@@ -219,7 +222,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                 visible: puppyViewModel
                                     .getPuppyNameFieldError.isNotEmpty,
                                 child: orange14w400(
-                                    data: puppyViewModel.getPuppyNameFieldError)),
+                                    data:
+                                        puppyViewModel.getPuppyNameFieldError)),
                           ],
                         ),
                       ),
@@ -229,12 +233,15 @@ class PuppyDetailScreen extends StatelessWidget {
                       Visibility(
                         visible: puppyViewModel.getIsPuppyEdit,
                         replacement: grey14w400(
-                            data: '( ${puppyViewModel.getPuppyDetail!.breed!} )'),
+                            data:
+                                '( ${puppyViewModel.getPuppyDetail!.breed!} )'),
                         child: Column(
                           children: [
                             TextField(
-                              controller: puppyViewModel.getPuppyBreedController,
-                              scrollPadding: const EdgeInsets.only(bottom: 150).w,
+                              controller:
+                                  puppyViewModel.getPuppyBreedController,
+                              scrollPadding:
+                                  const EdgeInsets.only(bottom: 150).w,
                               onChanged: (value) {
                                 puppyViewModel.searchBreeds(value);
                               },
@@ -277,12 +284,14 @@ class PuppyDetailScreen extends StatelessWidget {
                                                       .getPuppyBreedController
                                                       .text =
                                                   puppyViewModel
-                                                      .getBreedslist[index].name!;
+                                                      .getBreedslist[index]
+                                                      .name!;
                                               puppyViewModel.setBreedsList([]);
                                             },
                                             title: black12w500Centre(
                                                 data: puppyViewModel
-                                                    .getBreedslist[index].name!),
+                                                    .getBreedslist[index]
+                                                    .name!),
                                           ),
                                         );
                                       }),
@@ -308,8 +317,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                   scale: 0.8,
                                   child: CupertinoSwitch(
                                     activeTrackColor: CustomColors.orangeColor,
-                                    value:
-                                        puppyViewModel.getPuppyDetail!.isDefault!,
+                                    value: puppyViewModel
+                                        .getPuppyDetail!.isDefault!,
                                     onChanged: (isDefault) {
                                       puppyViewModel
                                           .callDefaultPuppyApi()
@@ -356,8 +365,9 @@ class PuppyDetailScreen extends StatelessWidget {
                                           puppyViewModel
                                               .setPuppyGender(Puppy.boy.text);
                                         },
-                                        colored: puppyViewModel.getPuppyGender ==
-                                            Puppy.boy.text),
+                                        colored:
+                                            puppyViewModel.getPuppyGender ==
+                                                Puppy.boy.text),
                                   ),
                                   SizedBox(
                                     width: 20.w,
@@ -369,8 +379,9 @@ class PuppyDetailScreen extends StatelessWidget {
                                           puppyViewModel
                                               .setPuppyGender(Puppy.girl.text);
                                         },
-                                        colored: puppyViewModel.getPuppyGender ==
-                                            Puppy.girl.text),
+                                        colored:
+                                            puppyViewModel.getPuppyGender ==
+                                                Puppy.girl.text),
                                   )
                                 ],
                               ),
@@ -416,8 +427,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                             .getPuppyDetail!.actualWeight! ==
                                         PuppyWeight.idealWeight.value
                                     ? 'ideal Weight'
-                                    : puppyViewModel
-                                                .getPuppyDetail!.actualWeight! ==
+                                    : puppyViewModel.getPuppyDetail!
+                                                .actualWeight! ==
                                             PuppyWeight.underweight.value
                                         ? 'underWeight'
                                         : 'overWeight')!),
@@ -486,7 +497,9 @@ class PuppyDetailScreen extends StatelessWidget {
                           black14w500(
                               data:
                                   'How old is ${puppyViewModel.getPuppyDetail!.name}?'),
-                         SizedBox(height: 5.h,),
+                          SizedBox(
+                            height: 5.h,
+                          ),
                           puppyViewModel.getIsPuppyEdit
                               ? Row(
                                   children: [
@@ -503,7 +516,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                           height: 40.h,
                                           width: 70.w,
                                           padding: const EdgeInsets.only(
-                                                  left: 10, right: 10).w,
+                                                  left: 10, right: 10)
+                                              .w,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(14),
@@ -527,10 +541,10 @@ class PuppyDetailScreen extends StatelessWidget {
                                           scrollbarTheme: ScrollbarThemeData(
                                             radius: const Radius.circular(40),
                                             thickness:
-                                            WidgetStateProperty.all<double>(
+                                                WidgetStateProperty.all<double>(
                                                     6),
                                             thumbVisibility:
-                                            WidgetStateProperty.all<bool>(
+                                                WidgetStateProperty.all<bool>(
                                                     true),
                                           ),
                                         ),
@@ -544,7 +558,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                     ),*/
                                         value: puppyViewModel.getPuppyYear,
                                         onChanged: (newValue) {
-                                          puppyViewModel.setPuppyYear(newValue!);
+                                          puppyViewModel
+                                              .setPuppyYear(newValue!);
                                         },
                                         items: puppyViewModel.getListOfYear
                                             .map((int years) {
@@ -593,10 +608,10 @@ class PuppyDetailScreen extends StatelessWidget {
                                           scrollbarTheme: ScrollbarThemeData(
                                             radius: const Radius.circular(40),
                                             thickness:
-                                            WidgetStateProperty.all<double>(
+                                                WidgetStateProperty.all<double>(
                                                     6),
                                             thumbVisibility:
-                                            WidgetStateProperty.all<bool>(
+                                                WidgetStateProperty.all<bool>(
                                                     true),
                                           ),
                                         ),
@@ -637,9 +652,9 @@ class PuppyDetailScreen extends StatelessWidget {
                                               '${puppyViewModel.getPuppyDetail!.year} Years'),
                                     ),
                                     Visibility(
-                                      visible:
-                                          puppyViewModel.getPuppyDetail!.month !=
-                                              0,
+                                      visible: puppyViewModel
+                                              .getPuppyDetail!.month !=
+                                          0,
                                       child: Padding(
                                         padding:
                                             const EdgeInsets.only(left: 10).w,
@@ -675,10 +690,11 @@ class PuppyDetailScreen extends StatelessWidget {
                                     puppyViewModel.setDogIsPuppy(value!);
                                   })
                               : black14w500(
-                                  data: puppyViewModel.getPuppyDetail!.isPuppy ==
-                                          true
-                                      ? 'Yes'
-                                      : 'No'),
+                                  data:
+                                      puppyViewModel.getPuppyDetail!.isPuppy ==
+                                              true
+                                          ? 'Yes'
+                                          : 'No'),
                         ],
                       ),
                       /* Row(
@@ -756,10 +772,10 @@ class PuppyDetailScreen extends StatelessWidget {
                                       height: 40.h,
                                       width: 70.w,
                                       padding: const EdgeInsets.only(
-                                          left: 10, right: 10).w,
+                                              left: 10, right: 10)
+                                          .w,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(14),
                                         border: Border.all(
                                           color: Colors.black26,
                                         ),
@@ -772,19 +788,16 @@ class PuppyDetailScreen extends StatelessWidget {
                                       maxHeight: 200,
                                       width: 70.w,
                                       decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(14),
+                                        borderRadius: BorderRadius.circular(14),
                                         //  color: Colors.redAccent,
                                       ),
                                       offset: const Offset(0, -10),
                                       scrollbarTheme: ScrollbarThemeData(
                                         radius: const Radius.circular(40),
                                         thickness:
-                                        WidgetStateProperty.all<double>(
-                                            6),
+                                            WidgetStateProperty.all<double>(6),
                                         thumbVisibility:
-                                        WidgetStateProperty.all<bool>(
-                                            true),
+                                            WidgetStateProperty.all<bool>(true),
                                       ),
                                     ),
                                     // borderRadius: BorderRadius.circular(15.0),
@@ -797,7 +810,8 @@ class PuppyDetailScreen extends StatelessWidget {
                                     ),*/
                                     value: puppyViewModel.getPuppyCurrentWeight,
                                     onChanged: (newValue) {
-                                      puppyViewModel.setPuppyCurrentWeight(newValue!);
+                                      puppyViewModel
+                                          .setPuppyCurrentWeight(newValue!);
                                     },
                                     items: puppyViewModel.getListOfWeight
                                         .map((int weight) {
@@ -808,22 +822,24 @@ class PuppyDetailScreen extends StatelessWidget {
                                     }).toList(),
                                   ),
                                 ),
-                                SizedBox(width: 10.w,),
+                                SizedBox(
+                                  width: 10.w,
+                                ),
                                 black14w500(data: 'KG')
-                               /* IntrinsicWidth(
+                                /* IntrinsicWidth(
                                   child: TextField(
                                     controller:
                                         puppyViewModel.getPuppyCurrentWeight,
-                                    *//*onChanged: (text) {
+                                    */ /*onChanged: (text) {
                                   puppyViewModel.setPuppyCurrentWeight(int.parse(text));
-                        },*//*
+                        },*/ /*
                                     keyboardType: TextInputType.number,
                                     decoration: InputDecoration(
                                         contentPadding: EdgeInsets.all(20.0).w,
                                         hintText: 'Weight in KG'),
                                   ),
                                 ),*/
-                             /*   SizedBox(
+                                /*   SizedBox(
                                   height: 5.h,
                                 ),
                                 Visibility(
@@ -874,12 +890,11 @@ class PuppyDetailScreen extends StatelessWidget {
                           InkWell(
                             onTap: () {
                               descriptionDialog(
-                                context: context,
-                                height: 250.h,
-                                title: 'Activity Level',
-                                description:
-                                  'Less Active (less than 30 minutes of exercise per day)\n\nActive (30 to 120 minutes of exercise per day)\n\nVery Active (more than 120 minutes per day)'
-                              );
+                                  context: context,
+                                  height: 250.h,
+                                  title: 'Activity Level',
+                                  description:
+                                      'Less Active (less than 30 minutes of exercise per day)\n\nActive (30 to 120 minutes of exercise per day)\n\nVery Active (more than 120 minutes per day)');
                             },
                             child: const Icon(
                               Icons.info,
@@ -965,8 +980,7 @@ class PuppyDetailScreen extends StatelessWidget {
                                   height: 200.h,
                                   title: 'Feeding Routine per Day',
                                   description:
-                                  'We will prepare and portion your meals in an adequate number of servings to ensure you get a hassle-fee and zero-waste feeding experience.'
-                              );
+                                      'We will prepare and portion your meals in an adequate number of servings to ensure you get a hassle-fee and zero-waste feeding experience.');
                             },
                             child: const Icon(
                               Icons.info,
@@ -1083,18 +1097,18 @@ class PuppyDetailScreen extends StatelessWidget {
                       child: customButton(
                           text: 'Update',
                           onPressed: () {
-                          /*  if (puppyViewModel
+                            /*  if (puppyViewModel
                                 .puppyAdditionalCreationValidation()) {*/
-                              puppyViewModel
-                                  .callEditPuppyApi()
-                                  .then((value) async => {
-                                        if (value)
-                                          {
-                                            await context
-                                                .read<AuthViewModel>()
-                                                .callSplash(showLoader: true),
-                                          }
-                                      });
+                            puppyViewModel
+                                .callEditPuppyApi()
+                                .then((value) async => {
+                                      if (value)
+                                        {
+                                          await context
+                                              .read<AuthViewModel>()
+                                              .callSplash(showLoader: true),
+                                        }
+                                    });
                             /*}*/
                           },
                           colored: true),

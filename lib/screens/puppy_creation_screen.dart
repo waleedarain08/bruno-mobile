@@ -1,11 +1,10 @@
-import 'dart:io';
-
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 import '../utils/custom_buttons.dart';
 import '../utils/custom_colors.dart';
@@ -13,8 +12,8 @@ import '../utils/enums.dart';
 import '../utils/images.dart';
 import '../view_models/puppy_view_model.dart';
 import '../widgets/app_bar_with_back_widget.dart';
-import '../widgets/circular_network_image_widget.dart';
 import '../widgets/bottomSheet/image_taking_bottom_sheet_widget.dart';
+import '../widgets/circular_network_image_widget.dart';
 
 class PuppyCreationScreen extends StatelessWidget {
   const PuppyCreationScreen({super.key});
@@ -26,24 +25,27 @@ class PuppyCreationScreen extends StatelessWidget {
         child: Scaffold(
           //resizeToAvoidBottomInset: false,
           appBar: AppBarWithBackWidget(
-            heading: context.read<PuppyViewModel>().getRouteToPuppyFrom ==
-                    Screens.home.text
-                ? 'Add pet'
-                : 'My Pets', showPuppy: false,showCart: true
-          ),
+              heading: context.read<PuppyViewModel>().getRouteToPuppyFrom ==
+                      Screens.home.text
+                  ? 'Add pet'
+                  : 'My Pets',
+              showPuppy: false,
+              showCart: true),
           body: Stack(
             children: [
               SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 40, bottom: 20, left: 20, right: 20).w,
+                          top: 40, bottom: 20, left: 20, right: 20)
+                      .w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Visibility(
-                        visible:
-                            context.read<PuppyViewModel>().getRouteToPuppyFrom ==
-                                Screens.home.text,
+                        visible: context
+                                .read<PuppyViewModel>()
+                                .getRouteToPuppyFrom ==
+                            Screens.home.text,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 40.0).w,
                           child: Center(
@@ -85,7 +87,7 @@ class PuppyCreationScreen extends StatelessWidget {
                         controller: puppyViewModel.getPuppyNameController,
                         onChanged: (text) {},
                         keyboardType: TextInputType.name,
-                        decoration:  InputDecoration(
+                        decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(20.0).w,
                             hintText: 'Entre Your Pet\'s Name'),
                       ),
@@ -130,7 +132,8 @@ class PuppyCreationScreen extends StatelessWidget {
                                         height: 100.h,
                                         width: 100.h,
                                         child: CircleAvatar(
-                                          backgroundColor: CustomColors.greyColor,
+                                          backgroundColor:
+                                              CustomColors.greyColor,
                                           backgroundImage: Image.file(File(
                                                   puppyViewModel
                                                       .getImageFile!.path))
@@ -192,14 +195,15 @@ class PuppyCreationScreen extends StatelessWidget {
                             child: customSquareButton(
                                 text: 'Girl',
                                 onPressed: () {
-                                  puppyViewModel.setPuppyGender(Puppy.girl.text);
+                                  puppyViewModel
+                                      .setPuppyGender(Puppy.girl.text);
                                 },
                                 colored: puppyViewModel.getPuppyGender ==
                                     Puppy.girl.text),
                           )
                         ],
                       ),
-                    /*  SizedBox(
+                      /*  SizedBox(
                         height: 40.h,
                       ),
                       black18w500(

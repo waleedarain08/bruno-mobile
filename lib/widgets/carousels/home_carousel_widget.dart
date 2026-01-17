@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../utils/custom_colors.dart';
+import '../../utils/widget_utils.dart';
 import '../../view_models/auth_view_model.dart';
 
 /*final List<Widget> slidersList = [
@@ -12,8 +13,6 @@ import '../../view_models/auth_view_model.dart';
   Image.asset(slider2),
   Image.asset(slider3),
 ];*/
-
-
 
 class HomeCarouselWidget extends StatefulWidget {
   const HomeCarouselWidget({super.key});
@@ -23,7 +22,6 @@ class HomeCarouselWidget extends StatefulWidget {
 }
 
 class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
-
   int _current = 0;
   final CarouselSliderController _controller = CarouselSliderController();
   @override
@@ -33,15 +31,18 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
         child: CarouselSlider(
           items: [
             for (var banner in context.read<AuthViewModel>().getBannerList)
-              CachedNetworkImage(imageUrl: banner.media![0],)
-            ],
+              CachedNetworkImage(
+                imageUrl: banner.media![0],
+                fit: BoxFit.fill,
+              )
+          ],
           carouselController: _controller,
           options: CarouselOptions(
-           // height: 200,
+              // height: 200,
               autoPlay: true,
-              viewportFraction: 0.85.w,
+              viewportFraction: isBiggerThanMobile ? 1.w : 0.85.w,
               enlargeCenterPage: true,
-              aspectRatio: 2.0,
+              aspectRatio: isBiggerThanMobile ? 2.5 : 2.0,
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
@@ -49,21 +50,29 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
               }),
         ),
       ),
-      SizedBox(height: 5.h,),
+      SizedBox(
+        height: 5.h,
+      ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: context.read<AuthViewModel>().getBannerList.asMap().entries.map((entry) {
+        children: context
+            .read<AuthViewModel>()
+            .getBannerList
+            .asMap()
+            .entries
+            .map((entry) {
           return GestureDetector(
             onTap: () => _controller.animateToPage(entry.key),
             child: Container(
               width: 7.0,
               height: 7.0,
-              margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 4.0),
+              margin:
+                  const EdgeInsets.symmetric(vertical: 5.0, horizontal: 4.0),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: (Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : CustomColors.orangeColor)
+                          ? Colors.white
+                          : CustomColors.orangeColor)
                       .withOpacity(_current == entry.key ? 0.9 : 0.4)),
             ),
           );

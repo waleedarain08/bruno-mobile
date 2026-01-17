@@ -1,7 +1,8 @@
+import 'package:brunos_kitchen/firebase_options.dart';
 import 'package:brunos_kitchen/route_generator.dart';
+import 'package:brunos_kitchen/utils/custom_colors.dart';
 import 'package:brunos_kitchen/utils/screen_size.dart';
 import 'package:brunos_kitchen/view_models/address_view_model.dart';
-import 'package:brunos_kitchen/utils/custom_colors.dart';
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:brunos_kitchen/view_models/bottom_navigation_view_model.dart';
 import 'package:brunos_kitchen/view_models/card_view_model.dart';
@@ -14,13 +15,12 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 void configLoading() {
   EasyLoading.instance
@@ -56,20 +56,22 @@ final double screenHeight =
 final double screenHeightWithAppBar =
     MediaQuery.of(navigatorKey.currentContext!).size.height * 0.8;
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
-}
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//           (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 Future<void> main() async {
-  HttpOverrides.global = MyHttpOverrides();
+  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   FirebaseMessaging.onBackgroundMessage(backgroundHandler);
-  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     //systemNavigationBarColor: Colors.amber, // navigation bar color
     statusBarColor: Colors.transparent, // status bar color
@@ -77,8 +79,8 @@ Future<void> main() async {
     systemNavigationBarIconBrightness:
         Brightness.dark, // color of navigation controls
   ));
-  Stripe.publishableKey =
-      "pk_live_51O6BroGm97cexwqwVYot0mnw9MgdK1qBOCTJ35dxF6582pfptbKcHGsnZbfDR7CbtlR6YxayCNiuArS3DWOvNGH300JR8PSnHM";
+  // Stripe.publishableKey =
+  //     "pk_live_51O6BroGm97cexwqwVYot0mnw9MgdK1qBOCTJ35dxF6582pfptbKcHGsnZbfDR7CbtlR6YxayCNiuArS3DWOvNGH300JR8PSnHM";
   configLoading();
   runApp(MultiProvider(
     providers: [
@@ -265,7 +267,15 @@ class MyApp extends StatelessWidget {
             initialRoute: '/',
             navigatorKey: navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
-            builder: EasyLoading.init(),
+            builder: (context, child) => ResponsiveBreakpoints.builder(
+              child: FlutterEasyLoading(child: child!),
+              breakpoints: [
+                const Breakpoint(start: 0, end: 450, name: MOBILE),
+                const Breakpoint(start: 451, end: 800, name: TABLET),
+                const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+                const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+              ],
+            ),
           );
         });
   }

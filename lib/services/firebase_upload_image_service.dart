@@ -1,11 +1,9 @@
-
-import 'dart:io';
-
 import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 class FirebaseUploadImageService {
   Future<String> upLoadImageFile(

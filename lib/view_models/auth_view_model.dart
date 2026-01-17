@@ -1,7 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:math';
 
 import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/models/address_model.dart';
@@ -15,21 +12,19 @@ import 'package:brunos_kitchen/models/requests/user_register_request.dart';
 import 'package:brunos_kitchen/models/responses/banners_response.dart';
 import 'package:brunos_kitchen/services/auth_api_services.dart';
 import 'package:brunos_kitchen/view_models/cart_view_model.dart';
-import 'package:crypto/crypto.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
+import 'package:universal_io/io.dart';
 
 import '../models/requests/sign_in_request.dart';
 import '../models/requests/social_sign_in_request.dart';
 import '../models/responses/auth_response.dart';
 import '../models/responses/otp_response.dart';
 import '../screens/bottom_navigation_screen.dart';
-import '../screens/logIn_screen.dart';
 import '../screens/intro_slides_screen.dart';
+import '../screens/logIn_screen.dart';
 import '../utils/conversions.dart';
 import '../utils/enums.dart';
 import '../utils/send_grid_pref.dart';
@@ -54,8 +49,6 @@ class AuthViewModel with ChangeNotifier {
   String _operatingSystem = '';
   String _otpType = '';
 
-  //String _verificationId = '';
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   final TextEditingController _otpController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -448,7 +441,7 @@ class AuthViewModel with ChangeNotifier {
     }
   }
 
- /* Future<bool> signInWithGoogle() async {
+  /* Future<bool> signInWithGoogle() async {
     EasyLoading.show(status: 'Please Wait...');
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
