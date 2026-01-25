@@ -2,6 +2,7 @@ import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../route_generator.dart';
@@ -12,7 +13,6 @@ import '../utils/navigations_validation.dart';
 import '../view_models/auth_view_model.dart';
 import '../view_models/plans_view_model.dart';
 import '../view_models/puppy_view_model.dart';
-import '../widgets/gridChip/item_discribed_grid_chip_widget.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -30,10 +30,7 @@ class ShopScreen extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    black24w500Centre(data: 'Shop'),
-                    cartIconWidget()
-                  ],
+                  children: [black24w500Centre(data: 'Shop'), cartIconWidget()],
                 ),
                 SizedBox(
                   height: 20.h,
@@ -43,10 +40,10 @@ class ShopScreen extends StatelessWidget {
                     /* boldText: 'Tap Here',*/
                     onPressed: () {
                       if (context
-                          .read<AuthViewModel>()
-                          .getAuthResponse
-                          .data!
-                          .petsCount ==
+                              .read<AuthViewModel>()
+                              .getAuthResponse
+                              .data!
+                              .petsCount ==
                           0) {
                         context
                             .read<PuppyViewModel>()
@@ -54,7 +51,8 @@ class ShopScreen extends StatelessWidget {
                         context.read<PuppyViewModel>().clearPuppyData();
                         Navigator.pushNamed(context, puppyCreationRoute);
                       } else {
-                        navigateToMonthlyPlans(context: context)  ;                    }
+                        navigateToMonthlyPlans(context: context);
+                      }
                       /*   SendGridPref sendGrid = SendGridPref();
                       sendGrid.sendEmail(emailSubject: 'Registration', emailDescription: 'Register Successfully');
                       */
@@ -72,46 +70,24 @@ class ShopScreen extends StatelessWidget {
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
-                    children: plansViewModel.getRecipesListResponse.data!.categories!
+                    children: plansViewModel
+                        .getRecipesListResponse.data!.categories!
                         .map(
                           (data) => Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        width: 140.w,
-                        child: customSquareButton(
-                            text: data.name!,
-                            onPressed: () {
-                              plansViewModel.setProductCategory(data
-                                  .name!);
-                            },
-                            colored: plansViewModel.getProductCategory ==
-                                data.name),
-                      ),
-                    )
+                            margin: const EdgeInsets.only(right: 20),
+                            width: 140.w,
+                            child: customSquareButton(
+                                text: data.name!,
+                                onPressed: () {
+                                  plansViewModel.setProductCategory(data.name!);
+                                },
+                                colored: plansViewModel.getProductCategory ==
+                                    data.name),
+                          ),
+                        )
                         .toList(),
                   ),
                 ),
-             /*   Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 10.w,
-                  runSpacing: 10.w,
-                  children: List.generate(
-                      plansViewModel.getRecipesListResponse.data!.categories!
-                          .length, (index) {
-                    return customSquareButton(
-                        text: plansViewModel.getRecipesListResponse.data!
-                            .categories![index].name!,
-                        onPressed: () {
-                          plansViewModel.setProductCategory(plansViewModel
-                              .getRecipesListResponse
-                              .data!
-                              .categories![index]
-                              .name!);
-                        },
-                        colored: plansViewModel.getProductCategory ==
-                            plansViewModel.getRecipesListResponse.data!
-                                .categories![index].name);
-                  }),
-                ),*/
                 SizedBox(
                   height: 20.h,
                 ),
@@ -120,29 +96,47 @@ class ShopScreen extends StatelessWidget {
                   height: 10.h,
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Wrap(
-                          runSpacing: 20.w,
-                          spacing: 20.w,
-                          alignment: plansViewModel.getProductList.length == 1
-                              ? WrapAlignment.start
-                              : WrapAlignment.center,
-                          children: List.generate(plansViewModel.getProductList.length,
-                              (index) {
-                            return SizedBox(
-                              width: 157.w,
-                              child: productGridChipWidget(
-                                  recipeData: plansViewModel.getProductList[index], showInformationIcon: false),
-                            );
-                          }),
+                  child: MasonryGridView.extent(
+                    maxCrossAxisExtent: 157.w,
+                    itemCount: plansViewModel.getProductList.length,
+                    padding: EdgeInsets.only(bottom: 80.h),
+                    primary: true,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: 157.w,
+                        child: productGridChipWidget(
+                          recipeData: plansViewModel.getProductList[index],
+                          showInformationIcon: false,
                         ),
-                        SizedBox(height: 80.h,)
-                      ],
-                    ),
+                      );
+                    },
                   ),
                 ),
+
+                // Expanded(
+                //   child: SingleChildScrollView(
+                //     child: Column(
+                //       children: [
+                //         Wrap(
+                //           runSpacing: 20.w,
+                //           spacing: 20.w,
+                //           alignment: plansViewModel.getProductList.length == 1
+                //               ? WrapAlignment.start
+                //               : WrapAlignment.center,
+                //           children: List.generate(plansViewModel.getProductList.length,
+                //               (index) {
+                //             return SizedBox(
+                //               width: 157.w,
+                //               child: productGridChipWidget(
+                //                   recipeData: plansViewModel.getProductList[index], showInformationIcon: false),
+                //             );
+                //           }),
+                //         ),
+                //         SizedBox(height: 80.h,)
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

@@ -362,6 +362,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "flutter_staggered_grid_view",
+      "rootUri": "file:///C:/Users/Tauqeer%20Ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_stripe",
       "rootUri": "file:///C:/Users/Tauqeer%20Ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_stripe-12.1.1",
       "packageUri": "lib/",

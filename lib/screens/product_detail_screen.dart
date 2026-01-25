@@ -4,6 +4,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
 import '../models/cart_model.dart';
 import '../models/recipe_model.dart';
 import '../route_generator.dart';
@@ -16,7 +17,6 @@ import '../view_models/plans_view_model.dart';
 import '../widgets/app_bar_with_back_widget.dart';
 import '../widgets/carousels/product_carousel_widget.dart';
 import '../widgets/dialogs/discription_dialog.dart';
-import '../widgets/dialogs/monthly_suggestion_dialog.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key});
@@ -49,10 +49,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       SizedBox(
                           height: 300.h,
                           child: ProductCarouselWidget(
-                            productImages:
-                                plansViewModel.getProductImages,
+                            productImages: plansViewModel.getProductImages,
                           )),
-        /*
+                      /*
                       Container(
                           width: double.infinity,
                           height: 300.h,
@@ -76,15 +75,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         height: 24.h,
                       ),
                       Visibility(
-                        visible: plansViewModel.getSelectedRecipe.details!.isNotEmpty || plansViewModel.getSelectedRecipe.weight != 0,
-
+                        visible: plansViewModel
+                                .getSelectedRecipe.details!.isNotEmpty ||
+                            plansViewModel.getSelectedRecipe.weight != 0,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20).w,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Visibility(
-                                visible: plansViewModel.getSelectedRecipe.details!.isNotEmpty,
+                                visible: plansViewModel
+                                    .getSelectedRecipe.details!.isNotEmpty,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -93,19 +94,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       height: 10.h,
                                     ),
                                     black24w500Centre(
-                                        data:
-                                            plansViewModel.getSelectedRecipe.details!)
+                                        data: plansViewModel
+                                            .getSelectedRecipe.details!)
                                   ],
                                 ),
                               ),
                               Visibility(
-                                visible: plansViewModel.getSelectedRecipe.weight != 0,
+                                visible:
+                                    plansViewModel.getSelectedRecipe.weight !=
+                                        0,
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 24.h,),
+                                    SizedBox(
+                                      height: 24.h,
+                                    ),
                                     black24w500Centre(
                                         data:
-                                           '${plansViewModel.getSelectedRecipe.weight!.toString()} ${plansViewModel.getSelectedRecipe.unit}'),
+                                            '${plansViewModel.getSelectedRecipe.weight!.toString()} ${plansViewModel.getSelectedRecipe.unit}'),
                                   ],
                                 ),
                               ),
@@ -113,7 +118,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20).w,
                         child: Row(
@@ -125,7 +132,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 black14w500(
                                     data: plansViewModel
                                                 .getSelectedRecipe.category ==
-                                            ProductCategories.standardRecipes.text
+                                            ProductCategories
+                                                .standardRecipes.text
                                         ? 'Pouch Price'
                                         : 'Unit Price'),
                                 SizedBox(
@@ -204,7 +212,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                   BorderRadius.circular(12),
                                             ),
                                           ),
-                                          child:  Padding(
+                                          child: Padding(
                                             padding: const EdgeInsets.all(10).w,
                                             child: const Icon(
                                               Icons.add,
@@ -225,7 +233,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                     /* Visibility(
+                      /* Visibility(
                           visible: plansViewModel.getSelectedRecipe.category ==
                               ProductCategories.standardRecipes.text,
                           child: Padding(
@@ -235,7 +243,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           )),*/
                       plansViewModel.getSelectedRecipe.selectedItemSize != null
                           ? Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20).w,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20).w,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -267,9 +276,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                               false,
                                           child: Padding(
                                             padding: const EdgeInsets.only(
-                                                bottom: 20.0).w,
-                                            child:
-                                                black14w500(data: 'Select Option'),
+                                                    bottom: 20.0)
+                                                .w,
+                                            child: black14w500(
+                                                data: 'Select Option'),
                                           )),
                                   Visibility(
                                     visible: context
@@ -283,14 +293,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         for (var sizes in plansViewModel
                                             .getSelectedRecipe.sizes!)
                                           Visibility(
-                                            visible: sizes.stock != 0 ,
+                                            visible: sizes.stock != 0,
                                             child: SizedBox(
                                               width: 100.w,
                                               child: customSquareButton(
                                                   text: '${sizes.name}',
                                                   onPressed: () {
                                                     plansViewModel
-                                                        .setSelectedItemSize(sizes);
+                                                        .setSelectedItemSize(
+                                                            sizes);
                                                   },
                                                   colored: plansViewModel
                                                               .getSelectedRecipe
@@ -314,11 +325,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       SizedBox(
                         height: 24.h,
                       ),
-                     /* Padding(
+                      /* Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20).w,
                         child: black14w500(data: 'Details'),
                       ),*/
-                     /* SizedBox(
+                      /* SizedBox(
                         height: 8.h,
                       ),*/
                       /* Padding(
@@ -331,8 +342,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20).w,
                         child: Html(
-                           // lineHeight: true,
-                            data: plansViewModel.getSelectedRecipe.description!),
+                            // lineHeight: true,
+                            data:
+                                plansViewModel.getSelectedRecipe.description!),
                       ),
                       SizedBox(
                         height: 120.h,
@@ -341,8 +353,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: context.read<CartViewModel>().getViewCartItemDetail ==
-                      false,
+                  visible:
+                      context.read<CartViewModel>().getViewCartItemDetail ==
+                          false,
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
@@ -358,24 +371,65 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           //   });
                           // }
                           // else{
-                            if (context.read<CartViewModel>().getSelectedIndex ==
-                                null) {
-                              if (context
-                                  .read<CartViewModel>()
-                                  .checkProductValidation(
-                                  recipe: plansViewModel.getSelectedRecipe)) {
-                                final List<RecipeModel> recipeList = [];
-                                plansViewModel.setProductModel();
-                                recipeList.add(plansViewModel.getSelectedRecipe);
-                                final num planTotalPrice =
+                          if (context.read<CartViewModel>().getSelectedIndex ==
+                              null) {
+                            if (context
+                                .read<CartViewModel>()
+                                .checkProductValidation(
+                                    recipe: plansViewModel.getSelectedRecipe)) {
+                              final List<RecipeModel> recipeList = [];
+                              plansViewModel.setProductModel();
+                              recipeList.add(plansViewModel.getSelectedRecipe);
+                              final num planTotalPrice =
+                                  calculatePlanTotal(listOfItems: recipeList);
+                              final int planTotalWeight =
+                                  calculateProductWeightTotal(
+                                      listOfItems: recipeList);
+                              context.read<CartViewModel>().addToCartList(
+                                    CartModel(
+                                        recipes: recipeList,
+                                        pet: null,
+                                        /*
+                                    deliveryDate: '03 Oct 2023',
+        */
+                                        planType: plansViewModel.getPlanType,
+                                        planTotal: planTotalPrice,
+                                        pouchesDetail: [],
+                                        totalWeight: [planTotalWeight],
+                                        planDiscountedPrice: planTotalPrice,
+                                        planDiscountPer: 0),
+                                  );
+
+                              Navigator.pushNamedAndRemoveUntil(context,
+                                  bottomNavigationRoute, (route) => false);
+
+                              /* EasyLoading.showToast(
+                                  '${plansViewModel.getPlanType} Successfully Added To\nShopping Bag',
+                                  toastPosition: EasyLoadingToastPosition.center);*/
+                            } else {
+                              Navigator.pushNamed(context, cartRoute);
+                              descriptionDialog(
+                                  context: context,
+                                  description:
+                                      '${plansViewModel.getSelectedRecipe.name} is already added to shopping bag',
+                                  height: 180.h,
+                                  title: 'Alert');
+                            }
+                          } else {
+                            final List<RecipeModel> recipeList = [];
+                            plansViewModel.setProductModel();
+                            recipeList.add(plansViewModel.getSelectedRecipe);
+                            final num planTotalPrice =
                                 calculatePlanTotal(listOfItems: recipeList);
-                                final int planTotalWeight = calculateProductWeightTotal(listOfItems: recipeList);
-                                context.read<CartViewModel>().addToCartList(
+                            final int planTotalWeight =
+                                calculateProductWeightTotal(
+                                    listOfItems: recipeList);
+                            context.read<CartViewModel>().addToCartList(
                                   CartModel(
                                       recipes: recipeList,
                                       pet: null,
-        /*
-                                    deliveryDate: '03 Oct 2023',
+                                      /*
+                                  deliveryDate: '03 Oct 2023',
         */
                                       planType: plansViewModel.getPlanType,
                                       planTotal: planTotalPrice,
@@ -384,52 +438,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       planDiscountedPrice: planTotalPrice,
                                       planDiscountPer: 0),
                                 );
-
-                                Navigator.pushNamedAndRemoveUntil(context,
-                                    bottomNavigationRoute, (route) => false);
-
-                                /* EasyLoading.showToast(
-                                  '${plansViewModel.getPlanType} Successfully Added To\nShopping Bag',
-                                  toastPosition: EasyLoadingToastPosition.center);*/
-                              } else {
-                                Navigator.pushNamed(context, cartRoute);
-                                descriptionDialog(
-                                    context: context,
-                                    description:
-                                    '${plansViewModel.getSelectedRecipe.name} is already added to shopping bag',
-                                    height: 180.h,
-                                    title: 'Alert');
-                              }
-                            } else {
-                              final List<RecipeModel> recipeList = [];
-                              plansViewModel.setProductModel();
-                              recipeList.add(plansViewModel.getSelectedRecipe);
-                              final num planTotalPrice =
-                              calculatePlanTotal(listOfItems: recipeList);
-                              final int planTotalWeight = calculateProductWeightTotal(listOfItems: recipeList);
-                              context.read<CartViewModel>().addToCartList(
-                                CartModel(
-                                    recipes: recipeList,
-                                    pet: null,
-        /*
-                                  deliveryDate: '03 Oct 2023',
-        */
-                                    planType: plansViewModel.getPlanType,
-                                    planTotal: planTotalPrice,
-                                    pouchesDetail: [],
-                                    totalWeight: [planTotalWeight],
-                                    planDiscountedPrice: planTotalPrice,
-                                    planDiscountPer: 0),
-                              );
-                              Navigator.pushNamedAndRemoveUntil(context, cartRoute,
-                                      (Route route) => route.isFirst);
-                            }
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                cartRoute, (Route route) => route.isFirst);
+                          }
                           // }
-
-
                         },
                         child: Container(
-                            height: 90.h,
+                            height: 120.h,
                             width: double.infinity,
                             decoration: ShapeDecoration(
                               color: CustomColors.orangeColor,
@@ -438,11 +453,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               ),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15).w,
+                              padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 15)
+                                  .w,
                               child: Row(
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       white18w500(
                                           data:
