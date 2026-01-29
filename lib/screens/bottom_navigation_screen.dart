@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,9 +22,12 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await context.read<AuthViewModel>().callBanners();
       context.read<PlansViewModel>().callAllRecipesApi();
-      if(context.read<AuthViewModel>().getShowGreeting){
+      if (kIsWeb) {
+        return;
+      }
+      await context.read<AuthViewModel>().callBanners();
+      if (context.read<AuthViewModel>().getShowGreeting) {
         if (context.read<AuthViewModel>().getAuthResponse.data!.location ==
             null) {
           shareYourLocationDialog(context: context);
@@ -34,8 +38,11 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
             .data!
             .greetings!
             .isNotEmpty) {
-          for (Greetings greeting
-          in context.read<AuthViewModel>().getAuthResponse.data!.greetings!) {
+          for (Greetings greeting in context
+              .read<AuthViewModel>()
+              .getAuthResponse
+              .data!
+              .greetings!) {
             if (greeting.isFeatured!) {
               homePromoDialog(context: context, greetingData: greeting);
             }
@@ -43,7 +50,6 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
         }
         context.read<AuthViewModel>().setShowGreeting();
       }
-
     });
   }
 
@@ -78,9 +84,13 @@ class _BottomNavigationScreenState extends State<BottomNavigationScreen> {
                 );
               },
             ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: CustomBottomBarWidget(),
+            Visibility(
+              visible: !kIsWeb,
+              maintainSize: false,
+              child: const Align(
+                alignment: Alignment.bottomCenter,
+                child: CustomBottomBarWidget(),
+              ),
             )
           ],
         ),

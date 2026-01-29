@@ -13,6 +13,7 @@ import 'package:brunos_kitchen/models/responses/banners_response.dart';
 import 'package:brunos_kitchen/services/auth_api_services.dart';
 import 'package:brunos_kitchen/view_models/cart_view_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
@@ -374,12 +375,15 @@ class AuthViewModel with ChangeNotifier {
     } else {
       _operatingSystem = 'iOS';
     }
-    //TODO: ENABLE FCM
-    // _fcmToken = await _firebaseMessaging.getToken();
-    // print("fcm token: $_fcmToken");
     final authToken =
         await _sharedPref.read(SharedPreferencesKeys.authToken.text);
     await Future.delayed(const Duration(seconds: 4), () {});
+    if (kIsWeb) {
+      final success = await callGuestUserRegisterApi();
+      if (success) {
+        return const BottomNavigationScreen();
+      }
+    }
     if (authToken == null) {
       return const IntroSlidesScreen();
     } else {
