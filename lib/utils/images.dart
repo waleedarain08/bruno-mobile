@@ -22,6 +22,7 @@ const buyBulits1 = "assets/images/buy-bulits1.png";
 const buyBulits2 = "assets/images/buy-bulits2.png";
 const buyBulits3 = "assets/images/buy-bulits3.png";
 const dogBanner = "assets/images/dog-banner.png";
+const dogBannerMonthly = "assets/images/dog-banner-monthly.png";
 
 const transitionPlan = "assets/images/transition-plan.svg";
 const monthlyPlan = "assets/images/monthly-plan.svg";
@@ -35,7 +36,8 @@ const slider3 = "assets/images/slider-3.png";
 const freshlyCooked = "assets/images/freshly-cooked.svg";
 const informationButton = "assets/images/Information-button.svg";
 const dogProfileImage = "assets/images/image-dog-profile.svg";
-const wellBalancedNutrientBlend = "assets/images/well-balanced-nutrient-blend.svg";
+const wellBalancedNutrientBlend =
+    "assets/images/well-balanced-nutrient-blend.svg";
 const doorstepDelivery = "assets/images/doorstep-delivery.svg";
 const longShelfLife = "assets/images/long-shelf-life.svg";
 const humanGradeIngredients = "assets/images/human-grade-ingredients.svg";
@@ -70,7 +72,3 @@ const workAddressIcon = "assets/images/work-rounded-icon.svg";
 const partnerAddressIcon = "assets/images/partner-rounded-icon.svg";
 const otherAddressIcon = "assets/images/other-rounded-icon.svg";
 const shoppingBagIcon = "assets/images/shopping-bag.svg";
-
-
-
-

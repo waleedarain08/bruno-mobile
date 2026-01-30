@@ -27,16 +27,17 @@ import 'package:brunos_kitchen/screens/order_detail_screen.dart';
 import 'package:brunos_kitchen/screens/orders_screen.dart';
 import 'package:brunos_kitchen/screens/otp_screen.dart';
 import 'package:brunos_kitchen/screens/paw_points_screen.dart';
-import 'package:brunos_kitchen/screens/puppy_creation_additional_screen.dart';
+import 'package:brunos_kitchen/screens/product_detail_screen.dart';
+import 'package:brunos_kitchen/screens/profile_screen.dart';
+import 'package:brunos_kitchen/screens/puppies_list_screen.dart';
 import 'package:brunos_kitchen/screens/puppy_confirmation_screen.dart';
+import 'package:brunos_kitchen/screens/puppy_creation_additional_screen.dart';
 import 'package:brunos_kitchen/screens/puppy_creation_screen.dart';
 import 'package:brunos_kitchen/screens/puppy_detail_screen.dart';
-import 'package:brunos_kitchen/screens/puppies_list_screen.dart';
 import 'package:brunos_kitchen/screens/register_user_continue_screen.dart';
 import 'package:brunos_kitchen/screens/register_user_screen.dart';
 import 'package:brunos_kitchen/screens/reset_password_screen.dart';
 import 'package:brunos_kitchen/screens/reset_password_success_screen.dart';
-import 'package:brunos_kitchen/screens/product_detail_screen.dart';
 import 'package:brunos_kitchen/screens/splash_screen.dart';
 import 'package:brunos_kitchen/screens/transitional_plan_screen.dart';
 import 'package:brunos_kitchen/screens/user_verified_screen.dart';
@@ -88,7 +89,7 @@ const String orderDetailRoute = '/orderDetail';
 const String addCardRoute = 'addCard';
 const String chooseCardRoute = 'chooseCard';
 const String feedbackRoute = 'feedback';
-
+const String profileRoute = '/profile';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -198,7 +199,8 @@ class RouteGenerator {
             builder: (_) => WinesDetailScreen(
                   reviewButton: args,
                 ));*/
-
+      case profileRoute:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
       default:
         return _errorRoute();
     }

@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:provider/provider.dart';
 
 import '../route_generator.dart';
 import '../utils/custom_buttons.dart';
+import '../utils/custom_colors.dart';
 import '../utils/custom_font_style.dart';
 import '../utils/enums.dart';
+import '../utils/images.dart';
 import '../utils/navigations_validation.dart';
 import '../view_models/auth_view_model.dart';
 import '../view_models/plans_view_model.dart';
@@ -37,99 +40,187 @@ class ShopScreen extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [black24w500Centre(data: 'Shop'), cartIconWidget()],
+            spacing: 10.w,
+            children: [
+              black24w500Centre(data: 'Shop'),
+              Spacer(),
+              SizedBox(
+                height: 30.h,
+                width: 30.h,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, profileRoute);
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: CustomColors.purpleColorTint,
+                    child: Center(
+                      child: Icon(
+                        Icons.person_outline,
+                        size: 15.sp,
+                        color: CustomColors.whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              cartIconWidget()
+            ],
           ),
           SizedBox(
             height: 20.h,
           ),
-          customButton(
-              text: '<< Monthly Plan >>',
-              /* boldText: 'Tap Here',*/
-              onPressed: () {
-                if (context
-                        .read<AuthViewModel>()
-                        .getAuthResponse
-                        .data!
-                        .petsCount ==
-                    0) {
-                  context
-                      .read<PuppyViewModel>()
-                      .setRouteToPuppyFrom(Screens.shop.text);
-                  context.read<PuppyViewModel>().clearPuppyData();
-                  Navigator.pushNamed(context, puppyCreationRoute);
-                } else {
-                  navigateToMonthlyPlans(context: context);
-                }
-                /*   SendGridPref sendGrid = SendGridPref();
+          if (context.isBiggerThanMobile)
+            Center(
+              child: Container(
+                width: MediaQuery.widthOf(context) * 0.35,
+                padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
+                child: InkWell(
+                  onTap: () {
+                    if (context
+                            .read<AuthViewModel>()
+                            .getAuthResponse
+                            .data!
+                            .petsCount ==
+                        0) {
+                      context
+                          .read<PuppyViewModel>()
+                          .setRouteToPuppyFrom(Screens.shop.text);
+                      context.read<PuppyViewModel>().clearPuppyData();
+                      Navigator.pushNamed(context, puppyCreationRoute);
+                    } else {
+                      navigateToMonthlyPlans(context: context);
+                    }
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadiusGeometry.circular(40.r),
+                    child: Image.asset(dogBannerMonthly),
+                  ),
+                ),
+              ),
+            )
+          else
+            customButton(
+                text: '<< Monthly Plan >>',
+                /* boldText: 'Tap Here',*/
+                onPressed: () {
+                  if (context
+                          .read<AuthViewModel>()
+                          .getAuthResponse
+                          .data!
+                          .petsCount ==
+                      0) {
+                    context
+                        .read<PuppyViewModel>()
+                        .setRouteToPuppyFrom(Screens.shop.text);
+                    context.read<PuppyViewModel>().clearPuppyData();
+                    Navigator.pushNamed(context, puppyCreationRoute);
+                  } else {
+                    navigateToMonthlyPlans(context: context);
+                  }
+                  /*   SendGridPref sendGrid = SendGridPref();
                     sendGrid.sendEmail(emailSubject: 'Registration', emailDescription: 'Register Successfully');
                     */
-              },
-              colored: true),
+                },
+                colored: true),
           if (data != null)
-            Expanded(child: _buildCustomPlanData(plansViewModel)),
+            Expanded(child: _buildCustomPlanData(context, plansViewModel)),
         ],
       ),
     );
   }
 
-  Widget _buildCustomPlanData(PlansViewModel plansViewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 20.h,
-        ),
-        Center(child: grey14w400HeightCentre(data: 'OR')),
-        black18w500(data: 'Select Category'),
-        SizedBox(
-          height: 20.h,
-        ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: plansViewModel.getRecipesListResponse.data!.categories!
-                .map(
-                  (data) => Container(
-                    margin: const EdgeInsets.only(right: 20),
-                    width: 140.w,
-                    child: customSquareButton(
-                        text: data.name!,
-                        onPressed: () {
-                          plansViewModel.setProductCategory(data.name!);
-                        },
-                        colored:
-                            plansViewModel.getProductCategory == data.name),
+  Widget _buildCustomPlanData(
+    BuildContext context,
+    PlansViewModel plansViewModel,
+  ) {
+    return Padding(
+      padding: context.isBiggerThanMobile
+          ? EdgeInsets.symmetric(horizontal: 0.05.sw)
+          : EdgeInsets.zero,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 20.h,
+          ),
+          Center(child: grey14w400HeightCentre(data: 'OR')),
+          black18w500(data: 'Select Category'),
+          SizedBox(
+            height: 20.h,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: plansViewModel.getRecipesListResponse.data!.categories!
+                  .map(
+                    (data) => Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      width: context.isBiggerThanMobile ? 150.w : 140.w,
+                      child: customSquareButton(
+                          text: data.name!,
+                          onPressed: () {
+                            plansViewModel.setProductCategory(data.name!);
+                          },
+                          colored:
+                              plansViewModel.getProductCategory == data.name),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+          SizedBox(
+            height: 20.h,
+          ),
+          black18w500(data: 'Products'),
+          SizedBox(
+            height: 10.h,
+          ),
+          Expanded(
+            child: context.isBiggerThanMobile
+                ? MasonryGridView.extent(
+                    maxCrossAxisExtent: 157.w,
+                    itemCount: plansViewModel.getProductList.length,
+                    padding: EdgeInsets.only(bottom: 80.h),
+                    primary: true,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: 157.w,
+                        child: productGridChipWidget(
+                          recipeData: plansViewModel.getProductList[index],
+                          showInformationIcon: false,
+                        ),
+                      );
+                    },
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Wrap(
+                          runSpacing: 20.w,
+                          spacing: 20.w,
+                          alignment: plansViewModel.getProductList.length == 1
+                              ? WrapAlignment.start
+                              : WrapAlignment.center,
+                          children: List.generate(
+                              plansViewModel.getProductList.length, (index) {
+                            return SizedBox(
+                              width: 157.w,
+                              child: productGridChipWidget(
+                                  recipeData:
+                                      plansViewModel.getProductList[index],
+                                  showInformationIcon: false),
+                            );
+                          }),
+                        ),
+                        SizedBox(
+                          height: 80.h,
+                        )
+                      ],
+                    ),
                   ),
-                )
-                .toList(),
           ),
-        ),
-        SizedBox(
-          height: 20.h,
-        ),
-        black18w500(data: 'Products'),
-        SizedBox(
-          height: 10.h,
-        ),
-        Expanded(
-          child: MasonryGridView.extent(
-            maxCrossAxisExtent: 157.w,
-            itemCount: plansViewModel.getProductList.length,
-            padding: EdgeInsets.only(bottom: 80.h),
-            primary: true,
-            itemBuilder: (context, index) {
-              return SizedBox(
-                width: 157.w,
-                child: productGridChipWidget(
-                  recipeData: plansViewModel.getProductList[index],
-                  showInformationIcon: false,
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
