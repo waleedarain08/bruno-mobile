@@ -9,22 +9,22 @@ import 'package:provider/provider.dart';
 import '../route_generator.dart';
 import '../utils/custom_colors.dart';
 import '../utils/images.dart';
+import '../utils/widget_utils.dart';
 
 Widget cartIconWidget() {
   return Consumer<CartViewModel>(builder: (_, cartViewModel, __) {
     return Center(
-      child: SizedBox(
-        height: 30.h,
-        width: 30.h,
-        child: badges.Badge(
-          // position: badges.BadgePosition.topEnd(top: -8, end: -2),
-          badgeStyle: const badges.BadgeStyle(
-            badgeColor: CustomColors.orangeColor,
-          ),
-          badgeContent: Text(
-            cartViewModel.getCartList.length.toString(),
-            style: const TextStyle(color: Colors.white),
-          ),
+      child: badges.Badge(
+        badgeStyle: const badges.BadgeStyle(
+          badgeColor: CustomColors.orangeColor,
+        ),
+        badgeContent: Text(
+          cartViewModel.getCartList.length.toString(),
+          style: const TextStyle(color: Colors.white),
+        ),
+        child: SizedBox(
+          height: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 30.h,
+          width: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 30.h,
           child: InkWell(
             onTap: () {
               Navigator.pushNamed(navigatorKey.currentContext!, cartRoute);
