@@ -31,9 +31,7 @@ class RegisterUserScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Center(
                 child: Container(
-                  width: getIsBiggerThanMobile(context)
-                      ? MediaQuery.widthOf(context) * 0.5
-                      : null,
+                  width: getIsBiggerThanMobile(context) ? 0.35.sw : null,
                   padding: const EdgeInsets.only(
                           top: 30, bottom: 20, left: 20, right: 20)
                       .w,

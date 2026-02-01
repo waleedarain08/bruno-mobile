@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:brunos_kitchen/screens/profile_screen.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
@@ -51,7 +54,21 @@ class ShopScreen extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     if (kDebugMode) {
-                      Navigator.pushNamed(context, profileRoute);
+                      if (context.isBiggerThanMobile) {
+                        log("BIGGER");
+                        showDialog(
+                          context: context,
+                          builder: (_) => Center(
+                            child: SizedBox(
+                              width: 0.6.sw,
+                              height: 0.7.sh,
+                              child: ProfileScreen(),
+                            ),
+                          ),
+                        );
+                      } else {
+                        Navigator.pushNamed(context, profileRoute);
+                      }
                     }
                   },
                   child: CircleAvatar(

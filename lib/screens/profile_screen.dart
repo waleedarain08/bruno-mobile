@@ -3,6 +3,7 @@ import 'package:brunos_kitchen/utils/images.dart';
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:brunos_kitchen/view_models/bottom_navigation_view_model.dart';
 import 'package:brunos_kitchen/view_models/faqs_blogs_news_view_model.dart';
+import 'package:brunos_kitchen/widgets/back_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,11 +25,12 @@ class ProfileScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding:
-                const EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20).w,
+                const EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20)
+                    .w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
+                ListTile(
                   onTap: () {
                     if (!context
                         .read<AuthViewModel>()
@@ -45,91 +47,81 @@ class ProfileScreen extends StatelessWidget {
                       Navigator.pushNamed(context, registerUserRoute);
                     }
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  contentPadding: EdgeInsets.zero,
+                  leading: BackButtonWidget(),
+                  title: lightBlack14w400Centre(
+                    left: true,
+                    data:
+                        'Hi, ${context.watch<AuthViewModel>().getAuthResponse.data!.fullName}',
+                  ),
+                  isThreeLine: true,
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          lightBlack14w400Centre(
-                              left: true,
-                              data:
-                                  'Hi, ${context.watch<AuthViewModel>().getAuthResponse.data!.fullName}'),
-                          SizedBox(
-                            height: 10.h,
-                          ),
-                          Visibility(
-                              visible: context
+                      Visibility(
+                          visible: context
+                              .read<AuthViewModel>()
+                              .getAuthResponse
+                              .data!
+                              .isGuest!,
+                          child: orange14w400(data: 'Register Now')),
+                      grey14w400(
+                          data: !context
                                   .read<AuthViewModel>()
                                   .getAuthResponse
                                   .data!
-                                  .isGuest!,
-                              child: orange14w400(data: 'Register Now')),
-                          grey14w400(
-                              data: !context
-                                      .read<AuthViewModel>()
-                                      .getAuthResponse
-                                      .data!
-                                      .isGuest!
-                                  ? context
-                                      .read<AuthViewModel>()
-                                      .getAuthResponse
-                                      .data!
-                                      .email!
-                                  : '')
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Visibility(
-                            visible: context
-                                    .watch<AuthViewModel>()
-                                    .getAuthResponse
-                                    .data!
-                                    .availablePoints !=
-                                0,
-                            child: Padding(
-                              padding: EdgeInsets.only(bottom: 10.h),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    couponCoin,
-                                    height: 30.h,
-                                  ),
-                                  SizedBox(
-                                    width: 5.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      lightBlack14w400Centre(
-                                          data: context
-                                              .watch<AuthViewModel>()
-                                              .getAuthResponse
-                                              .data!
-                                              .availablePoints
-                                              .toString()),
-                                      lightBlack14w400Centre(data: 'Points'),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            size: 15,
-                            color: CustomColors.greyColor,
-                          ),
-                        ],
-                      )
+                                  .isGuest!
+                              ? context
+                                  .read<AuthViewModel>()
+                                  .getAuthResponse
+                                  .data!
+                                  .email!
+                              : '')
                     ],
                   ),
+                  trailing: context
+                              .watch<AuthViewModel>()
+                              .getAuthResponse
+                              .data!
+                              .availablePoints !=
+                          0
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SvgPicture.asset(
+                              couponCoin,
+                              height: 30.h,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                lightBlack14w400Centre(
+                                    data: context
+                                        .watch<AuthViewModel>()
+                                        .getAuthResponse
+                                        .data!
+                                        .availablePoints
+                                        .toString()),
+                                lightBlack14w400Centre(data: 'Points'),
+                              ],
+                            ),
+                            SizedBox(width: 10.w),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              size: 15,
+                              color: CustomColors.greyColor,
+                            ),
+                          ],
+                        )
+                      : SizedBox.shrink(),
                 ),
-                SizedBox(
-                  height: 39.h,
-                ),
+                // SizedBox(
+                //   height: 39.h,
+                // ),
                 lightBlack14w400Centre(data: 'Account'),
                 SizedBox(
                   height: 14.h,
@@ -223,7 +215,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     title: Align(
                         alignment: Alignment.centerLeft,
-                        child: lightBlack14w400Centre(data: 'Shipping Address')),
+                        child:
+                            lightBlack14w400Centre(data: 'Shipping Address')),
                     contentPadding: const EdgeInsets.all(0).w,
                     minLeadingWidth: 12,
                     trailing: const Icon(
@@ -233,7 +226,9 @@ class ProfileScreen extends StatelessWidget {
                     )),
                 ListTile(
                     onTap: () {
-                      context.read<FaqsBlogsNewsViewModel>().clearFeedbackForm();
+                      context
+                          .read<FaqsBlogsNewsViewModel>()
+                          .clearFeedbackForm();
                       Navigator.pushNamed(context, feedbackRoute);
                     },
                     leading: const Icon(
