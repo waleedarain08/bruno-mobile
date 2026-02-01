@@ -1,6 +1,7 @@
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -49,7 +50,9 @@ class ShopScreen extends StatelessWidget {
                 width: context.isBiggerThanMobile ? 60.h : 30.h,
                 child: InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, profileRoute);
+                    if (kDebugMode) {
+                      Navigator.pushNamed(context, profileRoute);
+                    }
                   },
                   child: CircleAvatar(
                     backgroundColor: CustomColors.purpleColorTint,
@@ -100,28 +103,29 @@ class ShopScreen extends StatelessWidget {
             )
           else
             customButton(
-                text: '<< Monthly Plan >>',
-                /* boldText: 'Tap Here',*/
-                onPressed: () {
-                  if (context
-                          .read<AuthViewModel>()
-                          .getAuthResponse
-                          .data!
-                          .petsCount ==
-                      0) {
-                    context
-                        .read<PuppyViewModel>()
-                        .setRouteToPuppyFrom(Screens.shop.text);
-                    context.read<PuppyViewModel>().clearPuppyData();
-                    Navigator.pushNamed(context, puppyCreationRoute);
-                  } else {
-                    navigateToMonthlyPlans(context: context);
-                  }
-                  /*   SendGridPref sendGrid = SendGridPref();
+              text: '<< Monthly Plan >>',
+              /* boldText: 'Tap Here',*/
+              onPressed: () {
+                if (context
+                        .read<AuthViewModel>()
+                        .getAuthResponse
+                        .data!
+                        .petsCount ==
+                    0) {
+                  context
+                      .read<PuppyViewModel>()
+                      .setRouteToPuppyFrom(Screens.shop.text);
+                  context.read<PuppyViewModel>().clearPuppyData();
+                  Navigator.pushNamed(context, puppyCreationRoute);
+                } else {
+                  navigateToMonthlyPlans(context: context);
+                }
+                /*   SendGridPref sendGrid = SendGridPref();
                     sendGrid.sendEmail(emailSubject: 'Registration', emailDescription: 'Register Successfully');
                     */
-                },
-                colored: true),
+              },
+              colored: true,
+            ),
           if (data != null)
             Expanded(child: _buildCustomPlanData(context, plansViewModel)),
         ],
@@ -143,114 +147,14 @@ class ShopScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          Center(child: grey14w400HeightCentre(data: 'OR')),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: grey14w400HeightCentre(data: 'OR'),
+          ),
           if (context.isBiggerThanMobile)
-            Expanded(
-              child: Row(
-                spacing: 20.w,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      black18w500(data: 'Select Category'),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 430.w,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: CustomColors.greyColor,
-                            ),
-                            borderRadius: BorderRadiusGeometry.circular(15.r),
-                          ),
-                          padding: EdgeInsets.all(20.w),
-                          child: Wrap(
-                            runSpacing: 10.h,
-                            alignment: WrapAlignment.center,
-                            children: List.generate(
-                                plansViewModel.getRecipesListResponse.data!
-                                    .categories!.length, (index) {
-                              final data = plansViewModel.getRecipesListResponse
-                                  .data!.categories![index];
-                              return Container(
-                                margin:
-                                    const EdgeInsets.only(right: 20, left: 20)
-                                        .w,
-                                width:
-                                    context.isBiggerThanMobile ? 150.w : 140.w,
-                                child: customSquareButton(
-                                    text: data.name!,
-                                    onPressed: () {
-                                      plansViewModel
-                                          .setProductCategory(data.name!);
-                                    },
-                                    colored:
-                                        plansViewModel.getProductCategory ==
-                                            data.name),
-                              );
-                            }),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        black18w500(data: 'Products'),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Expanded(
-                          child: MasonryGridView.extent(
-                            maxCrossAxisExtent: 157.w,
-                            itemCount: plansViewModel.getProductList.length,
-                            padding: EdgeInsets.only(bottom: 80.h),
-                            primary: true,
-                            itemBuilder: (context, index) {
-                              return SizedBox(
-                                width: 157.w,
-                                child: productGridChipWidget(
-                                  recipeData:
-                                      plansViewModel.getProductList[index],
-                                  showInformationIcon: false,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            )
+            _buildWebCategoryView(plansViewModel)
           else ...{
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: plansViewModel
-                    .getRecipesListResponse.data!.categories!
-                    .map(
-                      (data) => Container(
-                        margin: const EdgeInsets.only(right: 20),
-                        width: context.isBiggerThanMobile ? 150.w : 140.w,
-                        child: customSquareButton(
-                            text: data.name!,
-                            onPressed: () {
-                              plansViewModel.setProductCategory(data.name!);
-                            },
-                            colored:
-                                plansViewModel.getProductCategory == data.name),
-                      ),
-                    )
-                    .toList(),
-              ),
-            ),
+            _buildMobileCategoryView(context, plansViewModel),
             SizedBox(
               height: 20.h,
             ),
@@ -286,6 +190,104 @@ class ShopScreen extends StatelessWidget {
               ),
             ),
           },
+        ],
+      ),
+    );
+  }
+
+  SingleChildScrollView _buildMobileCategoryView(
+    BuildContext context,
+    PlansViewModel plansViewModel,
+  ) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: plansViewModel.getRecipesListResponse.data!.categories!
+            .map(
+              (data) => Container(
+                margin: const EdgeInsets.only(right: 20),
+                width: context.isBiggerThanMobile ? 150.w : 140.w,
+                child: customSquareButton(
+                    text: data.name!,
+                    onPressed: () {
+                      plansViewModel.setProductCategory(data.name!);
+                    },
+                    colored: plansViewModel.getProductCategory == data.name),
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  Expanded _buildWebCategoryView(PlansViewModel plansViewModel) {
+    final categories = plansViewModel.getRecipesListResponse.data!.categories!;
+    return Expanded(
+      child: Row(
+        spacing: 20.w,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              black18w500(data: 'Select Category'),
+              SizedBox(
+                height: 20.h,
+              ),
+              Container(
+                width: 430.w,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CustomColors.greyColor,
+                  ),
+                  borderRadius: BorderRadiusGeometry.circular(15.r),
+                ),
+                padding: EdgeInsets.all(20.w),
+                child: Wrap(
+                  spacing: 10.w,
+                  runSpacing: 10.h,
+                  children: List.generate(categories.length, (index) {
+                    final data = categories[index];
+                    return customSquareButton(
+                      text: data.name!,
+                      onPressed: () {
+                        plansViewModel.setProductCategory(data.name!);
+                      },
+                      colored: plansViewModel.getProductCategory == data.name,
+                    );
+                  }),
+                ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                black18w500(data: 'Products'),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Expanded(
+                  child: MasonryGridView.extent(
+                    maxCrossAxisExtent: 157.w,
+                    itemCount: plansViewModel.getProductList.length,
+                    padding: EdgeInsets.only(bottom: 80.h),
+                    primary: true,
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        width: 157.w,
+                        child: productGridChipWidget(
+                          recipeData: plansViewModel.getProductList[index],
+                          showInformationIcon: false,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

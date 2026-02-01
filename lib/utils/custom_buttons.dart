@@ -71,7 +71,9 @@ Widget customSquareButton({
 }) {
   return SizedBox(
     height: navigatorKey.currentContext!.isBiggerThanMobile ? 50.h : 40.h,
-    width: double.infinity,
+    width: navigatorKey.currentContext!.isBiggerThanMobile
+        ? null
+        : double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 5),
@@ -79,9 +81,12 @@ Widget customSquareButton({
         backgroundColor:
             colored ? CustomColors.orangeColor : CustomColors.whiteColor,
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side:
-                const BorderSide(width: 1.0, color: CustomColors.orangeColor)),
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(
+            width: 1.0,
+            color: CustomColors.orangeColor,
+          ),
+        ),
       ),
       onPressed: onPressed,
       child: Text(text,

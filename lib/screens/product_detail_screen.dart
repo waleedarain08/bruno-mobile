@@ -35,10 +35,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       return SafeArea(
         child: Scaffold(
           appBar: AppBarWithBackWidget(
-              heading: toBeginningOfSentenceCase(
-                  '${plansViewModel.getSelectedRecipe.name}'),
-              showPuppy: false,
-              showCart: context.read<CartViewModel>().getSelectedIndex == null),
+            heading: toBeginningOfSentenceCase(
+                '${plansViewModel.getSelectedRecipe.name}'),
+            showPuppy: false,
+            showCart: context.read<CartViewModel>().getSelectedIndex == null,
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0).w,
             child: Stack(
@@ -51,6 +52,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(width: 0.15.sw),
                             SizedBox(
                               width: 430.w,
                               height: 400.h,
@@ -58,20 +60,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 productImages: plansViewModel.getProductImages,
                               ),
                             ),
-                            if (context.isBiggerThanMobile)
-                              Expanded(
-                                  child: _buildProductDetails(plansViewModel)),
+                            Expanded(
+                              child: _buildProductDetails(plansViewModel),
+                            ),
+                            SizedBox(width: 0.15.sw),
                           ],
                         )
-                      else
+                      else ...{
                         SizedBox(
                           height: 300.h,
                           child: ProductCarouselWidget(
                             productImages: plansViewModel.getProductImages,
                           ),
                         ),
-                      if (!context.isBiggerThanMobile)
                         _buildProductDetails(plansViewModel),
+                      },
                       SizedBox(
                         height: 24.h,
                       ),
@@ -96,9 +99,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   visible:
                       context.read<CartViewModel>().getViewCartItemDetail ==
                           false,
-                  child: Center(
+                  child: Align(
+                    alignment: context.isBiggerThanMobile
+                        ? Alignment.centerRight
+                        : Alignment.center,
                     child: Container(
-                      width: 0.5.sw,
+                      width: context.isBiggerThanMobile ? 0.35.sw : null,
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20).w,
@@ -339,11 +345,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ),
                       SizedBox(
-                          width: 40.w,
-                          child: Center(
-                              child: black18w500(
-                                  data:
-                                      plansViewModel.getQuantity.toString()))),
+                        width: 40.w,
+                        child: Center(
+                          child: black18w500(
+                            data: plansViewModel.getQuantity.toString(),
+                          ),
+                        ),
+                      ),
                       Visibility(
                         visible: context
                                 .read<CartViewModel>()
@@ -402,8 +410,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             height: 20.h,
                           ),
                           black18w500(
-                              data: plansViewModel
-                                  .getSelectedRecipe.selectedItemSize!.name!)
+                            data: plansViewModel
+                                .getSelectedRecipe.selectedItemSize!.name!,
+                          )
                         ],
                       )
                     : Visibility(
@@ -413,8 +422,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             false,
                         child: Padding(
                           padding: const EdgeInsets.only(bottom: 20.0).w,
-                          child: black14w500(data: 'Select Option'),
-                        )),
+                          child: black14w500(
+                            data: 'Select Option',
+                          ),
+                        ),
+                      ),
                 Visibility(
                   visible:
                       context.read<CartViewModel>().getViewCartItemDetail ==
@@ -427,17 +439,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         Visibility(
                           visible: sizes.stock != 0,
                           child: SizedBox(
-                            width: 100.w,
+                            width: context.isBiggerThanMobile ? null : 100.w,
                             child: customSquareButton(
-                                text: '${sizes.name}',
-                                onPressed: () {
-                                  plansViewModel.setSelectedItemSize(sizes);
-                                },
-                                colored: plansViewModel.getSelectedRecipe
-                                            .selectedItemSize ==
-                                        sizes
-                                    ? true
-                                    : false),
+                              text: '${sizes.name}',
+                              onPressed: () {
+                                plansViewModel.setSelectedItemSize(sizes);
+                              },
+                              colored: plansViewModel
+                                          .getSelectedRecipe.selectedItemSize ==
+                                      sizes
+                                  ? true
+                                  : false,
+                            ),
                           ),
                         )
                     ],

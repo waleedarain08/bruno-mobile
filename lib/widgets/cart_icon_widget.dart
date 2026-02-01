@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/view_models/cart_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -27,7 +28,9 @@ Widget cartIconWidget() {
           width: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 30.h,
           child: InkWell(
             onTap: () {
-              Navigator.pushNamed(navigatorKey.currentContext!, cartRoute);
+              if (kDebugMode) {
+                Navigator.pushNamed(navigatorKey.currentContext!, cartRoute);
+              }
             },
             child: CircleAvatar(
               backgroundColor: CustomColors.purpleColorTint,
