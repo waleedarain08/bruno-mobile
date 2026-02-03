@@ -1,16 +1,17 @@
-
+import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/models/cart_model.dart';
 import 'package:brunos_kitchen/models/puppy_model.dart';
 import 'package:brunos_kitchen/models/recipe_model.dart';
 import 'package:brunos_kitchen/models/responses/recipes_list_response.dart';
 import 'package:brunos_kitchen/services/plan_api_services.dart';
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../models/item_sizes_model.dart';
-import '../utils/enums.dart';
 import '../utils/calculations.dart';
+import '../utils/enums.dart';
 
 class PlansViewModel with ChangeNotifier {
   final PlanApiServices _planApiServices = PlanApiServices();
@@ -40,13 +41,14 @@ class PlansViewModel with ChangeNotifier {
   RecipesListResponse _recipesListResponse = RecipesListResponse();
   RecipeModel _selectedRecipe = RecipeModel();
   final List<String> _productImages = [];
-  final CarouselSliderController _productCarouselController = CarouselSliderController();
+  final CarouselSliderController _productCarouselController =
+      CarouselSliderController();
   List<RecipeModel> _recipesList = [];
   List<RecipeModel> _productsList = [];
   List<RecipeModel> _featuredRecipesList = [];
   List<RecipeModel> _selectedFeaturedRecipesList = [];
   List<RecipeModel> _featuredProductsList = [];
- // List<RecipeModel> _comboRecipesList = [];
+  // List<RecipeModel> _comboRecipesList = [];
   List<RecipeModel> _recommendedRecipesList = [];
   List<RecipeModel> _oneTimeRecipesList = [];
 
@@ -60,8 +62,8 @@ class PlansViewModel with ChangeNotifier {
 
   //ItemSizes? get getSelectedItemSize => _selectedItemSize;
 
-  CarouselSliderController get getProductCarouselController => _productCarouselController;
-
+  CarouselSliderController get getProductCarouselController =>
+      _productCarouselController;
 
   String get getTransitional1to3PouchesText => _transitional1to3PouchesText;
 
@@ -82,7 +84,9 @@ class PlansViewModel with ChangeNotifier {
     if (value.image!.isNotEmpty) {
       _productImages[0] = value.image!;
     }
-    _productCarouselController.animateToPage(0);
+    if (!navigatorKey.currentContext!.isBiggerThanMobile) {
+      _productCarouselController.animateToPage(0);
+    }
     _inStockQuantity = value.stock!;
     notifyListeners();
   }
@@ -147,8 +151,7 @@ class PlansViewModel with ChangeNotifier {
   }
 
   void addQuantity() {
-    if (_selectedRecipe.sizes!.isNotEmpty &&
-        _quantity != _inStockQuantity) {
+    if (_selectedRecipe.sizes!.isNotEmpty && _quantity != _inStockQuantity) {
       _quantity = ++_quantity;
     }
     notifyListeners();
@@ -380,24 +383,28 @@ class PlansViewModel with ChangeNotifier {
     _transitionalGrams1to3Days = calculateTransitionalGram(
         recipeModel: _selectedRecipe,
         percentage: 25,
-        days: 3/*,
-        calculatePrice: true*/);
+        days: 3 /*,
+        calculatePrice: true*/
+        );
     _transitionalGrams4to6Days = calculateTransitionalGram(
         recipeModel: _selectedRecipe,
         percentage: 50,
-        days: 3/*,
-        calculatePrice: true*/);
+        days: 3 /*,
+        calculatePrice: true*/
+        );
     _transitionalGrams7to9Days = calculateTransitionalGram(
         recipeModel: _selectedRecipe,
         percentage: 75,
-        days: 3/*,
-        calculatePrice: true*/);
+        days: 3 /*,
+        calculatePrice: true*/
+        );
     _transitionalGrams10thDay = calculateTransitionalGram(
         recipeModel: _selectedRecipe,
         percentage: 100,
-        days: 1/*,
-        calculatePrice: true*/);
-   /* final num priceFor1to3Days = calculateTransitionalPrice(
+        days: 1 /*,
+        calculatePrice: true*/
+        );
+    /* final num priceFor1to3Days = calculateTransitionalPrice(
         gramWithPercent: _transitionalGrams1to3Days,
         recipeModel: _selectedRecipe);
     final num priceFor4to6Days = calculateTransitionalPrice(
@@ -411,12 +418,16 @@ class PlansViewModel with ChangeNotifier {
         recipeModel: _selectedRecipe);*/
     final RecipeModel applyDishDetail =
         RecipeModel.fromJson(_selectedRecipe.toJson());
-    applyDishDetail.finalPrice = calculatePrice(recipeModel: applyDishDetail, planType: Plans.transitional.text)/*roundTo10(
+    applyDishDetail.finalPrice = calculatePrice(
+            recipeModel: applyDishDetail,
+            planType: Plans.transitional
+                .text) /*roundTo10(
         value: (priceFor1to3Days +
                 priceFor4to6Days +
                 priceFor7to9Days +
                 priceFor10thDay)
-            .toInt())*/;
+            .toInt())*/
+        ;
     _selectedRecipe = applyDishDetail;
   }
 
@@ -446,10 +457,10 @@ class PlansViewModel with ChangeNotifier {
     final RecipeModel applyDishDetail =
         RecipeModel.fromJson(_selectedRecipe.toJson());
     applyDishDetail.totalDays = int.parse(_monthlySelectedDaysController.text);
-    final num planPrice =
-        calculatePrice(recipeModel: _selectedRecipe, planType: Plans.monthly.text) *
-            int.parse(_monthlySelectedDaysController.text);
-    applyDishDetail.finalPrice = /*roundTo10(value:*/ planPrice/*)*/  ;
+    final num planPrice = calculatePrice(
+            recipeModel: _selectedRecipe, planType: Plans.monthly.text) *
+        int.parse(_monthlySelectedDaysController.text);
+    applyDishDetail.finalPrice = /*roundTo10(value:*/ planPrice /*)*/;
     if (_monthlyEmptyTileNumber == 1) {
       _monthlyEmptyTile1 = applyDishDetail;
     } else if (_monthlyEmptyTileNumber == 2) {
@@ -490,8 +501,7 @@ class PlansViewModel with ChangeNotifier {
         .toList();*/
     _recommendedRecipesList = _recipesListResponse.data!.recipe!
         .where((element) =>
-            element.isComboRecipe == false &&
-            element.category == '')
+            element.isComboRecipe == false && element.category == '')
         .toList();
     _oneTimeRecipesList = _recipesListResponse.data!.recipe!
         .where((element) =>
@@ -515,7 +525,7 @@ class PlansViewModel with ChangeNotifier {
         RecipeModel.fromJson(value.toJson());
     _selectedRecipe = applySelectedRecipe;
     _productImages.clear();
-    if(_selectedRecipe.sizes!.isNotEmpty){
+    if (_selectedRecipe.sizes!.isNotEmpty) {
       _inStockQuantity = _selectedRecipe.sizes![0].stock!;
     }
     _productImages.addAll(_selectedRecipe.media!);

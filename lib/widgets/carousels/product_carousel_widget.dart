@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/view_models/plans_view_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -69,21 +70,31 @@ class _ProductCarouselWidgetState extends State<ProductCarouselWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: widget.productImages.asMap().entries.map((entry) {
             return GestureDetector(
-              onTap: () => context
-                  .read<PlansViewModel>()
-                  .getProductCarouselController
-                  .animateToPage(entry.key),
+              onTap: () {
+                if (context.isBiggerThanMobile) {
+                  return;
+                }
+                context
+                    .read<PlansViewModel>()
+                    .getProductCarouselController
+                    .animateToPage(entry.key);
+              },
               child: Container(
                 width: 7.0,
                 height: 7.0,
-                margin:
-                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 4.0),
+                margin: const EdgeInsets.symmetric(
+                  vertical: 5.0,
+                  horizontal: 4.0,
+                ),
                 decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: (Theme.of(context).brightness == Brightness.dark
-                            ? Colors.white
-                            : CustomColors.orangeColor)
-                        .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                  shape: BoxShape.circle,
+                  color: (Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : CustomColors.orangeColor)
+                      .withValues(
+                    alpha: _current == entry.key ? 0.9 : 0.4,
+                  ),
+                ),
               ),
             );
           }).toList(),

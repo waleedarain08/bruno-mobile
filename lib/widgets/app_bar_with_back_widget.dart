@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,7 +13,12 @@ class AppBarWithBackWidget extends StatelessWidget
   final bool showCart;
   final Function? onBackPress;
 
-  const AppBarWithBackWidget({super.key, this.heading, required this.showPuppy, required this.showCart, this.onBackPress});
+  const AppBarWithBackWidget(
+      {super.key,
+      this.heading,
+      required this.showPuppy,
+      required this.showCart,
+      this.onBackPress});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +30,7 @@ class AppBarWithBackWidget extends StatelessWidget
       title: heading != null ? Text(heading!) : Container(),
       leading: InkWell(
         onTap: () {
-          onBackPress != null? onBackPress!():
-          Navigator.pop(context);
+          onBackPress != null ? onBackPress!() : Navigator.pop(context);
         },
         child: const Padding(
           padding: EdgeInsets.only(left: 10.0),
@@ -35,22 +40,26 @@ class AppBarWithBackWidget extends StatelessWidget
           ),
         ),
       ),
+      actionsPadding: context.isBiggerThanMobile
+          ? EdgeInsets.symmetric(horizontal: 20.w, vertical: 1.h)
+          : null,
       actions: [
         Visibility(
           visible: showCart,
           child: Padding(
-            padding:  EdgeInsets.only(right: showPuppy? 10 : 20,top: 10),
+            padding: context.isBiggerThanMobile
+                ? EdgeInsets.zero
+                : EdgeInsets.only(right: showPuppy ? 10 : 20, top: 10),
             child: cartIconWidget(),
           ),
         ),
         Visibility(
           visible: showPuppy,
           child: Padding(
-            padding: const EdgeInsets.only(right: 10,top: 10),
+            padding: const EdgeInsets.only(right: 10, top: 10),
             child: defaultPuppyIconWidget(),
           ),
         ),
-
       ],
     );
   }

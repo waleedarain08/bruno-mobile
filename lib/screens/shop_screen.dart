@@ -76,7 +76,7 @@ class ShopScreen extends StatelessWidget {
                     child: Center(
                       child: Icon(
                         Icons.person_outline,
-                        size: 15.sp,
+                        size: context.isBiggerThanMobile ? 20.sp : 15.sp,
                         color: CustomColors.whiteColor,
                       ),
                     ),
@@ -194,8 +194,9 @@ class ShopScreen extends StatelessWidget {
                         return SizedBox(
                           width: 157.w,
                           child: productGridChipWidget(
-                              recipeData: plansViewModel.getProductList[index],
-                              showInformationIcon: false),
+                            recipeData: plansViewModel.getProductList[index],
+                            showInformationIcon: false,
+                          ),
                         );
                       }),
                     ),
@@ -251,28 +252,38 @@ class ShopScreen extends StatelessWidget {
               SizedBox(
                 height: 20.h,
               ),
-              Container(
-                width: 430.w,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: CustomColors.greyColor,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    width: 430.w,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: CustomColors.greyColor,
+                      ),
+                      borderRadius: BorderRadiusGeometry.circular(15.r),
+                    ),
+                    padding: EdgeInsets.all(20.w),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Wrap(
+                        spacing: 10.w,
+                        runSpacing: 10.h,
+                        direction: Axis.horizontal,
+                        children: List.generate(categories.length, (index) {
+                          final data = categories[index];
+                          return customSquareButton(
+                            text: data.name!,
+                            onPressed: () {
+                              plansViewModel.setProductCategory(data.name!);
+                            },
+                            colored:
+                                plansViewModel.getProductCategory == data.name,
+                          );
+                        }),
+                      ),
+                    ),
                   ),
-                  borderRadius: BorderRadiusGeometry.circular(15.r),
-                ),
-                padding: EdgeInsets.all(20.w),
-                child: Wrap(
-                  spacing: 10.w,
-                  runSpacing: 10.h,
-                  children: List.generate(categories.length, (index) {
-                    final data = categories[index];
-                    return customSquareButton(
-                      text: data.name!,
-                      onPressed: () {
-                        plansViewModel.setProductCategory(data.name!);
-                      },
-                      colored: plansViewModel.getProductCategory == data.name,
-                    );
-                  }),
                 ),
               ),
             ],
@@ -288,6 +299,8 @@ class ShopScreen extends StatelessWidget {
                 Expanded(
                   child: MasonryGridView.extent(
                     maxCrossAxisExtent: 157.w,
+                    mainAxisSpacing: 10.w,
+                    crossAxisSpacing: 10.w,
                     itemCount: plansViewModel.getProductList.length,
                     padding: EdgeInsets.only(bottom: 80.h),
                     primary: true,
