@@ -1,4 +1,5 @@
 import 'package:brunos_kitchen/main.dart';
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +23,9 @@ Widget defaultPuppyIconWidget() {
         } else {
           Navigator.pushNamed(navigatorKey.currentContext!, puppiesListRoute);
         }
-        navigatorKey.currentContext!.read<PuppyViewModel>().setRouteToPuppyFrom(Screens.profile.text);
+        navigatorKey.currentContext!
+            .read<PuppyViewModel>()
+            .setRouteToPuppyFrom(Screens.profile.text);
       },
       child: Column(
         children: [
@@ -30,17 +33,33 @@ Widget defaultPuppyIconWidget() {
                   authViewModel.getAuthResponse.data!.pet!.media!.isNotEmpty
               ? circularNetworkImageWidget(
                   image: authViewModel.getAuthResponse.data!.pet!.media!,
-                  size: 30.h)
+                  size: navigatorKey.currentContext!.isBiggerThanMobile
+                      ? 60.h
+                      : 30.h)
               : SizedBox(
-                  height: 30.h,
-                  width: 30.h,
+                  height: navigatorKey.currentContext!.isBiggerThanMobile
+                      ? 60.h
+                      : 30.h,
+                  width: navigatorKey.currentContext!.isBiggerThanMobile
+                      ? 60.h
+                      : 30.h,
                   child: SvgPicture.asset(dogProfileImage),
                 ),
-          authViewModel.getAuthResponse.data!.pet != null?
-          black10w400( data: authViewModel.getAuthResponse.data!.pet!.name!.substring(0,authViewModel.getAuthResponse.data!.pet!.name!.length > 5 ? 5 : authViewModel.getAuthResponse.data!.pet!.name!.length),)
-          :const SizedBox()
-            ],
-          ),
+          authViewModel.getAuthResponse.data!.pet != null
+              ? black10w400(
+                  data: authViewModel.getAuthResponse.data!.pet!.name!
+                      .substring(
+                          0,
+                          authViewModel
+                                      .getAuthResponse.data!.pet!.name!.length >
+                                  5
+                              ? 5
+                              : authViewModel
+                                  .getAuthResponse.data!.pet!.name!.length),
+                )
+              : const SizedBox()
+        ],
+      ),
     );
   });
 }

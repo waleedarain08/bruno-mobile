@@ -97,34 +97,6 @@ class _PuppyCreationAdditionalScreenState
                       );
                 },
               ),
-              // Visibility(
-              //   visible: MediaQuery.of(context).viewInsets.bottom == 0,
-              //   child: Align(
-              //     alignment: Alignment.bottomCenter,
-              //     child: Container(
-              //       decoration: const BoxDecoration(
-              //         color: CustomColors.whiteColor,
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(30.0),
-              //           topRight: Radius.circular(30.0),
-              //         ),
-              //         boxShadow: [
-              //           BoxShadow(
-              //             offset: Offset(0, 0),
-              //             blurRadius: 5,
-              //             spreadRadius: 2,
-              //             color: Colors.black12,
-              //           ),
-              //         ],
-              //       ),
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(20).w,
-              //         child: customButton(
-              //             text: 'Save', onPressed: () {}, colored: true),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
@@ -524,6 +496,7 @@ class _PuppyCreationAdditionalScreenState
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -551,12 +524,45 @@ class _PuppyCreationAdditionalScreenState
           SizedBox(
             height: 24.h,
           ),
-          if (context.isBiggerThanMobile)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 10.h,
-              children: [
-                customSquareButton(
+          // if (context.isBiggerThanMobile)
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     spacing: 10.h,
+          //     children: [
+          //       customSquareButton(
+          //         text: 'Underweight',
+          //         onPressed: () {
+          //           puppyViewModel
+          //               .setPuppyActualWeight(PuppyWeight.underweight.value);
+          //         },
+          //         colored: puppyViewModel.getPuppyActualWeight ==
+          //             PuppyWeight.underweight.value,
+          //       ),
+          //       customSquareButton(
+          //         text: 'Ideal Weight',
+          //         onPressed: () {
+          //           puppyViewModel
+          //               .setPuppyActualWeight(PuppyWeight.idealWeight.value);
+          //         },
+          //         colored: puppyViewModel.getPuppyActualWeight ==
+          //             PuppyWeight.idealWeight.value,
+          //       ),
+          //       customSquareButton(
+          //         text: 'Overweight',
+          //         onPressed: () {
+          //           puppyViewModel
+          //               .setPuppyActualWeight(PuppyWeight.overweight.value);
+          //         },
+          //         colored: puppyViewModel.getPuppyActualWeight ==
+          //             PuppyWeight.overweight.value,
+          //       ),
+          //     ],
+          //   )
+          // else
+          Row(
+            children: [
+              Expanded(
+                child: customSquareButton(
                   text: 'Underweight',
                   onPressed: () {
                     puppyViewModel
@@ -565,7 +571,12 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getPuppyActualWeight ==
                       PuppyWeight.underweight.value,
                 ),
-                customSquareButton(
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: customSquareButton(
                   text: 'Ideal Weight',
                   onPressed: () {
                     puppyViewModel
@@ -574,7 +585,12 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getPuppyActualWeight ==
                       PuppyWeight.idealWeight.value,
                 ),
-                customSquareButton(
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: customSquareButton(
                   text: 'Overweight',
                   onPressed: () {
                     puppyViewModel
@@ -583,52 +599,9 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getPuppyActualWeight ==
                       PuppyWeight.overweight.value,
                 ),
-              ],
-            )
-          else
-            Row(
-              children: [
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Underweight',
-                    onPressed: () {
-                      puppyViewModel
-                          .setPuppyActualWeight(PuppyWeight.underweight.value);
-                    },
-                    colored: puppyViewModel.getPuppyActualWeight ==
-                        PuppyWeight.underweight.value,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Ideal Weight',
-                    onPressed: () {
-                      puppyViewModel
-                          .setPuppyActualWeight(PuppyWeight.idealWeight.value);
-                    },
-                    colored: puppyViewModel.getPuppyActualWeight ==
-                        PuppyWeight.idealWeight.value,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Overweight',
-                    onPressed: () {
-                      puppyViewModel
-                          .setPuppyActualWeight(PuppyWeight.overweight.value);
-                    },
-                    colored: puppyViewModel.getPuppyActualWeight ==
-                        PuppyWeight.overweight.value,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 24.h,
           ),
@@ -638,12 +611,42 @@ class _PuppyCreationAdditionalScreenState
           SizedBox(
             height: 24.h,
           ),
-          if (context.isBiggerThanMobile)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 10.h,
-              children: [
-                customSquareButton(
+          // if (context.isBiggerThanMobile)
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     spacing: 10.h,
+          //     children: [
+          //       customSquareButton(
+          //         text: 'Less Active',
+          //         onPressed: () {
+          //           puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
+          //         },
+          //         colored: puppyViewModel.getPuppyActivityLevel ==
+          //             Puppy.lessActive.text,
+          //       ),
+          //       customSquareButton(
+          //         text: 'Active',
+          //         onPressed: () {
+          //           puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
+          //         },
+          //         colored:
+          //             puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
+          //       ),
+          //       customSquareButton(
+          //         text: 'Very Active',
+          //         onPressed: () {
+          //           puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
+          //         },
+          //         colored: puppyViewModel.getPuppyActivityLevel ==
+          //             Puppy.veryActive.text,
+          //       ),
+          //     ],
+          //   )
+          // else
+          Row(
+            children: [
+              Expanded(
+                child: customSquareButton(
                   text: 'Less Active',
                   onPressed: () {
                     puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
@@ -651,7 +654,12 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getPuppyActivityLevel ==
                       Puppy.lessActive.text,
                 ),
-                customSquareButton(
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: customSquareButton(
                   text: 'Active',
                   onPressed: () {
                     puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
@@ -659,7 +667,12 @@ class _PuppyCreationAdditionalScreenState
                   colored:
                       puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
                 ),
-                customSquareButton(
+              ),
+              SizedBox(
+                width: 10.w,
+              ),
+              Expanded(
+                child: customSquareButton(
                   text: 'Very Active',
                   onPressed: () {
                     puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
@@ -667,51 +680,9 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getPuppyActivityLevel ==
                       Puppy.veryActive.text,
                 ),
-              ],
-            )
-          else
-            Row(
-              children: [
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Less Active',
-                    onPressed: () {
-                      puppyViewModel
-                          .setPuppyActivityLevel(Puppy.lessActive.text);
-                    },
-                    colored: puppyViewModel.getPuppyActivityLevel ==
-                        Puppy.lessActive.text,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Active',
-                    onPressed: () {
-                      puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
-                    },
-                    colored: puppyViewModel.getPuppyActivityLevel ==
-                        Puppy.active.text,
-                  ),
-                ),
-                SizedBox(
-                  width: 10.w,
-                ),
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Very Active',
-                    onPressed: () {
-                      puppyViewModel
-                          .setPuppyActivityLevel(Puppy.veryActive.text);
-                    },
-                    colored: puppyViewModel.getPuppyActivityLevel ==
-                        Puppy.veryActive.text,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
+          ),
           SizedBox(
             height: 25.h,
           ),
@@ -721,13 +692,28 @@ class _PuppyCreationAdditionalScreenState
           SizedBox(
             height: 24.h,
           ),
-          if (context.isBiggerThanMobile)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              spacing: 10.h,
-              children: List.generate(
-                5,
-                (index) => customSquareButton(
+          // if (context.isBiggerThanMobile)
+          //   Column(
+          //     crossAxisAlignment: CrossAxisAlignment.stretch,
+          //     spacing: 10.h,
+          //     children: List.generate(
+          //       5,
+          //       (index) => customSquareButton(
+          //         text: '${index + 1}',
+          //         onPressed: () {
+          //           puppyViewModel.setFeedingRoutine(index + 1);
+          //         },
+          //         colored: puppyViewModel.getFeedingRoutine == (index + 1),
+          //       ),
+          //     ),
+          //   )
+          // else
+          Row(
+            spacing: 10.w,
+            children: List.generate(
+              5,
+              (index) => Expanded(
+                child: customSquareButton(
                   text: '${index + 1}',
                   onPressed: () {
                     puppyViewModel.setFeedingRoutine(index + 1);
@@ -735,23 +721,8 @@ class _PuppyCreationAdditionalScreenState
                   colored: puppyViewModel.getFeedingRoutine == (index + 1),
                 ),
               ),
-            )
-          else
-            Row(
-              spacing: 10.w,
-              children: List.generate(
-                5,
-                (index) => Expanded(
-                  child: customSquareButton(
-                    text: '${index + 1}',
-                    onPressed: () {
-                      puppyViewModel.setFeedingRoutine(index + 1);
-                    },
-                    colored: puppyViewModel.getFeedingRoutine == (index + 1),
-                  ),
-                ),
-              ),
             ),
+          ),
         ],
       ),
     );

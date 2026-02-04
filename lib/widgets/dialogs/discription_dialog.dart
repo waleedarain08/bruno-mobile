@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,7 +9,8 @@ import '../../utils/custom_font_style.dart';
 void descriptionDialog(
     {required BuildContext context,
     required String description,
-    required double height, required title}) {
+    required double height,
+    required title}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
@@ -21,6 +23,7 @@ void descriptionDialog(
       return Center(
         child: Container(
           height: height.h,
+          width: context.isBiggerThanMobile ? 0.5.sw : null,
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
               color: CustomColors.whiteColor,

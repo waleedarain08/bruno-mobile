@@ -4,7 +4,6 @@ import 'package:brunos_kitchen/screens/profile_screen.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -53,22 +52,20 @@ class ShopScreen extends StatelessWidget {
                 width: context.isBiggerThanMobile ? 60.h : 30.h,
                 child: InkWell(
                   onTap: () {
-                    if (kDebugMode) {
-                      if (context.isBiggerThanMobile) {
-                        log("BIGGER");
-                        showDialog(
-                          context: context,
-                          builder: (_) => Center(
-                            child: SizedBox(
-                              width: 0.6.sw,
-                              height: 0.7.sh,
-                              child: ProfileScreen(),
-                            ),
+                    if (context.isBiggerThanMobile) {
+                      log("BIGGER");
+                      showDialog(
+                        context: context,
+                        builder: (_) => Center(
+                          child: SizedBox(
+                            width: 0.6.sw,
+                            height: 0.7.sh,
+                            child: ProfileScreen(),
                           ),
-                        );
-                      } else {
-                        Navigator.pushNamed(context, profileRoute);
-                      }
+                        ),
+                      );
+                    } else {
+                      Navigator.pushNamed(context, profileRoute);
                     }
                   },
                   child: CircleAvatar(

@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,10 +25,13 @@ class AppBarWithBackWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      toolbarHeight: 60.h,
-      backgroundColor: CustomColors.whiteColor,
-      elevation: 1,
-      title: heading != null ? Text(heading!) : Container(),
+      toolbarHeight: context.isBiggerThanMobile ? 100.h : 60.h,
+      backgroundColor: context.isBiggerThanMobile
+          ? Theme.of(context).scaffoldBackgroundColor
+          : CustomColors.whiteColor,
+      elevation: context.isBiggerThanMobile ? 0 : 1,
+      scrolledUnderElevation: 0,
+      title: heading != null ? Text(heading!) : SizedBox.shrink(),
       leading: InkWell(
         onTap: () {
           onBackPress != null ? onBackPress!() : Navigator.pop(context);
@@ -53,6 +57,10 @@ class AppBarWithBackWidget extends StatelessWidget
             child: cartIconWidget(),
           ),
         ),
+        if (context.isBiggerThanMobile)
+          SizedBox(
+            width: 20.w,
+          ),
         Visibility(
           visible: showPuppy,
           child: Padding(
@@ -65,6 +73,9 @@ class AppBarWithBackWidget extends StatelessWidget
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(60.h);
+  Size get preferredSize {
+    return Size.fromHeight(
+      navigatorKey.currentContext!.isBiggerThanMobile ? 100.h : 60.h,
+    );
+  }
 }
