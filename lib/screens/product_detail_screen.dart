@@ -175,43 +175,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             : Alignment.center,
         child: Container(
           alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20).w,
-            child: InkWell(
-              onTap: () => _onAddToCart(context, plansViewModel),
-              child: Container(
-                  height: context.isBiggerThanMobile ? null : 120.h,
-                  width: double.infinity,
-                  decoration: ShapeDecoration(
-                    color: CustomColors.orangeColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+          padding: context.isBiggerThanMobile
+              ? EdgeInsets.zero
+              : const EdgeInsets.symmetric(horizontal: 20).w,
+          child: InkWell(
+            onTap: () => _onAddToCart(context, plansViewModel),
+            child: Container(
+                height: context.isBiggerThanMobile ? null : 120.h,
+                width: double.infinity,
+                decoration: ShapeDecoration(
+                  color: CustomColors.orangeColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
-                            .w,
-                    child: Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            white18w500(
-                                data:
-                                    'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            whiteTint14w400(data: 'Total Price')
-                          ],
-                        ),
-                        const Spacer(),
-                        white18w500(data: 'Add to shopping bag')
-                      ],
-                    ),
-                  )),
-            ),
+                ),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+                          .w,
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          white18w500(
+                              data:
+                                  'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          whiteTint14w400(data: 'Total Price')
+                        ],
+                      ),
+                      const Spacer(),
+                      white18w500(data: 'Add to shopping bag')
+                    ],
+                  ),
+                )),
           ),
         ),
       ),
@@ -227,8 +227,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 0.5.sw,
+              Expanded(
                 child: Row(
                   children: [
                     SizedBox(
@@ -275,6 +274,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ],
                 ),
               ),
+              VerticalDivider(width: 40.w),
               Expanded(
                 child: _buildProductDetails(plansViewModel),
               ),
@@ -286,18 +286,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   Widget _buildProductDetails(PlansViewModel plansViewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        SizedBox(
-          height: 24.h,
-        ),
-        Visibility(
-          visible: plansViewModel.getSelectedRecipe.details!.isNotEmpty ||
-              plansViewModel.getSelectedRecipe.weight != 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20).w,
+    return Padding(
+      padding: context.isBiggerThanMobile
+          ? EdgeInsets.only(right: 20.w)
+          : const EdgeInsets.symmetric(horizontal: 20).w,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          SizedBox(
+            height: 24.h,
+          ),
+          Visibility(
+            visible: plansViewModel.getSelectedRecipe.details!.isNotEmpty ||
+                plansViewModel.getSelectedRecipe.weight != 0,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -331,13 +333,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ],
             ),
           ),
-        ),
-        SizedBox(
-          height: 20.h,
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20).w,
-          child: Row(
+          SizedBox(
+            height: 20.h,
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
@@ -439,14 +438,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ],
           ),
-        ),
-        SizedBox(
-          height: 10.h,
-        ),
-        if (plansViewModel.getSelectedRecipe.selectedItemSize != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20).w,
-            child: Column(
+          SizedBox(
+            height: 10.h,
+          ),
+          if (plansViewModel.getSelectedRecipe.selectedItemSize != null)
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
@@ -509,12 +505,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ),
               ],
             ),
-          ),
-        if (context.isBiggerThanMobile) ...{
-          Spacer(),
-          _buildAddToCart(context, plansViewModel),
-        },
-      ],
+          if (context.isBiggerThanMobile) ...{
+            Spacer(),
+            _buildAddToCart(context, plansViewModel),
+          },
+        ],
+      ),
     );
   }
 }

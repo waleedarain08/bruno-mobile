@@ -51,12 +51,13 @@ class _PuppyCreationAdditionalScreenState
       return SafeArea(
         child: Scaffold(
           appBar: const AppBarWithBackWidget(
-              heading: /*context.read<PuppyViewModel>().getRouteToPuppyFrom ==
+            heading: /*context.read<PuppyViewModel>().getRouteToPuppyFrom ==
                       Screens.home.text
                   ? */
-                  'Add Pet' /*: 'My Pets'*/,
-              showPuppy: false,
-              showCart: true),
+                'Add Pet' /*: 'My Pets'*/,
+            showPuppy: false,
+            showCart: true,
+          ),
           body: Stack(
             children: [
               if (context.isBiggerThanMobile)
@@ -65,6 +66,12 @@ class _PuppyCreationAdditionalScreenState
                 KeyboardActions(
                   config: _buildConfig(context),
                   child: SingleChildScrollView(
+                    padding: const EdgeInsets.only(
+                      top: 40,
+                      bottom: 20,
+                      left: 20,
+                      right: 20,
+                    ).w,
                     child: _buildBody(context, puppyViewModel),
                   ),
                 ),
@@ -106,12 +113,7 @@ class _PuppyCreationAdditionalScreenState
 
   Padding _buildBody(BuildContext context, PuppyViewModel puppyViewModel) {
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 40,
-        bottom: 20,
-        left: 20,
-        right: 20,
-      ).w,
+      padding: EdgeInsets.symmetric(horizontal: 0.03.sw),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -152,9 +154,9 @@ class _PuppyCreationAdditionalScreenState
           if (context.isBiggerThanMobile)
             Expanded(
               child: Row(
-                spacing: 24.w,
                 children: [
                   Expanded(child: _buildLeftSide(puppyViewModel)),
+                  VerticalDivider(width: 40.w),
                   Expanded(child: _buildRightSide(puppyViewModel)),
                 ],
               ),

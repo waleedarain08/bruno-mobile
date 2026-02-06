@@ -70,7 +70,7 @@ Widget customSquareButton({
   required bool colored,
 }) {
   return SizedBox(
-    height: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 40.h,
+    height: navigatorKey.currentContext!.isBiggerThanMobile ? 50.h : 40.h,
     width: navigatorKey.currentContext!.isBiggerThanMobile
         ? null
         : double.infinity,

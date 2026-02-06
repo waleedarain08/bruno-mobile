@@ -4,7 +4,6 @@ import 'package:brunos_kitchen/models/responses/blogs_news_response.dart';
 import 'package:brunos_kitchen/models/responses/faqs_blogs_news_response.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 import '../services/faqs_blogs_news_api_services.dart';
 
@@ -14,14 +13,13 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
   FaqsBlogsNewsResponse _faqsResponse = FaqsBlogsNewsResponse();
   BlogsNewsResponse _blogsNewsResponse = BlogsNewsResponse();
   BlogsNewsData _selectedBlogNews = BlogsNewsData();
-  WebViewController _webViewController = WebViewController();
   final TextEditingController _feedbackTitle = TextEditingController();
   final TextEditingController _feedbackDesc = TextEditingController();
   final TextEditingController _comment = TextEditingController();
 
   BlogsNewsData get getSelectedBlogNews => _selectedBlogNews;
 
-  void setSelectedBlogNews (BlogsNewsData data){
+  void setSelectedBlogNews(BlogsNewsData data) {
     _selectedBlogNews = data;
     notifyListeners();
   }
@@ -30,9 +28,6 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
 
   TextEditingController get getFeedbackDesc => _feedbackDesc;
   TextEditingController get getComment => _comment;
-
-
-  WebViewController get getWebViewController => _webViewController;
 
   BlogsNewsResponse get getBlogsNewsResponse => _blogsNewsResponse;
 
@@ -46,44 +41,6 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
   void setFaqsResponse(FaqsBlogsNewsResponse value) {
     _faqsResponse = value;
     notifyListeners();
-  }
-
-  void setWebView({required String url}) async {
-    EasyLoading.show(status: "Loading...");
-    _webViewController = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..enableZoom(false)
-      ..currentUrl().catchError((error) async {
-        EasyLoading.showError(error);
-        // print("Invalid url ${error.hashCode} $error");
-      })
-      ..currentUrl()
-      ..setNavigationDelegate(NavigationDelegate(
-          /* onNavigationRequest: (navigation){
-                final host = Uri.parse(navigation.url).host;
-                if(host.contains("success")){
-                  print("Flutter Web view success");
-                  return NavigationDecision.navigate;
-                }else{
-                  return NavigationDecision.navigate;
-                }
-              },*/
-          /*onUrlChange: (urlChange){
-                if(urlChange.url!.contains('return')){
-                  Navigator.pop(context);
-                }
-                print(" Url change in web wiew kjhkh \n  ${urlChange.url}");
-              },*/
-          onWebResourceError: (error) {
-        EasyLoading.dismiss();
-        print("web view error ${error.description} ||\n ${error.errorType}");
-      }, onPageFinished: (v) {
-        EasyLoading.dismiss();
-        notifyListeners();
-        print("Navigation success");
-      }))
-      ..loadRequest(Uri.parse(url));
-    // await _webViewController.loadRequest(Uri.parse(widget.url));
   }
 
   Future<bool> callFaqsApi() async {
@@ -121,18 +78,18 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
     }
   }
 
-  clearBlogNewsData(){
-    if(_blogsNewsResponse.data != null){
+  clearBlogNewsData() {
+    if (_blogsNewsResponse.data != null) {
       _blogsNewsResponse.data!.clear();
       notifyListeners();
     }
   }
 
-  clearComment(){
+  clearComment() {
     _comment.clear();
   }
 
-  clearFeedbackForm(){
+  clearFeedbackForm() {
     _feedbackDesc.clear();
     _feedbackTitle.clear();
   }
@@ -164,11 +121,11 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
     EasyLoading.show(status: 'Please Wait ...');
     try {
       final BaseResponseModel response =
-      await _faqsBlogsNewsApiServices.addFeedbackApi(
-          feedbackRequest: FeedbackRequest(
-              title: 'Get Help Comment',
-              description: _comment.text,
-              type: 'feedback'));
+          await _faqsBlogsNewsApiServices.addFeedbackApi(
+              feedbackRequest: FeedbackRequest(
+                  title: 'Get Help Comment',
+                  description: _comment.text,
+                  type: 'feedback'));
       if (response.isSuccess!) {
         clearFeedbackForm();
         EasyLoading.showSuccess('Comment Submitted Successfully');
@@ -190,7 +147,6 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
       final BlogsNewsResponse response =
           await _faqsBlogsNewsApiServices.allNewsApi();
       if (response.isSuccess!) {
-
         setBlogsNewsResponse(response);
         EasyLoading.dismiss();
         return true;
@@ -209,9 +165,8 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
     EasyLoading.show(status: 'Please Wait ...');
     try {
       final BlogsNewsResponse response =
-      await _faqsBlogsNewsApiServices.allBlogsApi();
+          await _faqsBlogsNewsApiServices.allBlogsApi();
       if (response.isSuccess!) {
-
         setBlogsNewsResponse(response);
         EasyLoading.dismiss();
         return true;
@@ -223,11 +178,5 @@ class FaqsBlogsNewsViewModel with ChangeNotifier {
       EasyLoading.showError(e.toString());
       return false;
     }
-  }
-
-  void clearWebView() {
-    _webViewController.clearCache();
-    _webViewController.clearLocalStorage();
-    notifyListeners();
   }
 }

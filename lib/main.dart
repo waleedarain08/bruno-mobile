@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return ScreenUtilInit(
-        designSize: getDesignSize(context: context),
+        designSize: getDesignSize(context, MediaQuery.orientationOf(context)),
         //useInheritedMediaQuery: true,
         minTextAdapt: true,
         splitScreenMode: true,

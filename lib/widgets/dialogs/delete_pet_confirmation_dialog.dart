@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../utils/custom_buttons.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/custom_font_style.dart';
+import '../../utils/widget_utils.dart';
 import '../../view_models/auth_view_model.dart';
 
 void deletePetConfirmationDialog(
@@ -22,6 +23,9 @@ void deletePetConfirmationDialog(
       return Center(
         child: Container(
           height: 170.h,
+          width: context.isBiggerThanMobile
+              ? MediaQuery.widthOf(context) * 0.4
+              : null,
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
               color: CustomColors.whiteColor,
@@ -66,14 +70,16 @@ void deletePetConfirmationDialog(
                           Navigator.pop(context);
                           await context
                               .read<PuppyViewModel>()
-                              .callDeletePuppyApi().then((value) => {
-                                if(value){
-                                  Navigator.pop(context),
-                                  context
-                                      .read<AuthViewModel>()
-                                      .callSplash(showLoader: true)
-                                }
-                          });
+                              .callDeletePuppyApi()
+                              .then((value) => {
+                                    if (value)
+                                      {
+                                        Navigator.pop(context),
+                                        context
+                                            .read<AuthViewModel>()
+                                            .callSplash(showLoader: true)
+                                      }
+                                  });
                         },
                       ),
                     ),
