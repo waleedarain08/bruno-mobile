@@ -1,6 +1,5 @@
 import 'package:accordion/accordion.dart';
 import 'package:brunos_kitchen/utils/images.dart';
-import 'package:brunos_kitchen/view_models/address_view_model.dart';
 import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:brunos_kitchen/view_models/plans_view_model.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ import '../widgets/deafult_puppy_icon_widget.dart';
 import '../widgets/gridChip/food_category_grid_chip_widget.dart';
 import '../widgets/gridChip/food_grid_chip_widget.dart';
 import '../widgets/listChips/shop_items_horizontal_list_chip_widget.dart';
+import '../widgets/location_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,7 +37,10 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: CustomColors.whiteColorShade,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 80).w,
+            padding: EdgeInsets.only(
+              top: context.isBiggerThanMobile ? 10.h : 20.h,
+              bottom: 80.w,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -46,58 +49,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     spacing: 20.w,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          context
-                              .read<AddressViewModel>()
-                              .setRouteFromHome(true);
-                          if (context
-                                  .read<AuthViewModel>()
-                                  .getAuthResponse
-                                  .data!
-                                  .location !=
-                              null) {
-                            Navigator.pushNamed(context, addressRoute);
-                          } else {
-                            context
-                                .read<AddressViewModel>()
-                                .setIsAddressAdd(true);
-                            Navigator.pushNamed(context, addAddressRoute);
-                          }
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                purple10w500Centre(data: 'LOCATION'),
-                                const Icon(
-                                  Icons.keyboard_arrow_down,
-                                  color: CustomColors.purpleColor,
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              width: 260.w,
-                              child: lightBlack14w400Centre(
-                                  left: true,
-                                  data: context
-                                              .watch<AuthViewModel>()
-                                              .getAuthResponse
-                                              .data!
-                                              .location !=
-                                          null
-                                      ? context
-                                          .watch<AuthViewModel>()
-                                          .getAuthResponse
-                                          .data!
-                                          .location!
-                                          .address!
-                                      : 'Tap to set Your Location'),
-                            )
-                          ],
-                        ),
-                      ),
+                      LocationWidget(),
                       Spacer(),
                       cartIconWidget(),
                       defaultPuppyIconWidget(),

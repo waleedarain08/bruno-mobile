@@ -72,3 +72,6 @@ const workAddressIcon = "assets/images/work-rounded-icon.svg";
 const partnerAddressIcon = "assets/images/partner-rounded-icon.svg";
 const otherAddressIcon = "assets/images/other-rounded-icon.svg";
 const shoppingBagIcon = "assets/images/shopping-bag.svg";
+const footerQr = 'assets/images/footer_qr.png';
+const playstoreBanner = 'assets/images/playstore_banner.png';
+const appstoreBanner = 'assets/images/appstore_banner.png';

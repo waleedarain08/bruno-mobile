@@ -1,5 +1,6 @@
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
+import 'package:brunos_kitchen/widgets/brunos_footer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -116,7 +117,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             showCart: context.read<CartViewModel>().getSelectedIndex == null,
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0).w,
+            padding: const EdgeInsets.only(top: 20.0).h,
             child: Stack(
               children: [
                 SingleChildScrollView(
@@ -147,9 +148,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           data: plansViewModel.getSelectedRecipe.description!,
                         ),
                       ),
-                      SizedBox(
-                        height: 120.h,
-                      ),
+                      if (context.isBiggerThanMobile)
+                        BrunosFooter()
+                      else
+                        SizedBox(
+                          height: 120.h,
+                        ),
                     ],
                   ),
                 ),
@@ -169,49 +173,53 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   ) {
     return Visibility(
       visible: context.read<CartViewModel>().getViewCartItemDetail == false,
-      child: Align(
-        alignment: context.isBiggerThanMobile
-            ? Alignment.centerRight
-            : Alignment.center,
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          padding: context.isBiggerThanMobile
-              ? EdgeInsets.zero
-              : const EdgeInsets.symmetric(horizontal: 20).w,
-          child: InkWell(
-            onTap: () => _onAddToCart(context, plansViewModel),
-            child: Container(
-                height: context.isBiggerThanMobile ? null : 120.h,
-                width: double.infinity,
-                decoration: ShapeDecoration(
-                  color: CustomColors.orangeColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+      child: Center(
+        child: Align(
+          alignment: context.isBiggerThanMobile
+              ? Alignment.centerRight
+              : Alignment.center,
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            padding: context.isBiggerThanMobile
+                ? EdgeInsets.zero
+                : const EdgeInsets.symmetric(horizontal: 20).w,
+            child: InkWell(
+              onTap: () => _onAddToCart(context, plansViewModel),
+              child: Container(
+                  // height: context.isBiggerThanMobile ? null : 90.h,
+                  margin: EdgeInsets.only(bottom: 10.h),
+                  width: double.infinity,
+                  decoration: ShapeDecoration(
+                    color: CustomColors.orangeColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
-                          .w,
-                  child: Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          white18w500(
-                              data:
-                                  'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
-                          SizedBox(
-                            height: 5.h,
-                          ),
-                          whiteTint14w400(data: 'Total Price')
-                        ],
-                      ),
-                      const Spacer(),
-                      white18w500(data: 'Add to shopping bag')
-                    ],
-                  ),
-                )),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
+                            .w,
+                    child: Row(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            white18w500(
+                                data:
+                                    'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            whiteTint14w400(data: 'Total Price')
+                          ],
+                        ),
+                        const Spacer(),
+                        white18w500(data: 'Add to shopping bag')
+                      ],
+                    ),
+                  )),
+            ),
           ),
         ),
       ),

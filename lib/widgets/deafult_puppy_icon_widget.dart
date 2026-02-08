@@ -34,14 +34,14 @@ Widget defaultPuppyIconWidget() {
               ? circularNetworkImageWidget(
                   image: authViewModel.getAuthResponse.data!.pet!.media!,
                   size: navigatorKey.currentContext!.isBiggerThanMobile
-                      ? 60.h
+                      ? 40.h
                       : 30.h)
               : SizedBox(
                   height: navigatorKey.currentContext!.isBiggerThanMobile
-                      ? 60.h
+                      ? 40.h
                       : 30.h,
                   width: navigatorKey.currentContext!.isBiggerThanMobile
-                      ? 60.h
+                      ? 40.h
                       : 30.h,
                   child: SvgPicture.asset(dogProfileImage),
                 ),

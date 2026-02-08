@@ -70,7 +70,7 @@ Widget customSquareButton({
   required bool colored,
 }) {
   return SizedBox(
-    height: navigatorKey.currentContext!.isBiggerThanMobile ? 50.h : 40.h,
+    height: navigatorKey.currentContext!.isBiggerThanMobile ? 30.h : 40.h,
     width: navigatorKey.currentContext!.isBiggerThanMobile
         ? null
         : double.infinity,
@@ -89,14 +89,16 @@ Widget customSquareButton({
         ),
       ),
       onPressed: onPressed,
-      child: Text(text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontFamily: 'CircularStd',
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w500,
-            color: colored ? CustomColors.whiteColor : CustomColors.orangeColor,
-          )),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: 'CircularStd',
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500,
+          color: colored ? CustomColors.whiteColor : CustomColors.orangeColor,
+        ),
+      ),
     ),
   );
 }

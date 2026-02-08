@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:brunos_kitchen/screens/profile_screen.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
+import 'package:brunos_kitchen/widgets/brunos_footer.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -36,53 +38,12 @@ class ShopScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, PlansViewModel plansViewModel) {
     final data = plansViewModel.getRecipesListResponse.data;
-    return Padding(
-      padding: const EdgeInsets.all(20).w,
+    return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          Row(
-            spacing: 10.w,
-            children: [
-              black24w500Centre(data: 'Shop'),
-              Spacer(),
-              SizedBox(
-                height: context.isBiggerThanMobile ? 60.h : 30.h,
-                width: context.isBiggerThanMobile ? 60.h : 30.h,
-                child: InkWell(
-                  onTap: () {
-                    if (context.isBiggerThanMobile) {
-                      log("BIGGER");
-                      showDialog(
-                        context: context,
-                        builder: (_) => Center(
-                          child: SizedBox(
-                            width: 0.6.sw,
-                            height: 0.7.sh,
-                            child: ProfileScreen(),
-                          ),
-                        ),
-                      );
-                    } else {
-                      Navigator.pushNamed(context, profileRoute);
-                    }
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: CustomColors.purpleColorTint,
-                    child: Center(
-                      child: Icon(
-                        Icons.person_outline,
-                        size: context.isBiggerThanMobile ? 20.sp : 15.sp,
-                        color: CustomColors.whiteColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              cartIconWidget()
-            ],
-          ),
+          _buildPageBar(context),
           SizedBox(
             height: 20.h,
           ),
@@ -116,32 +77,94 @@ class ShopScreen extends StatelessWidget {
               ),
             )
           else
-            customButton(
-              text: '<< Monthly Plan >>',
-              /* boldText: 'Tap Here',*/
-              onPressed: () {
-                if (context
-                        .read<AuthViewModel>()
-                        .getAuthResponse
-                        .data!
-                        .petsCount ==
-                    0) {
-                  context
-                      .read<PuppyViewModel>()
-                      .setRouteToPuppyFrom(Screens.shop.text);
-                  context.read<PuppyViewModel>().clearPuppyData();
-                  Navigator.pushNamed(context, puppyCreationRoute);
-                } else {
-                  navigateToMonthlyPlans(context: context);
-                }
-                /*   SendGridPref sendGrid = SendGridPref();
-                    sendGrid.sendEmail(emailSubject: 'Registration', emailDescription: 'Register Successfully');
-                    */
-              },
-              colored: true,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20).w,
+              child: customButton(
+                text: '<< Monthly Plan >>',
+                /* boldText: 'Tap Here',*/
+                onPressed: () {
+                  if (context
+                          .read<AuthViewModel>()
+                          .getAuthResponse
+                          .data!
+                          .petsCount ==
+                      0) {
+                    context
+                        .read<PuppyViewModel>()
+                        .setRouteToPuppyFrom(Screens.shop.text);
+                    context.read<PuppyViewModel>().clearPuppyData();
+                    Navigator.pushNamed(context, puppyCreationRoute);
+                  } else {
+                    navigateToMonthlyPlans(context: context);
+                  }
+                  /*   SendGridPref sendGrid = SendGridPref();
+                      sendGrid.sendEmail(emailSubject: 'Registration', emailDescription: 'Register Successfully');
+                      */
+                },
+                colored: true,
+              ),
             ),
           if (data != null)
-            Expanded(child: _buildCustomPlanData(context, plansViewModel)),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20).w,
+              child: _buildCustomPlanData(context, plansViewModel),
+            )
+          else
+            SizedBox(
+              height: 0.7.sw,
+            ),
+          SizedBox(
+            height: 40.h,
+          ),
+          if (kIsWeb) BrunosFooter(),
+        ],
+      ),
+    );
+  }
+
+  Padding _buildPageBar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20).w,
+      child: Row(
+        spacing: 10.w,
+        children: [
+          black24w500Centre(data: 'Shop'),
+          Spacer(),
+          SizedBox(
+            height: context.isBiggerThanMobile ? 40.h : 30.h,
+            width: context.isBiggerThanMobile ? 40.h : 30.h,
+            child: InkWell(
+              onTap: () {
+                if (context.isBiggerThanMobile) {
+                  log("BIGGER");
+                  showDialog(
+                    context: context,
+                    builder: (_) => Center(
+                      child: SizedBox(
+                        width: 0.6.sw,
+                        height: 0.7.sh,
+                        child: ProfileScreen(),
+                      ),
+                    ),
+                  );
+                } else {
+                  Navigator.pushNamed(context, profileRoute);
+                }
+              },
+              child: CircleAvatar(
+                backgroundColor: CustomColors.purpleColorTint,
+                radius: 20.w,
+                child: Center(
+                  child: Icon(
+                    Icons.person_outline,
+                    size: context.isBiggerThanMobile ? 20.sp : 15.sp,
+                    color: CustomColors.whiteColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          cartIconWidget()
         ],
       ),
     );
@@ -161,9 +184,9 @@ class ShopScreen extends StatelessWidget {
           SizedBox(
             height: 20.h,
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: grey14w400HeightCentre(data: 'OR'),
+          Center(child: grey14w400HeightCentre(data: 'OR')),
+          SizedBox(
+            height: 20.h,
           ),
           if (context.isBiggerThanMobile)
             _buildWebCategoryView(plansViewModel)
@@ -176,33 +199,29 @@ class ShopScreen extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Wrap(
-                      runSpacing: 20.w,
-                      spacing: 20.w,
-                      alignment: plansViewModel.getProductList.length == 1
-                          ? WrapAlignment.start
-                          : WrapAlignment.center,
-                      children: List.generate(
-                          plansViewModel.getProductList.length, (index) {
-                        return SizedBox(
-                          width: 157.w,
-                          child: productGridChipWidget(
-                            recipeData: plansViewModel.getProductList[index],
-                            showInformationIcon: false,
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 80.h,
-                    )
-                  ],
+            Column(
+              children: [
+                Wrap(
+                  runSpacing: 20.w,
+                  spacing: 20.w,
+                  alignment: plansViewModel.getProductList.length == 1
+                      ? WrapAlignment.start
+                      : WrapAlignment.center,
+                  children: List.generate(plansViewModel.getProductList.length,
+                      (index) {
+                    return SizedBox(
+                      width: 157.w,
+                      child: productGridChipWidget(
+                        recipeData: plansViewModel.getProductList[index],
+                        showInformationIcon: false,
+                      ),
+                    );
+                  }),
                 ),
-              ),
+                SizedBox(
+                  height: 80.h,
+                )
+              ],
             ),
           },
         ],
@@ -235,88 +254,80 @@ class ShopScreen extends StatelessWidget {
     );
   }
 
-  Expanded _buildWebCategoryView(PlansViewModel plansViewModel) {
+  Row _buildWebCategoryView(PlansViewModel plansViewModel) {
     final categories = plansViewModel.getRecipesListResponse.data!.categories!;
-    return Expanded(
-      child: Row(
-        spacing: 20.w,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
+    return Row(
+      spacing: 20.w,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            black18w500(data: 'Select Category'),
+            SizedBox(
+              height: 20.h,
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 430.w,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: CustomColors.greyColor,
+                  ),
+                  borderRadius: BorderRadiusGeometry.circular(15.r),
+                ),
+                padding: EdgeInsets.all(20.w),
+                child: Wrap(
+                  spacing: 10.w,
+                  runSpacing: 10.h,
+                  direction: Axis.horizontal,
+                  children: List.generate(categories.length, (index) {
+                    final data = categories[index];
+                    return customSquareButton(
+                      text: data.name!,
+                      onPressed: () {
+                        plansViewModel.setProductCategory(data.name!);
+                      },
+                      colored: plansViewModel.getProductCategory == data.name,
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              black18w500(data: 'Select Category'),
+              black18w500(data: 'Products'),
               SizedBox(
-                height: 20.h,
+                height: 10.h,
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: 430.w,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: CustomColors.greyColor,
-                      ),
-                      borderRadius: BorderRadiusGeometry.circular(15.r),
+              MasonryGridView.extent(
+                maxCrossAxisExtent: 157.w,
+                mainAxisSpacing: 10.w,
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisSpacing: 10.w,
+                itemCount: plansViewModel.getProductList.length,
+                padding: EdgeInsets.only(bottom: 80.h),
+                primary: true,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: 157.w,
+                    child: productGridChipWidget(
+                      recipeData: plansViewModel.getProductList[index],
+                      showInformationIcon: false,
                     ),
-                    padding: EdgeInsets.all(20.w),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Wrap(
-                        spacing: 10.w,
-                        runSpacing: 10.h,
-                        direction: Axis.horizontal,
-                        children: List.generate(categories.length, (index) {
-                          final data = categories[index];
-                          return customSquareButton(
-                            text: data.name!,
-                            onPressed: () {
-                              plansViewModel.setProductCategory(data.name!);
-                            },
-                            colored:
-                                plansViewModel.getProductCategory == data.name,
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                black18w500(data: 'Products'),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Expanded(
-                  child: MasonryGridView.extent(
-                    maxCrossAxisExtent: 157.w,
-                    mainAxisSpacing: 10.w,
-                    crossAxisSpacing: 10.w,
-                    itemCount: plansViewModel.getProductList.length,
-                    padding: EdgeInsets.only(bottom: 80.h),
-                    primary: true,
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                        width: 157.w,
-                        child: productGridChipWidget(
-                          recipeData: plansViewModel.getProductList[index],
-                          showInformationIcon: false,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

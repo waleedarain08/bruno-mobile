@@ -380,10 +380,12 @@ class AuthViewModel with ChangeNotifier {
     await Future.delayed(const Duration(seconds: 4), () {});
     if (kIsWeb) {
       final success = await callGuestUserRegisterApi();
+      splashNotifier.value = true;
       if (success) {
         return const BottomNavigationScreen();
       }
     }
+    splashNotifier.value = true;
     if (authToken == null) {
       return const IntroSlidesScreen();
     } else {

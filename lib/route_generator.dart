@@ -97,99 +97,175 @@ class RouteGenerator {
 
     switch (settings.name) {
       case splashRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(
+            builder: (_) => const SplashScreen(),
+            settings: const RouteSettings(name: splashRoute));
       case loginRoute:
-        return MaterialPageRoute(builder: (_) => const LoginScreen());
+        return MaterialPageRoute(
+            builder: (_) => const LoginScreen(),
+            settings: const RouteSettings(name: loginRoute));
       case registerUserRoute:
-        return MaterialPageRoute(builder: (_) => const RegisterUserScreen());
+        return MaterialPageRoute(
+            builder: (_) => const RegisterUserScreen(),
+            settings: const RouteSettings(name: registerUserRoute));
       case registerUserContinueRoute:
         return MaterialPageRoute(
-            builder: (_) => const RegisterUserContinueScreen());
+            builder: (_) => const RegisterUserContinueScreen(),
+            settings: const RouteSettings(name: registerUserContinueRoute));
       case otpRoute:
-        return MaterialPageRoute(builder: (_) => const OtpScreen());
+        return MaterialPageRoute(
+            builder: (_) => const OtpScreen(),
+            settings: const RouteSettings(name: otpRoute));
       case userVerifiedRoute:
-        return MaterialPageRoute(builder: (_) => const UserVerifiedScreen());
+        return MaterialPageRoute(
+            builder: (_) => const UserVerifiedScreen(),
+            settings: const RouteSettings(name: userVerifiedRoute));
       case pawPointsRoute:
-        return MaterialPageRoute(builder: (_) => const PawPointsScreen());
+        return MaterialPageRoute(
+            builder: (_) => const PawPointsScreen(),
+            settings: const RouteSettings(name: pawPointsRoute));
       case bottomNavigationRoute:
         return MaterialPageRoute(
-            builder: (_) => const BottomNavigationScreen());
+            builder: (_) => const BottomNavigationScreen(),
+            settings: const RouteSettings(name: bottomNavigationRoute));
       /* case shareAddressRoute:
         return MaterialPageRoute(builder: (_) => const AddressIntroScreen());*/
       case editProfileRoute:
-        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
+        return MaterialPageRoute(
+            builder: (_) => const EditProfileScreen(),
+            settings: const RouteSettings(name: editProfileRoute));
       case ordersRoute:
-        return MaterialPageRoute(builder: (_) => const OrdersScreen());
+        return MaterialPageRoute(
+            builder: (_) => const OrdersScreen(),
+            settings: const RouteSettings(name: ordersRoute));
       case puppyCreationRoute:
-        return MaterialPageRoute(builder: (_) => const PuppyCreationScreen());
+        return MaterialPageRoute(
+            builder: (_) => const PuppyCreationScreen(),
+            settings: const RouteSettings(name: puppyCreationRoute));
       case puppiesListRoute:
-        return MaterialPageRoute(builder: (_) => const PuppiesListScreen());
+        return MaterialPageRoute(
+            builder: (_) => const PuppiesListScreen(),
+            settings: const RouteSettings(name: puppiesListRoute));
       case puppyAdditionalRoute:
         return MaterialPageRoute(
-            builder: (_) => const PuppyCreationAdditionalScreen());
+            builder: (_) => const PuppyCreationAdditionalScreen(),
+            settings: const RouteSettings(name: puppyAdditionalRoute));
       case puppyConfirmationRoute:
         return MaterialPageRoute(
-            builder: (_) => const PuppyConfirmationScreen());
+            builder: (_) => const PuppyConfirmationScreen(),
+            settings: const RouteSettings(name: puppyConfirmationRoute));
       case choosePlanRoute:
-        return MaterialPageRoute(builder: (_) => const ChooseYourPlanScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ChooseYourPlanScreen(),
+            settings: const RouteSettings(name: choosePlanRoute));
       case transitionPlanRoute:
         return MaterialPageRoute(
-            builder: (_) => const TransitionalPlanScreen());
+            builder: (_) => const TransitionalPlanScreen(),
+            settings: const RouteSettings(name: transitionPlanRoute));
       case monthlyPlanRoute:
-        return MaterialPageRoute(builder: (_) => const MonthlyPlanScreen());
+        return MaterialPageRoute(
+            builder: (_) => const MonthlyPlanScreen(),
+            settings: const RouteSettings(name: monthlyPlanRoute));
       case feedingPlanRoute:
-        return MaterialPageRoute(builder: (_) => const FeedingPlanScreen());
+        return MaterialPageRoute(
+            builder: (_) => const FeedingPlanScreen(),
+            settings: const RouteSettings(name: feedingPlanRoute));
       case deliveryDatesRoute:
-        return MaterialPageRoute(builder: (_) => const DeliveryDatesScreen());
+        return MaterialPageRoute(
+            builder: (_) => const DeliveryDatesScreen(),
+            settings: const RouteSettings(name: deliveryDatesRoute));
       case checkOutRoute:
-        return MaterialPageRoute(builder: (_) => const CheckoutScreen());
+        return MaterialPageRoute(
+            builder: (_) => const CheckoutScreen(),
+            settings: const RouteSettings(name: checkOutRoute));
       case orderConfirmationRoute:
         return MaterialPageRoute(
-            builder: (_) => const OrderConfirmationScreen());
+            builder: (_) => const OrderConfirmationScreen(),
+            settings: const RouteSettings(name: orderConfirmationRoute));
       case oneTimePlanRoute:
-        return MaterialPageRoute(builder: (_) => const OneTimePlanScreen());
+        return MaterialPageRoute(
+            builder: (_) => const OneTimePlanScreen(),
+            settings: const RouteSettings(name: oneTimePlanRoute));
       case addressRoute:
-        return MaterialPageRoute(builder: (_) => const AddressScreen());
+        return MaterialPageRoute(
+            builder: (_) => const AddressScreen(),
+            settings: const RouteSettings(name: addressRoute));
       case faqRoute:
-        return MaterialPageRoute(builder: (_) => const FaqScreen());
+        return MaterialPageRoute(
+            builder: (_) => const FaqScreen(),
+            settings: const RouteSettings(name: faqRoute));
       case forgetPasswordRoute:
-        return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ForgetPasswordScreen(),
+            settings: const RouteSettings(name: forgetPasswordRoute));
       case resetPasswordRoute:
-        return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ResetPasswordScreen(),
+            settings: const RouteSettings(name: resetPasswordRoute));
       case resetPasswordSuccessRoute:
         return MaterialPageRoute(
-            builder: (_) => const ResetPasswordSuccessScreen());
+            builder: (_) => const ResetPasswordSuccessScreen(),
+            settings: const RouteSettings(name: resetPasswordSuccessRoute));
       case puppyDetailRoute:
-        return MaterialPageRoute(builder: (_) => const PuppyDetailScreen());
+        return MaterialPageRoute(
+            builder: (_) => const PuppyDetailScreen(),
+            settings: const RouteSettings(name: puppyDetailRoute));
       case addAddressRoute:
-        return MaterialPageRoute(builder: (_) => const AddAddressScreen());
+        return MaterialPageRoute(
+            builder: (_) => const AddAddressScreen(),
+            settings: const RouteSettings(name: addAddressRoute));
       case addressDetailRoute:
-        return MaterialPageRoute(builder: (_) => const AddressDetailScreen());
+        return MaterialPageRoute(
+            builder: (_) => const AddressDetailScreen(),
+            settings: const RouteSettings(name: addressDetailRoute));
       case addAddressDetailRoute:
         return MaterialPageRoute(
-            builder: (_) => const AddAddressDetailScreen());
+            builder: (_) => const AddAddressDetailScreen(),
+            settings: const RouteSettings(name: addAddressDetailRoute));
       case productDetailRoute:
-        return MaterialPageRoute(builder: (_) => const ProductDetailScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ProductDetailScreen(),
+            settings: const RouteSettings(name: productDetailRoute));
       case cartRoute:
-        return MaterialPageRoute(builder: (_) => const CartScreen());
+        return MaterialPageRoute(
+            builder: (_) => const CartScreen(),
+            settings: const RouteSettings(name: cartRoute));
       case blogsRoute:
-        return MaterialPageRoute(builder: (_) => const BlogsScreen());
+        return MaterialPageRoute(
+            builder: (_) => const BlogsScreen(),
+            settings: const RouteSettings(name: blogsRoute));
       case blogsDetailRoute:
-        return MaterialPageRoute(builder: (_) => const BlogsNewsDetailScreen());
+        return MaterialPageRoute(
+            builder: (_) => const BlogsNewsDetailScreen(),
+            settings: const RouteSettings(name: blogsDetailRoute));
       case helpRoute:
-        return MaterialPageRoute(builder: (_) => const HelpScreen());
+        return MaterialPageRoute(
+            builder: (_) => const HelpScreen(),
+            settings: const RouteSettings(name: helpRoute));
       case newsRoute:
-        return MaterialPageRoute(builder: (_) => const NewsScreen());
+        return MaterialPageRoute(
+            builder: (_) => const NewsScreen(),
+            settings: const RouteSettings(name: newsRoute));
       case orderDetailRoute:
-        return MaterialPageRoute(builder: (_) => const OrderDetailScreen());
+        return MaterialPageRoute(
+            builder: (_) => const OrderDetailScreen(),
+            settings: const RouteSettings(name: orderDetailRoute));
       case chooseCardRoute:
-        return MaterialPageRoute(builder: (_) => const CardListScreen());
+        return MaterialPageRoute(
+            builder: (_) => const CardListScreen(),
+            settings: const RouteSettings(name: chooseCardRoute));
       case addCardRoute:
-        return MaterialPageRoute(builder: (_) => const AddCardScreen());
+        return MaterialPageRoute(
+            builder: (_) => const AddCardScreen(),
+            settings: const RouteSettings(name: addCardRoute));
       case deleteAccountRoute:
-        return MaterialPageRoute(builder: (_) => const DeleteAccountScreen());
+        return MaterialPageRoute(
+            builder: (_) => const DeleteAccountScreen(),
+            settings: const RouteSettings(name: deleteAccountRoute));
       case feedbackRoute:
-        return MaterialPageRoute(builder: (_) => const FeedbackScreen());
+        return MaterialPageRoute(
+            builder: (_) => const FeedbackScreen(),
+            settings: const RouteSettings(name: feedbackRoute));
       case '/tasting_details':
       /*return MaterialPageRoute(
             builder: (_) => const TastingDetailsScreen(),
@@ -198,9 +274,12 @@ class RouteGenerator {
       /*return MaterialPageRoute(
             builder: (_) => WinesDetailScreen(
                   reviewButton: args,
-                ));*/
+                ),
+            settings: const RouteSettings(name: '/wines_details'));*/
       case profileRoute:
-        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+        return MaterialPageRoute(
+            builder: (_) => const ProfileScreen(),
+            settings: const RouteSettings(name: profileRoute));
       default:
         return _errorRoute();
     }

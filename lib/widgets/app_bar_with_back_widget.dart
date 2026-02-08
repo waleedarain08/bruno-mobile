@@ -25,7 +25,7 @@ class AppBarWithBackWidget extends StatelessWidget
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      toolbarHeight: context.isBiggerThanMobile ? 100.h : 60.h,
+      toolbarHeight: context.isBiggerThanMobile ? 80.h : 60.h,
       backgroundColor: context.isBiggerThanMobile
           ? Theme.of(context).scaffoldBackgroundColor
           : CustomColors.whiteColor,

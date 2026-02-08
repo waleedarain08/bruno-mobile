@@ -36,18 +36,15 @@ class PuppyCreationScreen extends StatelessWidget {
           ),
           body: Stack(
             children: [
-              if (context.isBiggerThanMobile)
-                _buildBody(context, puppyViewModel)
-              else
-                SingleChildScrollView(
-                  padding: const EdgeInsets.only(
-                    top: 40,
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                  ).w,
-                  child: _buildBody(context, puppyViewModel),
-                ),
+              SingleChildScrollView(
+                padding: const EdgeInsets.only(
+                  top: 40,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
+                ).w,
+                child: _buildBody(context, puppyViewModel),
+              ),
               BottomButton(
                 title: 'Next',
                 onTap: () {
@@ -73,63 +70,6 @@ class PuppyCreationScreen extends StatelessWidget {
       );
     });
   }
-
-  // Visibility _buildNextButton(
-  //   BuildContext context,
-  //   PuppyViewModel puppyViewModel,
-  // ) {
-  //   return Visibility(
-  //     visible: MediaQuery.of(context).viewInsets.bottom == 0,
-  //     child: Align(
-  //       alignment: context.isBiggerThanMobile
-  //           ? Alignment.bottomRight
-  //           : Alignment.bottomCenter,
-  //       child: Container(
-  //         width: context.isBiggerThanMobile ? 0.2.sw : null,
-  //         decoration: context.isBiggerThanMobile
-  //             ? null
-  //             : const BoxDecoration(
-  //                 color: CustomColors.whiteColor,
-  //                 borderRadius: BorderRadius.only(
-  //                   topLeft: Radius.circular(30.0),
-  //                   topRight: Radius.circular(30.0),
-  //                 ),
-  //                 boxShadow: [
-  //                   BoxShadow(
-  //                     offset: Offset(0, 0),
-  //                     blurRadius: 5,
-  //                     spreadRadius: 2,
-  //                     color: Colors.black12,
-  //                   ),
-  //                 ],
-  //               ),
-  //         child: Padding(
-  //           padding: const EdgeInsets.all(20).w,
-  //           child: customButton(
-  //             text: 'Next',
-  //             onPressed: () {
-  //               puppyViewModel.getBreedslist.clear();
-  //               if (puppyViewModel.puppyCreationValidation()) {
-  //                 puppyViewModel.callPuppyBreedsApi().then(
-  //                       (value) => {
-  //                         if (value)
-  //                           {
-  //                             Navigator.pushNamed(
-  //                               context,
-  //                               puppyAdditionalRoute,
-  //                             )
-  //                           }
-  //                       },
-  //                     );
-  //               }
-  //             },
-  //             colored: true,
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget _buildBody(
     BuildContext context,
@@ -175,17 +115,15 @@ class PuppyCreationScreen extends StatelessWidget {
             height: 30.h,
           ),
           if (context.isBiggerThanMobile)
-            Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildLeftSide(context, puppyViewModel)),
-                  VerticalDivider(
-                    width: 40.w,
-                  ),
-                  Expanded(child: _buildRightSide(context, puppyViewModel)),
-                ],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildLeftSide(context, puppyViewModel)),
+                VerticalDivider(
+                  width: 40.w,
+                ),
+                Expanded(child: _buildRightSide(context, puppyViewModel)),
+              ],
             )
           else ...{
             _buildLeftSide(context, puppyViewModel),
@@ -203,157 +141,152 @@ class PuppyCreationScreen extends StatelessWidget {
   }
 
   Widget _buildLeftSide(BuildContext context, PuppyViewModel puppyViewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          lightBlack14w400Centre(data: 'Pet Name'),
-          SizedBox(
-            height: 12.h,
-          ),
-          TextField(
-            controller: puppyViewModel.getPuppyNameController,
-            onChanged: (text) {},
-            keyboardType: TextInputType.name,
-            decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(20.0).w,
-                hintText: 'Entre Your Pet\'s Name'),
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          Visibility(
-              visible: puppyViewModel.getPuppyNameFieldError.isNotEmpty,
-              child: orange14w400(data: puppyViewModel.getPuppyNameFieldError)),
-          SizedBox(
-            height: 15.h,
-          ),
-          InkWell(
-            onTap: () {
-              imageTakingBottomSheetWidget();
-            },
-            child: Container(
-              width: double.infinity,
-              decoration: ShapeDecoration(
-                color: CustomColors.lightGreyColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        lightBlack14w400Centre(data: 'Pet Name'),
+        SizedBox(
+          height: 12.h,
+        ),
+        TextField(
+          controller: puppyViewModel.getPuppyNameController,
+          onChanged: (text) {},
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+              contentPadding: const EdgeInsets.all(20.0).w,
+              hintText: 'Entre Your Pet\'s Name'),
+        ),
+        SizedBox(
+          height: 5.h,
+        ),
+        Visibility(
+            visible: puppyViewModel.getPuppyNameFieldError.isNotEmpty,
+            child: orange14w400(data: puppyViewModel.getPuppyNameFieldError)),
+        SizedBox(
+          height: 15.h,
+        ),
+        InkWell(
+          onTap: () {
+            imageTakingBottomSheetWidget();
+          },
+          child: Container(
+            width: double.infinity,
+            decoration: ShapeDecoration(
+              color: CustomColors.lightGreyColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(20).w,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    puppyViewModel.getImageFile == null
-                        ? puppyViewModel.getPuppyImage.isNotEmpty
-                            ? circularNetworkImageWidget(
-                                image: puppyViewModel.getPuppyImage,
-                                size: 100.h)
-                            : SvgPicture.asset(
-                                cameraImage,
-                                height: 102.h,
-                              )
-                        : SizedBox(
-                            height: 100.h,
-                            width: 100.h,
-                            child: CircleAvatar(
-                              backgroundColor: CustomColors.greyColor,
-                              backgroundImage: Image.file(
-                                      File(puppyViewModel.getImageFile!.path))
-                                  .image,
-                            ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20).w,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  puppyViewModel.getImageFile == null
+                      ? puppyViewModel.getPuppyImage.isNotEmpty
+                          ? circularNetworkImageWidget(
+                              image: puppyViewModel.getPuppyImage, size: 100.h)
+                          : SvgPicture.asset(
+                              cameraImage,
+                              height: 102.h,
+                            )
+                      : SizedBox(
+                          height: 100.h,
+                          width: 100.h,
+                          child: CircleAvatar(
+                            backgroundColor: CustomColors.greyColor,
+                            backgroundImage: Image.file(
+                                    File(puppyViewModel.getImageFile!.path))
+                                .image,
                           ),
-                    SizedBox(
-                      height: 14.h,
-                    ),
-                    lightBlack14w400Centre(
-                        data: 'Click to select photo (Optional)'),
-                    lightBlack14w400Centre(
-                        data: '.png . jpeg. max 1 MB file size'),
-                  ],
-                ),
+                        ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  lightBlack14w400Centre(
+                      data: 'Click to select photo (Optional)'),
+                  lightBlack14w400Centre(
+                      data: '.png . jpeg. max 1 MB file size'),
+                ],
               ),
             ),
           ),
-          SizedBox(
-            height: 5.h,
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          SizedBox(
-              width: context.isBiggerThanMobile ? null : 307.w,
-              child: lightBlack14w400Centre(
-                  data:
-                      'Proud parent of multiple pups? We\'ve got you covered! You can easily add more pet profiles to your account once you have finished signing up.')),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 5.h,
+        ),
+        SizedBox(
+          height: 10.h,
+        ),
+        SizedBox(
+            width: context.isBiggerThanMobile ? null : 307.w,
+            child: lightBlack14w400Centre(
+                data:
+                    'Proud parent of multiple pups? We\'ve got you covered! You can easily add more pet profiles to your account once you have finished signing up.')),
+      ],
     );
   }
 
   Widget _buildRightSide(BuildContext context, PuppyViewModel puppyViewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          black18w500(
-              data:
-                  '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} is a?'),
-          SizedBox(
-            height: 16.h,
-          ),
-          if (context.isBiggerThanMobile)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                customSquareButton(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        black18w500(
+            data:
+                '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} is a?'),
+        SizedBox(
+          height: 16.h,
+        ),
+        if (context.isBiggerThanMobile)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              customSquareButton(
+                text: 'Boy',
+                onPressed: () {
+                  puppyViewModel.setPuppyGender(Puppy.boy.text);
+                },
+                colored: puppyViewModel.getPuppyGender == Puppy.boy.text,
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              customSquareButton(
+                text: 'Girl',
+                onPressed: () {
+                  puppyViewModel.setPuppyGender(Puppy.girl.text);
+                },
+                colored: puppyViewModel.getPuppyGender == Puppy.girl.text,
+              ),
+            ],
+          )
+        else
+          Row(
+            children: [
+              Expanded(
+                child: customSquareButton(
                   text: 'Boy',
                   onPressed: () {
                     puppyViewModel.setPuppyGender(Puppy.boy.text);
                   },
                   colored: puppyViewModel.getPuppyGender == Puppy.boy.text,
                 ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                customSquareButton(
+              ),
+              SizedBox(
+                width: 20.w,
+              ),
+              Expanded(
+                child: customSquareButton(
                   text: 'Girl',
                   onPressed: () {
                     puppyViewModel.setPuppyGender(Puppy.girl.text);
                   },
                   colored: puppyViewModel.getPuppyGender == Puppy.girl.text,
                 ),
-              ],
-            )
-          else
-            Row(
-              children: [
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Boy',
-                    onPressed: () {
-                      puppyViewModel.setPuppyGender(Puppy.boy.text);
-                    },
-                    colored: puppyViewModel.getPuppyGender == Puppy.boy.text,
-                  ),
-                ),
-                SizedBox(
-                  width: 20.w,
-                ),
-                Expanded(
-                  child: customSquareButton(
-                    text: 'Girl',
-                    onPressed: () {
-                      puppyViewModel.setPuppyGender(Puppy.girl.text);
-                    },
-                    colored: puppyViewModel.getPuppyGender == Puppy.girl.text,
-                  ),
-                )
-              ],
-            ),
-        ],
-      ),
+              )
+            ],
+          ),
+      ],
     );
   }
 }

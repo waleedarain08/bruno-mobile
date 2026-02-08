@@ -22,6 +22,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+import 'widgets/web_app_bar.dart';
+
+final splashNotifier = ValueNotifier(false);
+
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -127,8 +131,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return ScreenUtilInit(
-        designSize: getDesignSize(context, MediaQuery.orientationOf(context)),
+    return LayoutBuilder(
+      builder: (context, constraints) => ScreenUtilInit(
+        designSize: getDesignSize(
+          constraints,
+          MediaQuery.orientationOf(context),
+        ),
         //useInheritedMediaQuery: true,
         minTextAdapt: true,
         splitScreenMode: true,
@@ -268,15 +276,23 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
             builder: (context, child) => ResponsiveBreakpoints.builder(
-              child: FlutterEasyLoading(child: child!),
+              child: FlutterEasyLoading(
+                child: WebAppBar(child: child!),
+              ),
               breakpoints: [
                 const Breakpoint(start: 0, end: 450, name: MOBILE),
                 const Breakpoint(start: 451, end: 800, name: TABLET),
                 const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-                const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+                const Breakpoint(
+                  start: 1921,
+                  end: double.infinity,
+                  name: '4K',
+                ),
               ],
             ),
           );
-        });
+        },
+      ),
+    );
   }
 }

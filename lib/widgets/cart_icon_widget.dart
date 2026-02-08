@@ -24,8 +24,8 @@ Widget cartIconWidget() {
           style: const TextStyle(color: Colors.white),
         ),
         child: SizedBox(
-          height: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 30.h,
-          width: navigatorKey.currentContext!.isBiggerThanMobile ? 60.h : 30.h,
+          height: navigatorKey.currentContext!.isBiggerThanMobile ? 40.h : 30.h,
+          width: navigatorKey.currentContext!.isBiggerThanMobile ? 40.h : 30.h,
           child: InkWell(
             onTap: () {
               if (kDebugMode) {
