@@ -54,7 +54,8 @@ Widget purple10w500Centre({required String data}) {
 
 Widget black14w500({required String data, bool? centre}) {
   return Text(
-    textAlign: centre != null  && centre == true? TextAlign.center : TextAlign.left,
+    textAlign:
+        centre != null && centre == true ? TextAlign.center : TextAlign.left,
     data,
     style: TextStyle(
         fontFamily: 'CircularStd',
@@ -126,7 +127,8 @@ Widget brown32w500({required String data}) {
 Widget brown14w400Centre({required String data, bool? centre}) {
   return Text(
     data,
-    textAlign: centre != null  && centre == true? TextAlign.center : TextAlign.left,
+    textAlign:
+        centre != null && centre == true ? TextAlign.center : TextAlign.left,
     style: TextStyle(
         fontFamily: 'CircularStd',
         fontSize: 14.sp,
@@ -227,7 +229,8 @@ Widget black12w500Centre(
     overflow:
         overFlowText != null && overFlowText ? TextOverflow.ellipsis : null,
     data,
-    textAlign: centre != null && centre == true? TextAlign.center : TextAlign.left,
+    textAlign:
+        centre != null && centre == true ? TextAlign.center : TextAlign.left,
     style: TextStyle(
         height: lineSpacing == true ? 1.5 : null,
         fontFamily: 'CircularStd',

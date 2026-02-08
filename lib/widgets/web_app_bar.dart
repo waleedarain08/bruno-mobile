@@ -5,6 +5,7 @@ import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 import '../utils/custom_colors.dart';
@@ -14,6 +15,13 @@ import 'location_widget.dart';
 class WebAppBar extends StatelessWidget {
   final Widget child;
   const WebAppBar({super.key, required this.child});
+
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +59,23 @@ class WebAppBar extends StatelessWidget {
                       Row(
                         spacing: 30.w,
                         children: [
-                          Image.asset(
-                            height: 40.h,
-                            playstoreBanner,
+                          InkWell(
+                            onTap: () => _launchUrl(
+                              'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
+                            ),
+                            child: Image.asset(
+                              height: 40.h,
+                              playstoreBanner,
+                            ),
                           ),
-                          Image.asset(
-                            height: 40.h,
-                            appstoreBanner,
+                          InkWell(
+                            onTap: () => _launchUrl(
+                              'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
+                            ),
+                            child: Image.asset(
+                              height: 40.h,
+                              appstoreBanner,
+                            ),
                           ),
                         ],
                       ),

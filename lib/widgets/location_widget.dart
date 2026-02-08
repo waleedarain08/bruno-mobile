@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +17,13 @@ class LocationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final address = context
+            .watch<AuthViewModel>()
+            .getAuthResponse
+            .data!
+            .location
+            ?.address ??
+        'Tap to set Your Location';
     return InkWell(
       onTap: () {
         if (kIsWeb) {
@@ -35,30 +43,23 @@ class LocationWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              purple10w500Centre(data: 'LOCATION'),
-              const Icon(
+              if (context.isBiggerThanMobile)
+                yellow10w500(data: 'LOCATION')
+              else
+                purple10w500Centre(data: 'LOCATION'),
+              Icon(
                 Icons.keyboard_arrow_down,
-                color: CustomColors.purpleColor,
+                color: context.isBiggerThanMobile
+                    ? CustomColors.yellowColor
+                    : CustomColors.purpleColor,
               )
             ],
           ),
           SizedBox(
             width: 260.w,
-            child: lightBlack14w400Centre(
-                left: true,
-                data: context
-                            .watch<AuthViewModel>()
-                            .getAuthResponse
-                            .data!
-                            .location !=
-                        null
-                    ? context
-                        .watch<AuthViewModel>()
-                        .getAuthResponse
-                        .data!
-                        .location!
-                        .address!
-                    : 'Tap to set Your Location'),
+            child: context.isBiggerThanMobile
+                ? white12w400(data: address)
+                : lightBlack14w400Centre(data: address, left: true),
           )
         ],
       ),
