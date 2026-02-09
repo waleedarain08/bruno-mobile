@@ -19,6 +19,7 @@ import '../view_models/cart_view_model.dart';
 import '../view_models/plans_view_model.dart';
 import '../widgets/app_bar_with_back_widget.dart';
 import '../widgets/carousels/product_carousel_widget.dart';
+import '../widgets/custom_scaffold.dart';
 import '../widgets/dialogs/discription_dialog.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -109,7 +110,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     return Consumer<PlansViewModel>(builder: (context, plansViewModel, child) {
       return SafeArea(
-        child: Scaffold(
+        child: CustomScaffold(
           appBar: AppBarWithBackWidget(
             heading: toBeginningOfSentenceCase(
                 '${plansViewModel.getSelectedRecipe.name}'),

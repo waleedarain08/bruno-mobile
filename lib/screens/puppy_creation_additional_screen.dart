@@ -60,21 +60,18 @@ class _PuppyCreationAdditionalScreenState
           ),
           body: Stack(
             children: [
-              if (context.isBiggerThanMobile)
-                _buildBody(context, puppyViewModel)
-              else
-                KeyboardActions(
-                  config: _buildConfig(context),
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.only(
-                      top: 40,
-                      bottom: 20,
-                      left: 20,
-                      right: 20,
-                    ).w,
-                    child: _buildBody(context, puppyViewModel),
-                  ),
+              KeyboardActions(
+                config: _buildConfig(context),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.only(
+                    top: 40,
+                    bottom: 20,
+                    left: 20,
+                    right: 20,
+                  ).w,
+                  child: _buildBody(context, puppyViewModel),
                 ),
+              ),
               BottomButton(
                 title: 'Save',
                 onTap: () {
@@ -152,14 +149,13 @@ class _PuppyCreationAdditionalScreenState
             height: 30.h,
           ),
           if (context.isBiggerThanMobile)
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(child: _buildLeftSide(puppyViewModel)),
-                  VerticalDivider(width: 40.w),
-                  Expanded(child: _buildRightSide(puppyViewModel)),
-                ],
-              ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildLeftSide(puppyViewModel)),
+                VerticalDivider(width: 40.w),
+                Expanded(child: _buildRightSide(puppyViewModel)),
+              ],
             )
           else ...{
             _buildLeftSide(puppyViewModel),
@@ -177,556 +173,552 @@ class _PuppyCreationAdditionalScreenState
   }
 
   Widget _buildLeftSide(PuppyViewModel puppyViewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          black18w500(
-              data:
-                  'Which Breed type is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
-          SizedBox(
-            height: 8.h,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        black18w500(
+            data:
+                'Which Breed type is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
+        SizedBox(
+          height: 8.h,
+        ),
+        lightBlack14w400Centre(
+            data: 'Currently serving 300+ breeds and counting.'),
+        SizedBox(
+          height: 19.h,
+        ),
+        TextField(
+          controller: puppyViewModel.getPuppyBreedController,
+          scrollPadding: const EdgeInsets.only(bottom: 150).w,
+          onChanged: (value) {
+            puppyViewModel.searchBreeds(value);
+          },
+          keyboardType: TextInputType.name,
+          decoration: InputDecoration(
+            contentPadding: const EdgeInsets.all(20.0).w,
+            hintText: 'Enter Your Pet\'s Breed',
           ),
-          lightBlack14w400Centre(
-              data: 'Currently serving 300+ breeds and counting.'),
-          SizedBox(
-            height: 19.h,
-          ),
-          TextField(
-            controller: puppyViewModel.getPuppyBreedController,
-            scrollPadding: const EdgeInsets.only(bottom: 150).w,
-            onChanged: (value) {
-              puppyViewModel.searchBreeds(value);
-            },
-            keyboardType: TextInputType.name,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(20.0).w,
-              hintText: 'Enter Your Pet\'s Breed',
-            ),
-          ),
-          Visibility(
-            visible: puppyViewModel.getBreedslist.isNotEmpty,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10.0).w,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: CustomColors.orangeColor,
-                    width: 1.5,
-                  ),
-                  color: CustomColors.orangeColorTint,
-                  borderRadius: BorderRadius.circular(20),
+        ),
+        Visibility(
+          visible: puppyViewModel.getBreedslist.isNotEmpty,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10.0).w,
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: CustomColors.orangeColor,
+                  width: 1.5,
                 ),
-                height: 200.h,
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(5).w,
-                  itemCount: puppyViewModel.getBreedslist.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: ListTile(
-                        onTap: () {
-                          puppyViewModel.getPuppyBreedController.text =
-                              puppyViewModel.getBreedslist[index].name!;
-                          puppyViewModel.setBreedsList([]);
-                        },
-                        title: black12w500Centre(
-                            data: puppyViewModel.getBreedslist[index].name!),
-                      ),
-                    );
-                  },
-                ),
+                color: CustomColors.orangeColorTint,
+                borderRadius: BorderRadius.circular(20),
               ),
-            ),
-          ),
-          SizedBox(
-            height: 5.h,
-          ),
-          Visibility(
-            visible: puppyViewModel.getPuppyBreedFieldError.isNotEmpty,
-            child: orange14w400(
-              data: puppyViewModel.getPuppyBreedFieldError,
-            ),
-          ),
-          SizedBox(
-            height: 34.h,
-          ),
-          black18w500(
-              data:
-                  'How old is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet\'s'}?'),
-          SizedBox(
-            height: 20.h,
-          ),
-          Row(
-            mainAxisAlignment: context.isBiggerThanMobile
-                ? MainAxisAlignment.start
-                : MainAxisAlignment.spaceBetween,
-            spacing: context.isBiggerThanMobile ? 10.w : 0,
-            children: [
-              DropdownButtonHideUnderline(
-                child: DropdownButton2<int>(
-                  style: TextStyle(
-                    fontFamily: 'CircularStd',
-                    fontSize: 14.sp,
-                    color: CustomColors
-                        .blackColor, // <-- TextFormField input color
-                  ),
-                  buttonStyleData: ButtonStyleData(
-                    height: 40.h,
-                    width: 80.w,
-                    padding: const EdgeInsets.only(left: 14, right: 14).w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: Colors.black26,
-                      ),
-
-                      //  color: Colors.redAccent,
+              height: 200.h,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(5).w,
+                itemCount: puppyViewModel.getBreedslist.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
                     ),
-                    // elevation: 2,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 200,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      //  color: Colors.redAccent,
+                    child: ListTile(
+                      onTap: () {
+                        puppyViewModel.getPuppyBreedController.text =
+                            puppyViewModel.getBreedslist[index].name!;
+                        puppyViewModel.setBreedsList([]);
+                      },
+                      title: black12w500Centre(
+                          data: puppyViewModel.getBreedslist[index].name!),
                     ),
-                    offset: const Offset(0, -10),
-                    scrollbarTheme: ScrollbarThemeData(
-                      radius: const Radius.circular(40),
-                      thickness: WidgetStateProperty.all<double>(6),
-                      thumbVisibility: WidgetStateProperty.all<bool>(true),
-                    ),
-                  ),
-                  // borderRadius: BorderRadius.circular(15.0),
-                  /* hint: Text(
-                                  'Year',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Theme.of(context).hintColor,
-                                  ),
-                                ),*/
-                  value: puppyViewModel.getPuppyYear,
-                  onChanged: (newValue) {
-                    puppyViewModel.setPuppyYear(newValue!);
-                  },
-                  items: puppyViewModel.getListOfYear.map((int years) {
-                    return DropdownMenuItem<int>(
-                      value: years,
-                      child: Text(years.toString()),
-                    );
-                  }).toList(),
-                ),
-              ),
-              lightBlack14w400Centre(data: 'Years'),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2<int>(
-                  style: TextStyle(
-                    fontFamily: 'CircularStd',
-                    fontSize: 14.sp,
-                    color: CustomColors
-                        .blackColor, // <-- TextFormField input color
-                  ),
-                  buttonStyleData: ButtonStyleData(
-                    height: 40.h,
-                    width: 80.w,
-                    padding: const EdgeInsets.only(left: 14, right: 14).w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: Colors.black26,
-                      ),
-
-                      //  color: Colors.redAccent,
-                    ),
-                    // elevation: 2,
-                  ),
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 200,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      //  color: Colors.redAccent,
-                    ),
-                    offset: const Offset(0, -10),
-                    scrollbarTheme: ScrollbarThemeData(
-                      radius: const Radius.circular(40),
-                      thickness: WidgetStateProperty.all<double>(6),
-                      thumbVisibility: WidgetStateProperty.all<bool>(true),
-                    ),
-                  ),
-                  value: puppyViewModel.getPuppyMonths,
-                  onChanged: (newValue) {
-                    puppyViewModel.setPuppyMonths(newValue!);
-                  },
-                  items: puppyViewModel.getListOfMonths.map((int months) {
-                    return DropdownMenuItem<int>(
-                      value: months,
-                      child: Text(months.toString()),
-                    );
-                  }).toList(),
-                ),
-              ),
-              lightBlack14w400Centre(data: 'Months')
-            ],
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          Row(
-            children: [
-              Checkbox(
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  activeColor: CustomColors.orangeColor,
-                  value: puppyViewModel.getDogIsPuppy,
-                  onChanged: (value) {
-                    puppyViewModel.setDogIsPuppy(value!);
-                  }),
-              black18w500(
-                  data:
-                      '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} is still a puppy?'),
-              SizedBox(
-                width: 5.w,
-              ),
-              InkWell(
-                onTap: () {
-                  descriptionDialog(
-                    context: context,
-                    height: 300.h,
-                    title: 'Puppies',
-                    description:
-                        'Generally, small breeds are considered puppies until they are 10 months old, medium breeds until 12 months old and large breeds until 16 months old.',
                   );
                 },
-                child: const Icon(
-                  Icons.help,
-                  size: 16,
-                ),
               ),
-            ],
+            ),
           ),
-          SizedBox(
-            height: 24.h,
+        ),
+        SizedBox(
+          height: 5.h,
+        ),
+        Visibility(
+          visible: puppyViewModel.getPuppyBreedFieldError.isNotEmpty,
+          child: orange14w400(
+            data: puppyViewModel.getPuppyBreedFieldError,
           ),
-          black18w500(
-              data:
-                  'How Much does ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} Weigh?'),
-          SizedBox(
-            height: 9.h,
-          ),
-          lightBlack14w400Centre(data: 'Not Sure? Give us your best guess.'),
-          SizedBox(
-            height: 18.h,
-          ),
-          lightBlack14w400Centre(data: 'Current Weight'),
-          SizedBox(
-            height: 12.h,
-          ),
-          Row(
-            children: [
-              DropdownButtonHideUnderline(
-                child: DropdownButton2<int>(
-                  style: TextStyle(
-                    fontFamily: 'CircularStd',
-                    fontSize: 14.sp,
-                    color: CustomColors
-                        .blackColor, // <-- TextFormField input color
-                  ),
-                  buttonStyleData: ButtonStyleData(
-                    height: 40.h,
-                    width: 70.w,
-                    padding: const EdgeInsets.only(left: 10, right: 10).w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: Colors.black26,
-                      ),
+        ),
+        SizedBox(
+          height: 34.h,
+        ),
+        black18w500(
+            data:
+                'How old is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet\'s'}?'),
+        SizedBox(
+          height: 20.h,
+        ),
+        Row(
+          mainAxisAlignment: context.isBiggerThanMobile
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.spaceBetween,
+          spacing: context.isBiggerThanMobile ? 10.w : 0,
+          children: [
+            DropdownButtonHideUnderline(
+              child: DropdownButton2<int>(
+                style: TextStyle(
+                  fontFamily: 'CircularStd',
+                  fontSize: 14.sp,
+                  color:
+                      CustomColors.blackColor, // <-- TextFormField input color
+                ),
+                buttonStyleData: ButtonStyleData(
+                  height: 40.h,
+                  width: 80.w,
+                  padding: const EdgeInsets.only(left: 14, right: 14).w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.black26,
+                    ),
 
-                      //  color: Colors.redAccent,
-                    ),
-                    // elevation: 2,
+                    //  color: Colors.redAccent,
                   ),
-                  dropdownStyleData: DropdownStyleData(
-                    maxHeight: 200,
-                    width: 70.w,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14),
-                      //  color: Colors.redAccent,
-                    ),
-                    offset: const Offset(0, -10),
-                    scrollbarTheme: ScrollbarThemeData(
-                      radius: const Radius.circular(40),
-                      thickness: WidgetStateProperty.all<double>(6),
-                      thumbVisibility: WidgetStateProperty.all<bool>(true),
-                    ),
-                  ),
-                  // borderRadius: BorderRadius.circular(15.0),
-                  /* hint: Text(
-                                        'Year',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Theme.of(context).hintColor,
-                                        ),
-                                          ),*/
-                  value: puppyViewModel.getPuppyCurrentWeight,
-                  onChanged: (newValue) {
-                    puppyViewModel.setPuppyCurrentWeight(newValue!);
-                  },
-                  items: puppyViewModel.getListOfWeight.map((int weight) {
-                    return DropdownMenuItem<int>(
-                      value: weight,
-                      child: Text(weight.toString()),
-                    );
-                  }).toList(),
+                  // elevation: 2,
                 ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    //  color: Colors.redAccent,
+                  ),
+                  offset: const Offset(0, -10),
+                  scrollbarTheme: ScrollbarThemeData(
+                    radius: const Radius.circular(40),
+                    thickness: WidgetStateProperty.all<double>(6),
+                    thumbVisibility: WidgetStateProperty.all<bool>(true),
+                  ),
+                ),
+                // borderRadius: BorderRadius.circular(15.0),
+                /* hint: Text(
+                                'Year',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Theme.of(context).hintColor,
+                                ),
+                              ),*/
+                value: puppyViewModel.getPuppyYear,
+                onChanged: (newValue) {
+                  puppyViewModel.setPuppyYear(newValue!);
+                },
+                items: puppyViewModel.getListOfYear.map((int years) {
+                  return DropdownMenuItem<int>(
+                    value: years,
+                    child: Text(years.toString()),
+                  );
+                }).toList(),
               ),
-              SizedBox(
-                width: 10.w,
+            ),
+            lightBlack14w400Centre(data: 'Years'),
+            DropdownButtonHideUnderline(
+              child: DropdownButton2<int>(
+                style: TextStyle(
+                  fontFamily: 'CircularStd',
+                  fontSize: 14.sp,
+                  color:
+                      CustomColors.blackColor, // <-- TextFormField input color
+                ),
+                buttonStyleData: ButtonStyleData(
+                  height: 40.h,
+                  width: 80.w,
+                  padding: const EdgeInsets.only(left: 14, right: 14).w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.black26,
+                    ),
+
+                    //  color: Colors.redAccent,
+                  ),
+                  // elevation: 2,
+                ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    //  color: Colors.redAccent,
+                  ),
+                  offset: const Offset(0, -10),
+                  scrollbarTheme: ScrollbarThemeData(
+                    radius: const Radius.circular(40),
+                    thickness: WidgetStateProperty.all<double>(6),
+                    thumbVisibility: WidgetStateProperty.all<bool>(true),
+                  ),
+                ),
+                value: puppyViewModel.getPuppyMonths,
+                onChanged: (newValue) {
+                  puppyViewModel.setPuppyMonths(newValue!);
+                },
+                items: puppyViewModel.getListOfMonths.map((int months) {
+                  return DropdownMenuItem<int>(
+                    value: months,
+                    child: Text(months.toString()),
+                  );
+                }).toList(),
               ),
-              black14w500(data: 'KG')
-            ],
-          ),
-        ],
-      ),
+            ),
+            lightBlack14w400Centre(data: 'Months')
+          ],
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        Row(
+          children: [
+            Checkbox(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                activeColor: CustomColors.orangeColor,
+                value: puppyViewModel.getDogIsPuppy,
+                onChanged: (value) {
+                  puppyViewModel.setDogIsPuppy(value!);
+                }),
+            black18w500(
+                data:
+                    '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} is still a puppy?'),
+            SizedBox(
+              width: 5.w,
+            ),
+            InkWell(
+              onTap: () {
+                descriptionDialog(
+                  context: context,
+                  height: 300.h,
+                  title: 'Puppies',
+                  description:
+                      'Generally, small breeds are considered puppies until they are 10 months old, medium breeds until 12 months old and large breeds until 16 months old.',
+                );
+              },
+              child: const Icon(
+                Icons.help,
+                size: 16,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        black18w500(
+            data:
+                'How Much does ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'} Weigh?'),
+        SizedBox(
+          height: 9.h,
+        ),
+        lightBlack14w400Centre(data: 'Not Sure? Give us your best guess.'),
+        SizedBox(
+          height: 18.h,
+        ),
+        lightBlack14w400Centre(data: 'Current Weight'),
+        SizedBox(
+          height: 12.h,
+        ),
+        Row(
+          children: [
+            DropdownButtonHideUnderline(
+              child: DropdownButton2<int>(
+                style: TextStyle(
+                  fontFamily: 'CircularStd',
+                  fontSize: 14.sp,
+                  color:
+                      CustomColors.blackColor, // <-- TextFormField input color
+                ),
+                buttonStyleData: ButtonStyleData(
+                  height: 40.h,
+                  width: 70.w,
+                  padding: const EdgeInsets.only(left: 10, right: 10).w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.black26,
+                    ),
+
+                    //  color: Colors.redAccent,
+                  ),
+                  // elevation: 2,
+                ),
+                dropdownStyleData: DropdownStyleData(
+                  maxHeight: 200,
+                  width: 70.w,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    //  color: Colors.redAccent,
+                  ),
+                  offset: const Offset(0, -10),
+                  scrollbarTheme: ScrollbarThemeData(
+                    radius: const Radius.circular(40),
+                    thickness: WidgetStateProperty.all<double>(6),
+                    thumbVisibility: WidgetStateProperty.all<bool>(true),
+                  ),
+                ),
+                // borderRadius: BorderRadius.circular(15.0),
+                /* hint: Text(
+                                      'Year',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Theme.of(context).hintColor,
+                                      ),
+                                        ),*/
+                value: puppyViewModel.getPuppyCurrentWeight,
+                onChanged: (newValue) {
+                  puppyViewModel.setPuppyCurrentWeight(newValue!);
+                },
+                items: puppyViewModel.getListOfWeight.map((int weight) {
+                  return DropdownMenuItem<int>(
+                    value: weight,
+                    child: Text(weight.toString()),
+                  );
+                }).toList(),
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            black14w500(data: 'KG')
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildRightSide(PuppyViewModel puppyViewModel) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              black18w500(
-                  data:
-                      'Is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
-              SizedBox(
-                width: 5.w,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            black18w500(
+                data:
+                    'Is ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
+            SizedBox(
+              width: 5.w,
+            ),
+            InkWell(
+              onTap: () {
+                scalingImageDialog(
+                  context: context,
+                  height: 600.h,
+                  title: 'Check Weight',
+                );
+              },
+              child: const Icon(
+                Icons.help,
+                size: 16,
               ),
-              InkWell(
-                onTap: () {
-                  scalingImageDialog(
-                    context: context,
-                    height: 600.h,
-                    title: 'Check Weight',
-                  );
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        // if (context.isBiggerThanMobile)
+        //   Column(
+        //     crossAxisAlignment: CrossAxisAlignment.stretch,
+        //     spacing: 10.h,
+        //     children: [
+        //       customSquareButton(
+        //         text: 'Underweight',
+        //         onPressed: () {
+        //           puppyViewModel
+        //               .setPuppyActualWeight(PuppyWeight.underweight.value);
+        //         },
+        //         colored: puppyViewModel.getPuppyActualWeight ==
+        //             PuppyWeight.underweight.value,
+        //       ),
+        //       customSquareButton(
+        //         text: 'Ideal Weight',
+        //         onPressed: () {
+        //           puppyViewModel
+        //               .setPuppyActualWeight(PuppyWeight.idealWeight.value);
+        //         },
+        //         colored: puppyViewModel.getPuppyActualWeight ==
+        //             PuppyWeight.idealWeight.value,
+        //       ),
+        //       customSquareButton(
+        //         text: 'Overweight',
+        //         onPressed: () {
+        //           puppyViewModel
+        //               .setPuppyActualWeight(PuppyWeight.overweight.value);
+        //         },
+        //         colored: puppyViewModel.getPuppyActualWeight ==
+        //             PuppyWeight.overweight.value,
+        //       ),
+        //     ],
+        //   )
+        // else
+        Row(
+          children: [
+            Expanded(
+              child: customSquareButton(
+                text: 'Underweight',
+                onPressed: () {
+                  puppyViewModel
+                      .setPuppyActualWeight(PuppyWeight.underweight.value);
                 },
-                child: const Icon(
-                  Icons.help,
-                  size: 16,
-                ),
+                colored: puppyViewModel.getPuppyActualWeight ==
+                    PuppyWeight.underweight.value,
               ),
-            ],
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          // if (context.isBiggerThanMobile)
-          //   Column(
-          //     crossAxisAlignment: CrossAxisAlignment.stretch,
-          //     spacing: 10.h,
-          //     children: [
-          //       customSquareButton(
-          //         text: 'Underweight',
-          //         onPressed: () {
-          //           puppyViewModel
-          //               .setPuppyActualWeight(PuppyWeight.underweight.value);
-          //         },
-          //         colored: puppyViewModel.getPuppyActualWeight ==
-          //             PuppyWeight.underweight.value,
-          //       ),
-          //       customSquareButton(
-          //         text: 'Ideal Weight',
-          //         onPressed: () {
-          //           puppyViewModel
-          //               .setPuppyActualWeight(PuppyWeight.idealWeight.value);
-          //         },
-          //         colored: puppyViewModel.getPuppyActualWeight ==
-          //             PuppyWeight.idealWeight.value,
-          //       ),
-          //       customSquareButton(
-          //         text: 'Overweight',
-          //         onPressed: () {
-          //           puppyViewModel
-          //               .setPuppyActualWeight(PuppyWeight.overweight.value);
-          //         },
-          //         colored: puppyViewModel.getPuppyActualWeight ==
-          //             PuppyWeight.overweight.value,
-          //       ),
-          //     ],
-          //   )
-          // else
-          Row(
-            children: [
-              Expanded(
-                child: customSquareButton(
-                  text: 'Underweight',
-                  onPressed: () {
-                    puppyViewModel
-                        .setPuppyActualWeight(PuppyWeight.underweight.value);
-                  },
-                  colored: puppyViewModel.getPuppyActualWeight ==
-                      PuppyWeight.underweight.value,
-                ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Expanded(
+              child: customSquareButton(
+                text: 'Ideal Weight',
+                onPressed: () {
+                  puppyViewModel
+                      .setPuppyActualWeight(PuppyWeight.idealWeight.value);
+                },
+                colored: puppyViewModel.getPuppyActualWeight ==
+                    PuppyWeight.idealWeight.value,
               ),
-              SizedBox(
-                width: 10.w,
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Expanded(
+              child: customSquareButton(
+                text: 'Overweight',
+                onPressed: () {
+                  puppyViewModel
+                      .setPuppyActualWeight(PuppyWeight.overweight.value);
+                },
+                colored: puppyViewModel.getPuppyActualWeight ==
+                    PuppyWeight.overweight.value,
               ),
-              Expanded(
-                child: customSquareButton(
-                  text: 'Ideal Weight',
-                  onPressed: () {
-                    puppyViewModel
-                        .setPuppyActualWeight(PuppyWeight.idealWeight.value);
-                  },
-                  colored: puppyViewModel.getPuppyActualWeight ==
-                      PuppyWeight.idealWeight.value,
-                ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 24.h,
+        ),
+        black18w500(
+            data:
+                '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}\'s Activity Level?'),
+        SizedBox(
+          height: 24.h,
+        ),
+        // if (context.isBiggerThanMobile)
+        //   Column(
+        //     crossAxisAlignment: CrossAxisAlignment.stretch,
+        //     spacing: 10.h,
+        //     children: [
+        //       customSquareButton(
+        //         text: 'Less Active',
+        //         onPressed: () {
+        //           puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
+        //         },
+        //         colored: puppyViewModel.getPuppyActivityLevel ==
+        //             Puppy.lessActive.text,
+        //       ),
+        //       customSquareButton(
+        //         text: 'Active',
+        //         onPressed: () {
+        //           puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
+        //         },
+        //         colored:
+        //             puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
+        //       ),
+        //       customSquareButton(
+        //         text: 'Very Active',
+        //         onPressed: () {
+        //           puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
+        //         },
+        //         colored: puppyViewModel.getPuppyActivityLevel ==
+        //             Puppy.veryActive.text,
+        //       ),
+        //     ],
+        //   )
+        // else
+        Row(
+          children: [
+            Expanded(
+              child: customSquareButton(
+                text: 'Less Active',
+                onPressed: () {
+                  puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
+                },
+                colored: puppyViewModel.getPuppyActivityLevel ==
+                    Puppy.lessActive.text,
               ),
-              SizedBox(
-                width: 10.w,
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Expanded(
+              child: customSquareButton(
+                text: 'Active',
+                onPressed: () {
+                  puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
+                },
+                colored:
+                    puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
               ),
-              Expanded(
-                child: customSquareButton(
-                  text: 'Overweight',
-                  onPressed: () {
-                    puppyViewModel
-                        .setPuppyActualWeight(PuppyWeight.overweight.value);
-                  },
-                  colored: puppyViewModel.getPuppyActualWeight ==
-                      PuppyWeight.overweight.value,
-                ),
+            ),
+            SizedBox(
+              width: 10.w,
+            ),
+            Expanded(
+              child: customSquareButton(
+                text: 'Very Active',
+                onPressed: () {
+                  puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
+                },
+                colored: puppyViewModel.getPuppyActivityLevel ==
+                    Puppy.veryActive.text,
               ),
-            ],
-          ),
-          SizedBox(
-            height: 24.h,
-          ),
-          black18w500(
-              data:
-                  '${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}\'s Activity Level?'),
-          SizedBox(
-            height: 24.h,
-          ),
-          // if (context.isBiggerThanMobile)
-          //   Column(
-          //     crossAxisAlignment: CrossAxisAlignment.stretch,
-          //     spacing: 10.h,
-          //     children: [
-          //       customSquareButton(
-          //         text: 'Less Active',
-          //         onPressed: () {
-          //           puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
-          //         },
-          //         colored: puppyViewModel.getPuppyActivityLevel ==
-          //             Puppy.lessActive.text,
-          //       ),
-          //       customSquareButton(
-          //         text: 'Active',
-          //         onPressed: () {
-          //           puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
-          //         },
-          //         colored:
-          //             puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
-          //       ),
-          //       customSquareButton(
-          //         text: 'Very Active',
-          //         onPressed: () {
-          //           puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
-          //         },
-          //         colored: puppyViewModel.getPuppyActivityLevel ==
-          //             Puppy.veryActive.text,
-          //       ),
-          //     ],
-          //   )
-          // else
-          Row(
-            children: [
-              Expanded(
-                child: customSquareButton(
-                  text: 'Less Active',
-                  onPressed: () {
-                    puppyViewModel.setPuppyActivityLevel(Puppy.lessActive.text);
-                  },
-                  colored: puppyViewModel.getPuppyActivityLevel ==
-                      Puppy.lessActive.text,
-                ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Expanded(
-                child: customSquareButton(
-                  text: 'Active',
-                  onPressed: () {
-                    puppyViewModel.setPuppyActivityLevel(Puppy.active.text);
-                  },
-                  colored:
-                      puppyViewModel.getPuppyActivityLevel == Puppy.active.text,
-                ),
-              ),
-              SizedBox(
-                width: 10.w,
-              ),
-              Expanded(
-                child: customSquareButton(
-                  text: 'Very Active',
-                  onPressed: () {
-                    puppyViewModel.setPuppyActivityLevel(Puppy.veryActive.text);
-                  },
-                  colored: puppyViewModel.getPuppyActivityLevel ==
-                      Puppy.veryActive.text,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 25.h,
-          ),
-          black18w500(
-              data:
-                  'How many times a day do you feed ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
-          SizedBox(
-            height: 24.h,
-          ),
-          // if (context.isBiggerThanMobile)
-          //   Column(
-          //     crossAxisAlignment: CrossAxisAlignment.stretch,
-          //     spacing: 10.h,
-          //     children: List.generate(
-          //       5,
-          //       (index) => customSquareButton(
-          //         text: '${index + 1}',
-          //         onPressed: () {
-          //           puppyViewModel.setFeedingRoutine(index + 1);
-          //         },
-          //         colored: puppyViewModel.getFeedingRoutine == (index + 1),
-          //       ),
-          //     ),
-          //   )
-          // else
-          Row(
-            spacing: 10.w,
-            children: List.generate(
-              5,
-              (index) => Expanded(
-                child: customSquareButton(
-                  text: '${index + 1}',
-                  onPressed: () {
-                    puppyViewModel.setFeedingRoutine(index + 1);
-                  },
-                  colored: puppyViewModel.getFeedingRoutine == (index + 1),
-                ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 25.h,
+        ),
+        black18w500(
+            data:
+                'How many times a day do you feed ${puppyViewModel.getPuppyNameController.text.isNotEmpty ? puppyViewModel.getPuppyNameController.text : 'Pet'}?'),
+        SizedBox(
+          height: 24.h,
+        ),
+        // if (context.isBiggerThanMobile)
+        //   Column(
+        //     crossAxisAlignment: CrossAxisAlignment.stretch,
+        //     spacing: 10.h,
+        //     children: List.generate(
+        //       5,
+        //       (index) => customSquareButton(
+        //         text: '${index + 1}',
+        //         onPressed: () {
+        //           puppyViewModel.setFeedingRoutine(index + 1);
+        //         },
+        //         colored: puppyViewModel.getFeedingRoutine == (index + 1),
+        //       ),
+        //     ),
+        //   )
+        // else
+        Row(
+          spacing: 10.w,
+          children: List.generate(
+            5,
+            (index) => Expanded(
+              child: customSquareButton(
+                text: '${index + 1}',
+                onPressed: () {
+                  puppyViewModel.setFeedingRoutine(index + 1);
+                },
+                colored: puppyViewModel.getFeedingRoutine == (index + 1),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

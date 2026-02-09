@@ -22,10 +22,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-import 'widgets/web_app_bar.dart';
-
-final splashNotifier = ValueNotifier(false);
-
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
@@ -37,21 +33,13 @@ void configLoading() {
     ..backgroundColor = CustomColors.whiteColor
     ..indicatorColor = CustomColors.orangeColor
     ..textColor = CustomColors.orangeColor
-    ..maskColor = Colors.black.withOpacity(0.5)
+    ..maskColor = Colors.black.withValues(alpha: 0.5)
     ..maskType = EasyLoadingMaskType.custom
     ..userInteractions = false
     ..toastPosition = EasyLoadingToastPosition.bottom
     ..dismissOnTap = false;
   // ..customAnimation = CustomAnimation();
 }
-
-/*//TODO: LOCAL NOTIFICATION
-const AndroidNotificationChannel channel = AndroidNotificationChannel(
-  'high_importance_channel', // id
-  'High Importance Notifications', // title
-  */ /*'This channel is used for important notifications.',*/ /* // description
-  importance: Importance.max,
-);*/
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
@@ -276,9 +264,7 @@ class MyApp extends StatelessWidget {
             navigatorKey: navigatorKey,
             onGenerateRoute: RouteGenerator.generateRoute,
             builder: (context, child) => ResponsiveBreakpoints.builder(
-              child: FlutterEasyLoading(
-                child: WebAppBar(child: child!),
-              ),
+              child: FlutterEasyLoading(child: child!),
               breakpoints: [
                 const Breakpoint(start: 0, end: 450, name: MOBILE),
                 const Breakpoint(start: 451, end: 800, name: TABLET),

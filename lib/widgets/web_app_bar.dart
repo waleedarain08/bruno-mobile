@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../main.dart';
 import '../utils/custom_colors.dart';
 import '../utils/images.dart';
 import 'location_widget.dart';
@@ -25,69 +22,63 @@ class WebAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: splashNotifier,
-      builder: (_, show, __) {
-        log('VALUE: ${!context.isBiggerThanMobile} $show');
-        if (!context.isBiggerThanMobile || !show) {
-          return child;
-        }
-        return Column(
-          children: [
-            Container(
-              color: CustomColors.orangeColor,
-              padding: EdgeInsets.symmetric(
-                horizontal: 0.03.sw,
-                vertical: 10.h,
+    if (!context.isBiggerThanMobile) {
+      return child;
+    }
+    return Column(
+      children: [
+        Container(
+          color: CustomColors.orangeColor,
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.03.sw,
+            vertical: 10.h,
+          ),
+          child: Row(
+            spacing: 20.w,
+            children: [
+              SvgPicture.asset(
+                logoImage,
+                width: 75.w,
+                height: 75.w,
               ),
-              child: Row(
-                spacing: 20.w,
+              LocationWidget(),
+              Spacer(),
+              Column(
+                spacing: 10.h,
                 children: [
-                  SvgPicture.asset(
-                    logoImage,
-                    width: 75.w,
-                    height: 75.w,
+                  white12w400(
+                    data: 'Download our APP and serve up happiness!',
                   ),
-                  LocationWidget(),
-                  Spacer(),
-                  Column(
-                    spacing: 10.h,
+                  Row(
+                    spacing: 30.w,
                     children: [
-                      white12w400(
-                        data: 'Download our APP and serve up happiness!',
+                      InkWell(
+                        onTap: () => _launchUrl(
+                          'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
+                        ),
+                        child: Image.asset(
+                          height: 40.h,
+                          playstoreBanner,
+                        ),
                       ),
-                      Row(
-                        spacing: 30.w,
-                        children: [
-                          InkWell(
-                            onTap: () => _launchUrl(
-                              'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
-                            ),
-                            child: Image.asset(
-                              height: 40.h,
-                              playstoreBanner,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () => _launchUrl(
-                              'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
-                            ),
-                            child: Image.asset(
-                              height: 40.h,
-                              appstoreBanner,
-                            ),
-                          ),
-                        ],
+                      InkWell(
+                        onTap: () => _launchUrl(
+                          'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
+                        ),
+                        child: Image.asset(
+                          height: 40.h,
+                          appstoreBanner,
+                        ),
                       ),
                     ],
-                  )
+                  ),
                 ],
-              ),
-            ),
-            Expanded(child: child),
-          ],
-        );
-      },
+              )
+            ],
+          ),
+        ),
+        Expanded(child: child),
+      ],
     );
   }
 }

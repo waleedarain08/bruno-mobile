@@ -11,7 +11,7 @@ void monthlySuggestionDialog({required BuildContext context}) {
       context: context,
       barrierLabel: "Barrier",
       barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.5),
+      barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -29,15 +29,18 @@ void monthlySuggestionDialog({required BuildContext context}) {
               child: Column(
                 children: [
                   const Spacer(),
-
-                  black18w500(data: 'Want a more convenient and cost-effective option?'),
+                  black18w500(
+                      data:
+                          'Want a more convenient and cost-effective option?'),
                   const Spacer(),
-                  lightBlack14w400Centre(data: 'Why not try the monthly plan instead where you get to choose up to 3 recipes for a whole month at a discounted price. We prepare and portion the food for you for a hassle-free feeding experience'),
+                  lightBlack14w400Centre(
+                      data:
+                          'Why not try the monthly plan instead where you get to choose up to 3 recipes for a whole month at a discounted price. We prepare and portion the food for you for a hassle-free feeding experience'),
                   const Spacer(),
                   customButton(
                     height: 40,
                     colored: true,
-                      text: 'Take me to the monthly meal option',
+                    text: 'Take me to the monthly meal option',
                     onPressed: () async {
                       Navigator.pop(context);
                       Navigator.pop(context);

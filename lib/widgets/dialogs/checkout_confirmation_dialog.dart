@@ -10,13 +10,12 @@ import '../../utils/custom_font_style.dart';
 import '../../view_models/auth_view_model.dart';
 import '../../view_models/order_view_model.dart';
 
-void checkOutConfirmationDialog(
-    {required BuildContext context}) {
+void checkOutConfirmationDialog({required BuildContext context}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -30,62 +29,62 @@ void checkOutConfirmationDialog(
               borderRadius: BorderRadius.circular(40)),
           child: SizedBox.expand(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                black18w500(
+                  data: 'Confirmation',
+                ),
+                const Spacer(),
+                lightBlack14w400Centre(
+                  data: 'Do you really want to Place Order?',
+                ),
+                const Spacer(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Row(
                   children: [
-                    black18w500(
-                      data: 'Confirmation',
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: false,
+                        text: 'No',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                    const Spacer(),
-                    lightBlack14w400Centre(
-                      data: 'Do you really want to Place Order?',
-                    ),
-                    const Spacer(),
                     SizedBox(
-                      height: 10.h,
+                      width: 10.w,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: false,
-                            text: 'No',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: true,
-                            text: 'Yes',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              context.read<CartViewModel>().setOrderRequest();
-                              context
-                                  .read<OrderViewModel>()
-                                  .callCreateOrderApi()
-                                  .then((value) {
-                                if (value) {
-                                  context.read<CartViewModel>().clearCart();
-                                  context.read<AuthViewModel>().checkSplash();
-                                  Navigator.pushNamed(
-                                      context, orderConfirmationRoute);
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: true,
+                        text: 'Yes',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          context.read<CartViewModel>().setOrderRequest();
+                          context
+                              .read<OrderViewModel>()
+                              .callCreateOrderApi()
+                              .then((value) {
+                            if (value) {
+                              context.read<CartViewModel>().clearCart();
+                              context.read<AuthViewModel>().checkSplash();
+                              Navigator.pushNamed(
+                                  context, orderConfirmationRoute);
+                            }
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
-              )),
+              ],
+            ),
+          )),
         ),
       );
     },

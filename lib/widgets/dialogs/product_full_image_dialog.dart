@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-
 void productFullImageDialog(
-    {required BuildContext context, required String image }) {
+    {required BuildContext context, required String image}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
     pageBuilder: (_, __, ___) {
       return Center(
-        child: Image.network(image,
+        child: Image.network(
+          image,
           loadingBuilder: (BuildContext context, Widget child,
               ImageChunkEvent? loadingProgress) {
             if (loadingProgress == null) return child;
@@ -21,11 +21,12 @@ void productFullImageDialog(
               child: CircularProgressIndicator(
                 value: loadingProgress.expectedTotalBytes != null
                     ? loadingProgress.cumulativeBytesLoaded /
-                    loadingProgress.expectedTotalBytes!
+                        loadingProgress.expectedTotalBytes!
                     : null,
               ),
             );
-          },),
+          },
+        ),
       );
     },
     /*transitionBuilder: (_, anim, __, child) {

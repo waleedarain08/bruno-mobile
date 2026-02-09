@@ -15,7 +15,7 @@ void deletePetConfirmationDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */

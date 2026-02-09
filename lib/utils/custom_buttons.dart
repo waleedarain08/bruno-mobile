@@ -13,7 +13,7 @@ Widget customButton(
     double? height,
     String? boldText}) {
   return SizedBox(
-    height: height == null ? 50.h : height.h,
+    height: height == null ? 30.h : height.h,
     width: double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(

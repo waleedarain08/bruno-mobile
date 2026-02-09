@@ -14,7 +14,7 @@ void cancelOrderDialog({required BuildContext context}) {
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: false,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
     //transitionDuration: const Duration(milliseconds: 500),
     pageBuilder: (_, __, ___) {
       return Center(
@@ -33,44 +33,43 @@ void cancelOrderDialog({required BuildContext context}) {
                 borderRadius: BorderRadius.circular(40)),
             child: SizedBox.expand(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      black18w500(
-                        data: 'Cancel Order',
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      black14w500(
-                        data: 'Are u sure you want to cancel ?',
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      customButton(
-                        height: 40,
-                        colored: true,
-                        text: 'Yes',
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      customButton(
-                        height: 40,
-                        colored: false,
-                        text: 'Not Now',
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                      ),
-
-                    ],
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  black18w500(
+                    data: 'Cancel Order',
                   ),
-                )),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  black14w500(
+                    data: 'Are u sure you want to cancel ?',
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  customButton(
+                    height: 40,
+                    colored: true,
+                    text: 'Yes',
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  customButton(
+                    height: 40,
+                    colored: false,
+                    text: 'Not Now',
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+              ),
+            )),
           ),
         ),
       );

@@ -73,7 +73,7 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
                   color: (Theme.of(context).brightness == Brightness.dark
                           ? Colors.white
                           : CustomColors.orangeColor)
-                      .withOpacity(_current == entry.key ? 0.9 : 0.4)),
+                      .withValues(alpha: _current == entry.key ? 0.9 : 0.4)),
             ),
           );
         }).toList(),

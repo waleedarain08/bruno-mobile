@@ -7,13 +7,12 @@ import '../../utils/custom_colors.dart';
 import '../../utils/custom_font_style.dart';
 
 void scalingImageDialog(
-    {required BuildContext context,
-      required double height, required title}) {
+    {required BuildContext context, required double height, required title}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -27,27 +26,30 @@ void scalingImageDialog(
               borderRadius: BorderRadius.circular(40)),
           child: SizedBox.expand(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    black18w500(
-                      data: title,
-                    ),
-                    const Spacer(),
-                    Image.asset(weightTest,height: 400.h,),
-                    const Spacer(),
-                    customButton(
-                      height: 40,
-                      colored: true,
-                      text: 'Got it',
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                black18w500(
+                  data: title,
                 ),
-              )),
+                const Spacer(),
+                Image.asset(
+                  weightTest,
+                  height: 400.h,
+                ),
+                const Spacer(),
+                customButton(
+                  height: 40,
+                  colored: true,
+                  text: 'Got it',
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          )),
         ),
       );
     },

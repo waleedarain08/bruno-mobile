@@ -7,13 +7,14 @@ import '../../utils/custom_font_style.dart';
 
 void promoCodeValidationDialog(
     {required BuildContext context,
-      required String description,
-      required double height, required title}) {
+    required String description,
+    required double height,
+    required title}) {
   showGeneralDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -27,29 +28,29 @@ void promoCodeValidationDialog(
               borderRadius: BorderRadius.circular(40)),
           child: SizedBox.expand(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    black18w500(
-                      data: title,
-                    ),
-                    const Spacer(),
-                    lightBlack14w400Centre(
-                      data: description,
-                    ),
-                    const Spacer(),
-                    customButton(
-                      height: 40,
-                      colored: true,
-                      text: 'Got it',
-                      onPressed: () async {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                black18w500(
+                  data: title,
                 ),
-              )),
+                const Spacer(),
+                lightBlack14w400Centre(
+                  data: description,
+                ),
+                const Spacer(),
+                customButton(
+                  height: 40,
+                  colored: true,
+                  text: 'Got it',
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          )),
         ),
       );
     },

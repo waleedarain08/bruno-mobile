@@ -4,6 +4,7 @@ import 'package:brunos_kitchen/screens/profile_screen.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/brunos_footer.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
+import 'package:brunos_kitchen/widgets/custom_scaffold.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,15 @@ class ShopScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PlansViewModel>(builder: (context, plansViewModel, child) {
-      return SafeArea(
-        child: Scaffold(
-          body: _buildBody(context, plansViewModel),
-        ),
-      );
-    });
+    return Consumer<PlansViewModel>(
+      builder: (context, plansViewModel, child) {
+        return SafeArea(
+          child: CustomScaffold(
+            body: _buildBody(context, plansViewModel),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildBody(BuildContext context, PlansViewModel plansViewModel) {

@@ -1,17 +1,5 @@
 import 'dart:async';
 
-import 'package:brunos_kitchen/main.dart';
-import 'package:brunos_kitchen/models/address_model.dart';
-import 'package:brunos_kitchen/models/base_response_model.dart';
-import 'package:brunos_kitchen/models/card_model.dart';
-import 'package:brunos_kitchen/models/puppy_model.dart';
-import 'package:brunos_kitchen/models/requests/edit_user_profile_request.dart';
-import 'package:brunos_kitchen/models/requests/forgot_password_request.dart';
-import 'package:brunos_kitchen/models/requests/otp_send_request.dart';
-import 'package:brunos_kitchen/models/requests/user_register_request.dart';
-import 'package:brunos_kitchen/models/responses/banners_response.dart';
-import 'package:brunos_kitchen/services/auth_api_services.dart';
-import 'package:brunos_kitchen/view_models/cart_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -19,17 +7,29 @@ import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
+import '../main.dart';
+import '../models/address_model.dart';
+import '../models/base_response_model.dart';
+import '../models/card_model.dart';
+import '../models/puppy_model.dart';
+import '../models/requests/edit_user_profile_request.dart';
+import '../models/requests/forgot_password_request.dart';
+import '../models/requests/otp_send_request.dart';
 import '../models/requests/sign_in_request.dart';
 import '../models/requests/social_sign_in_request.dart';
+import '../models/requests/user_register_request.dart';
 import '../models/responses/auth_response.dart';
+import '../models/responses/banners_response.dart';
 import '../models/responses/otp_response.dart';
 import '../screens/bottom_navigation_screen.dart';
 import '../screens/intro_slides_screen.dart';
 import '../screens/logIn_screen.dart';
+import '../services/auth_api_services.dart';
 import '../utils/conversions.dart';
 import '../utils/enums.dart';
 import '../utils/send_grid_pref.dart';
 import '../utils/shared_pref .dart';
+import 'cart_view_model.dart';
 
 class AuthViewModel with ChangeNotifier {
   String _otpRouteFrom = Screens.registerUser.text;
@@ -172,7 +172,7 @@ class AuthViewModel with ChangeNotifier {
     // notifyListeners();
   }
 
-  setDeliveryCity() async {
+  void setDeliveryCity() async {
     final Placemark locationCity = await convertCoordinatesToPlaces(
         latitude: double.parse(_authResponse.data!.location!.coordinates![0]),
         longitude: double.parse(_authResponse.data!.location!.coordinates![1]));
@@ -380,12 +380,10 @@ class AuthViewModel with ChangeNotifier {
     await Future.delayed(const Duration(seconds: 4), () {});
     if (kIsWeb) {
       final success = await callGuestUserRegisterApi();
-      splashNotifier.value = true;
       if (success) {
         return const BottomNavigationScreen();
       }
     }
-    splashNotifier.value = true;
     if (authToken == null) {
       return const IntroSlidesScreen();
     } else {

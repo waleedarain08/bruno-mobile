@@ -14,7 +14,7 @@ void addressLabelDialog({required BuildContext context}) {
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: false,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
     //transitionDuration: const Duration(milliseconds: 500),
     pageBuilder: (_, __, ___) {
       return Center(
@@ -78,7 +78,6 @@ void addressLabelDialog({required BuildContext context}) {
                       Navigator.pop(context);
                     },
                   ),
-
                 ],
               ),
             )),

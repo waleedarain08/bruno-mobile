@@ -1,21 +1,22 @@
-import 'package:brunos_kitchen/route_generator.dart';
-import 'package:brunos_kitchen/utils/custom_font_style.dart';
-import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
+import '../route_generator.dart';
 import '../utils/custom_buttons.dart';
 import '../utils/custom_colors.dart';
+import '../utils/custom_font_style.dart';
 import '../utils/enums.dart';
 import '../utils/images.dart';
+import '../utils/widget_utils.dart';
 import '../view_models/puppy_view_model.dart';
 import '../widgets/app_bar_with_back_widget.dart';
 import '../widgets/bottomSheet/image_taking_bottom_sheet_widget.dart';
 import '../widgets/bottom_button.dart';
 import '../widgets/circular_network_image_widget.dart';
+import '../widgets/custom_scaffold.dart';
 
 class PuppyCreationScreen extends StatelessWidget {
   const PuppyCreationScreen({super.key});
@@ -24,8 +25,7 @@ class PuppyCreationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PuppyViewModel>(builder: (_, puppyViewModel, __) {
       return SafeArea(
-        child: Scaffold(
-          //resizeToAvoidBottomInset: false,
+        child: CustomScaffold(
           appBar: AppBarWithBackWidget(
             heading: context.read<PuppyViewModel>().getRouteToPuppyFrom ==
                     Screens.home.text
@@ -150,11 +150,13 @@ class PuppyCreationScreen extends StatelessWidget {
         ),
         TextField(
           controller: puppyViewModel.getPuppyNameController,
-          onChanged: (text) {},
           keyboardType: TextInputType.name,
           decoration: InputDecoration(
-              contentPadding: const EdgeInsets.all(20.0).w,
-              hintText: 'Entre Your Pet\'s Name'),
+            contentPadding: context.isBiggerThanMobile
+                ? const EdgeInsets.all(15).w
+                : const EdgeInsets.all(20.0).w,
+            hintText: 'Entre Your Pet\'s Name',
+          ),
         ),
         SizedBox(
           height: 5.h,

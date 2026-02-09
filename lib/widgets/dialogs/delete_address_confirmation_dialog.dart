@@ -15,7 +15,7 @@ void deleteAddressConfirmationDialog({required BuildContext context}) {
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -29,74 +29,84 @@ void deleteAddressConfirmationDialog({required BuildContext context}) {
               borderRadius: BorderRadius.circular(40)),
           child: SizedBox.expand(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                black18w500(
+                  data: 'Confirmation',
+                ),
+                const Spacer(),
+                lightBlack14w400Centre(
+                  data: 'Do you really want to Delete this Address?',
+                ),
+                const Spacer(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Row(
                   children: [
-                    black18w500(
-                      data: 'Confirmation',
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: false,
+                        text: 'No',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                    const Spacer(),
-                    lightBlack14w400Centre(
-                      data: 'Do you really want to Delete this Address?',
-                    ),
-                    const Spacer(),
                     SizedBox(
-                      height: 10.h,
+                      width: 10.w,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: false,
-                            text: 'No',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: true,
-                            text: 'Yes',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await context
-                                  .read<AddressViewModel>()
-                                  .callDeleteAddressApi()
-                                  .then((value) async => {
-                              if(value){
-                                  await navigatorKey.currentContext!
-                                      .read<AuthViewModel>()
-                                  .callSplash(showLoader: true),
-                              if(navigatorKey.currentContext!
-                                  .read<AuthViewModel>().getAuthResponse.data!.location == null){
-                                Navigator.of( navigatorKey.currentContext!)
-                                  ..pop()
-                                  ..pop(),
-                              navigatorKey.currentContext!
-                                  .read<AddressViewModel>()
-                                  .setIsAddressAdd(true),
-                              Navigator.pushNamed(navigatorKey.currentContext!, addAddressRoute)
-                              }
-                              else{
-                              Navigator.pop(navigatorKey.currentContext!),
-                              }
-                            }
-                            }
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: true,
+                        text: 'Yes',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await context
+                              .read<AddressViewModel>()
+                              .callDeleteAddressApi()
+                              .then((value) async => {
+                                    if (value)
+                                      {
+                                        await navigatorKey.currentContext!
+                                            .read<AuthViewModel>()
+                                            .callSplash(showLoader: true),
+                                        if (navigatorKey.currentContext!
+                                                .read<AuthViewModel>()
+                                                .getAuthResponse
+                                                .data!
+                                                .location ==
+                                            null)
+                                          {
+                                            Navigator.of(
+                                                navigatorKey.currentContext!)
+                                              ..pop()
+                                              ..pop(),
+                                            navigatorKey.currentContext!
+                                                .read<AddressViewModel>()
+                                                .setIsAddressAdd(true),
+                                            Navigator.pushNamed(
+                                                navigatorKey.currentContext!,
+                                                addAddressRoute)
+                                          }
+                                        else
+                                          {
+                                            Navigator.pop(
+                                                navigatorKey.currentContext!),
+                                          }
+                                      }
+                                  });
+                        },
+                      ),
                     ),
                   ],
                 ),
-              )),
+              ],
+            ),
+          )),
         ),
       );
     },

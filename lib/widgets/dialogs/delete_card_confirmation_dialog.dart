@@ -14,7 +14,7 @@ void deleteCardConfirmationDialog(
     context: context,
     barrierLabel: "Barrier",
     barrierDismissible: true,
-    barrierColor: Colors.black.withOpacity(0.5),
+    barrierColor: Colors.black.withValues(alpha: 0.5),
 /*
     transitionDuration: const Duration(milliseconds: 500),
 */
@@ -28,60 +28,62 @@ void deleteCardConfirmationDialog(
               borderRadius: BorderRadius.circular(40)),
           child: SizedBox.expand(
               child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: [
+                black18w500(
+                  data: 'Confirmation',
+                ),
+                const Spacer(),
+                lightBlack14w400Centre(
+                  data: 'Do you really want to Delete Card?',
+                ),
+                const Spacer(),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Row(
                   children: [
-                    black18w500(
-                      data: 'Confirmation',
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: false,
+                        text: 'No',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                    const Spacer(),
-                    lightBlack14w400Centre(
-                      data: 'Do you really want to Delete Card?',
-                    ),
-                    const Spacer(),
                     SizedBox(
-                      height: 10.h,
+                      width: 10.w,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: false,
-                            text: 'No',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.w,
-                        ),
-                        Expanded(
-                          child: customButton(
-                            height: 40,
-                            colored: true,
-                            text: 'Yes',
-                            onPressed: () async {
-                              Navigator.pop(context);
-                              await context
-                                  .read<CardViewModel>()
-                                  .callDeleteCard(cardId: cardId).then((value) => {
-                                if(value){
-                                  Navigator.pop(context),
-                                  context
-                                      .read<AuthViewModel>()
-                                      .callSplash(showLoader: true)
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                    Expanded(
+                      child: customButton(
+                        height: 40,
+                        colored: true,
+                        text: 'Yes',
+                        onPressed: () async {
+                          Navigator.pop(context);
+                          await context
+                              .read<CardViewModel>()
+                              .callDeleteCard(cardId: cardId)
+                              .then((value) => {
+                                    if (value)
+                                      {
+                                        Navigator.pop(context),
+                                        context
+                                            .read<AuthViewModel>()
+                                            .callSplash(showLoader: true)
+                                      }
+                                  });
+                        },
+                      ),
                     ),
                   ],
                 ),
-              )),
+              ],
+            ),
+          )),
         ),
       );
     },

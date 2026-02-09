@@ -25,7 +25,7 @@ class _CustomBottomBarWidgetState extends State<CustomBottomBarWidget> {
       decoration: BoxDecoration(
         color: const Color(0xFFFAFAFA),
 
-        // color: AppTheme.primaryColor.withOpacity(0.8),
+        // color: AppTheme.primaryColor.withValues(alpha:0.8),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30.0),
           topRight: Radius.circular(30.0),
@@ -33,7 +33,7 @@ class _CustomBottomBarWidgetState extends State<CustomBottomBarWidget> {
         boxShadow: [
           BoxShadow(
             blurRadius: 10,
-            color: Colors.black.withOpacity(0.25),
+            color: Colors.black.withValues(alpha: 0.25),
           ),
         ],
       ),

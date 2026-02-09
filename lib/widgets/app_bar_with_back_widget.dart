@@ -53,7 +53,7 @@ class AppBarWithBackWidget extends StatelessWidget
           child: Padding(
             padding: context.isBiggerThanMobile
                 ? EdgeInsets.zero
-                : EdgeInsets.only(right: showPuppy ? 10 : 20, top: 10),
+                : EdgeInsets.only(right: showPuppy ? 10.w : 20.w, top: 10.h),
             child: cartIconWidget(),
           ),
         ),
@@ -64,7 +64,7 @@ class AppBarWithBackWidget extends StatelessWidget
         Visibility(
           visible: showPuppy,
           child: Padding(
-            padding: const EdgeInsets.only(right: 10, top: 10),
+            padding: EdgeInsets.only(right: 10.w, top: 10.h),
             child: defaultPuppyIconWidget(),
           ),
         ),
@@ -75,7 +75,7 @@ class AppBarWithBackWidget extends StatelessWidget
   @override
   Size get preferredSize {
     return Size.fromHeight(
-      navigatorKey.currentContext!.isBiggerThanMobile ? 100.h : 60.h,
+      navigatorKey.currentContext!.isBiggerThanMobile ? 80.h : 60.h,
     );
   }
 }
