@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/screens/profile_screen.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/widgets/brunos_footer.dart';
@@ -309,7 +310,10 @@ class ShopScreen extends StatelessWidget {
                 height: 10.h,
               ),
               MasonryGridView.extent(
-                maxCrossAxisExtent: 157.w,
+                maxCrossAxisExtent:
+                    navigatorKey.currentContext!.isBiggerThanMobile
+                        ? 180.w
+                        : 157.w,
                 mainAxisSpacing: 10.w,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -319,7 +323,7 @@ class ShopScreen extends StatelessWidget {
                 primary: true,
                 itemBuilder: (context, index) {
                   return SizedBox(
-                    width: 157.w,
+                    width: context.isBiggerThanMobile ? 180.w : 157.w,
                     child: productGridChipWidget(
                       recipeData: plansViewModel.getProductList[index],
                       showInformationIcon: false,
