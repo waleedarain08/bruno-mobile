@@ -3,6 +3,7 @@ import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:brunos_kitchen/view_models/cart_view_model.dart';
 import 'package:brunos_kitchen/widgets/custom_scaffold.dart';
+import 'package:brunos_kitchen/widgets/web_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -51,245 +52,260 @@ class MonthlyPlanScreen extends StatelessWidget {
                     child: Center(
                       child: SizedBox(
                         width: context.isBiggerThanMobile
-                            ? MediaQuery.widthOf(context) * 0.5
+                            ? MediaQuery.widthOf(context) * 0.4
                             : null,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Center(
-                              child: black24w500Centre(
-                                data:
-                                    'Let’s Feed Your Beloved\n${context.watch<AuthViewModel>().getAuthResponse.data?.pet?.name ?? 'Pet'}',
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Center(
-                                child: lightBlack14w400Centre(
+                        child: WebCardWidget(
+                          child: Padding(
+                            padding: context.isBiggerThanMobile
+                                ? EdgeInsets.all(20.w)
+                                : EdgeInsets.zero,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: black24w500Centre(
                                     data:
-                                        'You can select any two delicious dishes up to 30 days (min is 15 days)')),
-                            SizedBox(
-                              height: 30.h,
-                            ),
-                            black18w500(data: 'Add Dishes'),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                plansViewModel.setMonthlyEmptyTileNumber(1);
-                                addMealDetailBottomSheetWidget();
-                              },
-                              child: Container(
-                                decoration: ShapeDecoration(
-                                  color: CustomColors.lightGreyColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
+                                        'Let’s Feed Your Beloved\n${context.watch<AuthViewModel>().getAuthResponse.data?.pet?.name ?? 'Pet'}',
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0, vertical: 22)
-                                      .w,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          decoration: ShapeDecoration(
-                                            color: CustomColors.whiteColor,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200),
-                                            ),
-                                          ),
-                                          child: plansViewModel
-                                                      .getMonthlyEmptyTile1 !=
-                                                  null
-                                              ? circularNetworkImageWidget(
-                                                  image: plansViewModel
-                                                      .getMonthlyEmptyTile1!
-                                                      .media![0],
-                                                  size: 52.h,
-                                                )
-                                              : SizedBox(
-                                                  height: 52.h,
-                                                  width: 52.h,
-                                                )),
-                                      SizedBox(
-                                        width: 10.w,
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Center(
+                                    child: lightBlack14w400Centre(
+                                        data:
+                                            'You can select any two delicious dishes up to 30 days (min is 15 days)')),
+                                SizedBox(
+                                  height: 30.h,
+                                ),
+                                black18w500(data: 'Add Dishes'),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    plansViewModel.setMonthlyEmptyTileNumber(1);
+                                    addMealDetailBottomSheetWidget();
+                                  },
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color: CustomColors.lightGreyColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      Column(
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0, vertical: 22)
+                                          .w,
+                                      child: Row(
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          plansViewModel.getMonthlyEmptyTile1 !=
-                                                  null
-                                              ? black16w500(
-                                                  data:
-                                                      'Days ${plansViewModel.getMonthlyEmptyTile1!.totalDays}')
-                                              : black16w500(
-                                                  data: 'Tap to Add Meal'),
-                                          plansViewModel.getMonthlyEmptyTile1 !=
-                                                  null
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                              top: 5.0)
-                                                          .w,
-                                                  child: black14w500(
-                                                      data: plansViewModel
+                                          Container(
+                                              decoration: ShapeDecoration(
+                                                color: CustomColors.whiteColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          200),
+                                                ),
+                                              ),
+                                              child: plansViewModel
+                                                          .getMonthlyEmptyTile1 !=
+                                                      null
+                                                  ? circularNetworkImageWidget(
+                                                      image: plansViewModel
                                                           .getMonthlyEmptyTile1!
-                                                          .name!),
-                                                )
-                                              : Container(),
+                                                          .media![0],
+                                                      size: 52.h,
+                                                    )
+                                                  : SizedBox(
+                                                      height: 52.h,
+                                                      width: 52.h,
+                                                    )),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              plansViewModel
+                                                          .getMonthlyEmptyTile1 !=
+                                                      null
+                                                  ? black16w500(
+                                                      data:
+                                                          'Days ${plansViewModel.getMonthlyEmptyTile1!.totalDays}')
+                                                  : black16w500(
+                                                      data: 'Tap to Add Meal'),
+                                              plansViewModel
+                                                          .getMonthlyEmptyTile1 !=
+                                                      null
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                                  top: 5.0)
+                                                              .w,
+                                                      child: black14w500(
+                                                          data: plansViewModel
+                                                              .getMonthlyEmptyTile1!
+                                                              .name!),
+                                                    )
+                                                  : Container(),
 
-                                          /*     Visibility(
-                                          visible: plansViewModel.getScheduleEmptyTile1 == null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 8.0),
-                                            child: black12w500Centre(data: 'tap to add meal'),
+                                              /*     Visibility(
+                                              visible: plansViewModel.getScheduleEmptyTile1 == null,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 8.0),
+                                                child: black12w500Centre(data: 'tap to add meal'),
+                                              ),
+                                            )*/
+                                            ],
                                           ),
-                                        )*/
-                                        ],
-                                      ),
-                                      const Spacer(),
-                                      Container(
-                                        decoration: const ShapeDecoration(
-                                          color: CustomColors.orangeColor,
-                                          shape: OvalBorder(),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10).w,
-                                          child: Icon(
-                                            plansViewModel
-                                                        .getMonthlyEmptyTile1 ==
-                                                    null
-                                                ? Icons.add
-                                                : Icons.edit_outlined,
-                                            size: 20,
-                                            color: CustomColors.whiteColor,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            InkWell(
-                              onTap: () {
-                                plansViewModel.setMonthlyEmptyTileNumber(2);
-                                addMealDetailBottomSheetWidget();
-                              },
-                              child: Container(
-                                decoration: ShapeDecoration(
-                                  color: CustomColors.lightGreyColor,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                          horizontal: 15.0, vertical: 22)
-                                      .w,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                          decoration: ShapeDecoration(
-                                            color: CustomColors.whiteColor,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(200),
+                                          const Spacer(),
+                                          Container(
+                                            decoration: const ShapeDecoration(
+                                              color: CustomColors.orangeColor,
+                                              shape: OvalBorder(),
                                             ),
-                                          ),
-                                          child: plansViewModel
-                                                      .getMonthlyEmptyTile2 !=
-                                                  null
-                                              ? circularNetworkImageWidget(
-                                                  image: plansViewModel
-                                                      .getMonthlyEmptyTile2!
-                                                      .media![0],
-                                                  size: 52.h,
-                                                )
-                                              : SizedBox(
-                                                  height: 52.h,
-                                                  width: 52.h,
-                                                )),
-                                      SizedBox(
-                                        width: 10.w,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          plansViewModel.getMonthlyEmptyTile2 !=
-                                                  null
-                                              ? black16w500(
-                                                  data:
-                                                      'Days ${plansViewModel.getMonthlyEmptyTile2!.totalDays}')
-                                              : black16w500(
-                                                  data: 'Tap to Add Meal'),
-                                          plansViewModel.getMonthlyEmptyTile2 !=
-                                                  null
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                              top: 5.0)
-                                                          .w,
-                                                  child: black14w500(
-                                                      data: plansViewModel
-                                                          .getMonthlyEmptyTile2!
-                                                          .name!),
-                                                )
-                                              : Container(),
-
-                                          /*     Visibility(
-                                          visible: plansViewModel.getScheduleEmptyTile1 == null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 8.0),
-                                            child: black12w500Centre(data: 'tap to add meal'),
-                                          ),
-                                        )*/
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10).w,
+                                              child: Icon(
+                                                plansViewModel
+                                                            .getMonthlyEmptyTile1 ==
+                                                        null
+                                                    ? Icons.add
+                                                    : Icons.edit_outlined,
+                                                size: 20,
+                                                color: CustomColors.whiteColor,
+                                              ),
+                                            ),
+                                          )
                                         ],
                                       ),
-                                      const Spacer(),
-                                      Container(
-                                        decoration: const ShapeDecoration(
-                                          color: CustomColors.orangeColor,
-                                          shape: OvalBorder(),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10).w,
-                                          child: Icon(
-                                            plansViewModel
-                                                        .getMonthlyEmptyTile2 ==
-                                                    null
-                                                ? Icons.add
-                                                : Icons.edit_outlined,
-                                            size: 20,
-                                            color: CustomColors.whiteColor,
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    plansViewModel.setMonthlyEmptyTileNumber(2);
+                                    addMealDetailBottomSheetWidget();
+                                  },
+                                  child: Container(
+                                    decoration: ShapeDecoration(
+                                      color: CustomColors.lightGreyColor,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                              horizontal: 15.0, vertical: 22)
+                                          .w,
+                                      child: Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                              decoration: ShapeDecoration(
+                                                color: CustomColors.whiteColor,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          200),
+                                                ),
+                                              ),
+                                              child: plansViewModel
+                                                          .getMonthlyEmptyTile2 !=
+                                                      null
+                                                  ? circularNetworkImageWidget(
+                                                      image: plansViewModel
+                                                          .getMonthlyEmptyTile2!
+                                                          .media![0],
+                                                      size: 52.h,
+                                                    )
+                                                  : SizedBox(
+                                                      height: 52.h,
+                                                      width: 52.h,
+                                                    )),
+                                          SizedBox(
+                                            width: 10.w,
+                                          ),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              plansViewModel
+                                                          .getMonthlyEmptyTile2 !=
+                                                      null
+                                                  ? black16w500(
+                                                      data:
+                                                          'Days ${plansViewModel.getMonthlyEmptyTile2!.totalDays}')
+                                                  : black16w500(
+                                                      data: 'Tap to Add Meal'),
+                                              plansViewModel
+                                                          .getMonthlyEmptyTile2 !=
+                                                      null
+                                                  ? Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                                  top: 5.0)
+                                                              .w,
+                                                      child: black14w500(
+                                                          data: plansViewModel
+                                                              .getMonthlyEmptyTile2!
+                                                              .name!),
+                                                    )
+                                                  : Container(),
+
+                                              /*     Visibility(
+                                              visible: plansViewModel.getScheduleEmptyTile1 == null,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 8.0),
+                                                child: black12w500Centre(data: 'tap to add meal'),
+                                              ),
+                                            )*/
+                                            ],
+                                          ),
+                                          const Spacer(),
+                                          Container(
+                                            decoration: const ShapeDecoration(
+                                              color: CustomColors.orangeColor,
+                                              shape: OvalBorder(),
+                                            ),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10).w,
+                                              child: Icon(
+                                                plansViewModel
+                                                            .getMonthlyEmptyTile2 ==
+                                                        null
+                                                    ? Icons.add
+                                                    : Icons.edit_outlined,
+                                                size: 20,
+                                                color: CustomColors.whiteColor,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                black14w400(
+                                    data:
+                                        'Please make sure your pup\'s profile is up to date in order to get the right nutritional amount for an ultimate feeding experience!'),
+                              ],
                             ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            black14w400(
-                                data:
-                                    'Please make sure your pup\'s profile is up to date in order to get the right nutritional amount for an ultimate feeding experience!'),
-                          ],
+                          ),
                         ),
                       ),
                     ),

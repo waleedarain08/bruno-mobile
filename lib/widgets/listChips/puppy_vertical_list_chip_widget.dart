@@ -27,13 +27,11 @@ Widget puppyVerticalListChipWidget({required PuppyModel puppyDetail}) {
                 .read<AuthViewModel>()
                 .setPuppy(puppyDetail);
             Navigator.pop(navigatorKey.currentContext!);
-          }
-          else{
+          } else {
             navigatorKey.currentContext!
                 .read<PuppyViewModel>()
                 .setPuppyDetail(puppyDetail);
-            Navigator.pushNamed(
-                navigatorKey.currentContext!, puppyDetailRoute);
+            Navigator.pushNamed(navigatorKey.currentContext!, puppyDetailRoute);
           }
         },
         child: Container(
@@ -44,7 +42,8 @@ Widget puppyVerticalListChipWidget({required PuppyModel puppyDetail}) {
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20).w,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

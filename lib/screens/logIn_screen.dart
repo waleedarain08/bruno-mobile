@@ -11,6 +11,7 @@ import '../utils/enums.dart';
 import '../utils/widget_utils.dart';
 import '../view_models/auth_view_model.dart';
 import '../widgets/user_form_fields_widget.dart';
+import '../widgets/web_card_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -23,105 +24,120 @@ class LoginScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Center(
               child: Container(
-                width: getIsBiggerThanMobile(context) ? 0.35.sw : null,
+                width: getIsBiggerThanMobile(context) ? 0.4.sw : null,
                 padding: const EdgeInsets.only(
                         top: 30, bottom: 20, left: 20, right: 20)
                     .w,
                 child: Stack(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        black24w500Centre(data: 'Welcome back Dog Lovers ❤️'),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        grey14w400(
-                            data: 'Please enter your login details below'),
-                        SizedBox(
-                          height: 32.h,
-                        ),
-                        const EmailFieldWidget(),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        const PasswordFieldWidget(
-                          hint: 'Password',
-                        ),
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                                onTap: () {
-                                  authViewModel.clearFieldsData();
-                                  context.read<AuthViewModel>().setOtpRouteFrom(
-                                      Screens.forgetPassword.text);
-                                  Navigator.pushNamed(
-                                      context, forgetPasswordRoute);
+                    WebCardWidget(
+                      child: Padding(
+                        padding: context.isBiggerThanMobile
+                            ? EdgeInsets.all(20.w)
+                            : EdgeInsets.zero,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            black24w500Centre(
+                                data: 'Welcome back Dog Lovers ❤️'),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            grey14w400(
+                                data: 'Please enter your login details below'),
+                            SizedBox(
+                              height: 32.h,
+                            ),
+                            const EmailFieldWidget(),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            const PasswordFieldWidget(
+                              hint: 'Password',
+                            ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                    onTap: () {
+                                      authViewModel.clearFieldsData();
+                                      context
+                                          .read<AuthViewModel>()
+                                          .setOtpRouteFrom(
+                                              Screens.forgetPassword.text);
+                                      Navigator.pushNamed(
+                                          context, forgetPasswordRoute);
+                                    },
+                                    child: orange14w400(
+                                        data: 'Forget Password ?'))),
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            customButton(
+                                text: 'Login',
+                                onPressed: () {
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
+                                  if (authViewModel.signInValidation()) {
+                                    authViewModel.callSignInApi().then(
+                                          (value) => {
+                                            if (value)
+                                              {
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                  context,
+                                                  bottomNavigationRoute,
+                                                  (route) => false,
+                                                )
+                                              }
+                                          },
+                                        );
+                                  }
                                 },
-                                child:
-                                    orange14w400(data: 'Forget Password ?'))),
-                        SizedBox(
-                          height: 40.h,
-                        ),
-                        customButton(
-                            text: 'Login',
-                            onPressed: () {
-                              FocusScopeNode currentFocus =
-                                  FocusScope.of(context);
+                                colored: true),
+                            /* SizedBox(
+                              height: 20.h,
+                            ),
+                            Center(child: grey14w400(data: 'Or continue with')),
+                            SizedBox(
+                              height: 20.h,
+                            ),
+                            googleFacebookButtonWidget(context: context),*/
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            customButton(
+                                text: 'Continue As Guest',
+                                onPressed: () {
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
 
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
-                              }
-                              if (authViewModel.signInValidation()) {
-                                authViewModel.callSignInApi().then((value) => {
-                                      if (value)
-                                        {
-                                          Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              bottomNavigationRoute,
-                                              (route) => false)
-                                        }
-                                    });
-                              }
-                            },
-                            colored: true),
-                        /* SizedBox(
-                          height: 20.h,
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
+                                  authViewModel
+                                      .callGuestUserRegisterApi()
+                                      .then((value) => {
+                                            if (value)
+                                              {
+                                                Navigator
+                                                    .pushNamedAndRemoveUntil(
+                                                        context,
+                                                        bottomNavigationRoute,
+                                                        (route) => false)
+                                              }
+                                          });
+                                },
+                                colored: false),
+                          ],
                         ),
-                        Center(child: grey14w400(data: 'Or continue with')),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        googleFacebookButtonWidget(context: context),*/
-                        SizedBox(
-                          height: 40.h,
-                        ),
-                        customButton(
-                            text: 'Continue As Guest',
-                            onPressed: () {
-                              FocusScopeNode currentFocus =
-                                  FocusScope.of(context);
-
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
-                              }
-                              authViewModel
-                                  .callGuestUserRegisterApi()
-                                  .then((value) => {
-                                        if (value)
-                                          {
-                                            Navigator.pushNamedAndRemoveUntil(
-                                                context,
-                                                bottomNavigationRoute,
-                                                (route) => false)
-                                          }
-                                      });
-                            },
-                            colored: false),
-                      ],
+                      ),
                     ),
                     SizedBox(
                       height: screenHeight - 50,

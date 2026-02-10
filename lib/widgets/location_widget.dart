@@ -1,5 +1,4 @@
 import 'package:brunos_kitchen/utils/widget_utils.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -20,15 +19,12 @@ class LocationWidget extends StatelessWidget {
     final address = context
             .watch<AuthViewModel>()
             .getAuthResponse
-            .data!
-            .location
+            .data
+            ?.location
             ?.address ??
         'Tap to set Your Location';
     return InkWell(
       onTap: () {
-        if (kIsWeb) {
-          return;
-        }
         context.read<AddressViewModel>().setRouteFromHome(true);
         if (context.read<AuthViewModel>().getAuthResponse.data!.location !=
             null) {
