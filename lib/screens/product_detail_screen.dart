@@ -149,12 +149,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           data: plansViewModel.getSelectedRecipe.description!,
                         ),
                       ),
-                      if (context.isBiggerThanMobile)
-                        BrunosFooter()
-                      else
-                        SizedBox(
-                          height: 120.h,
-                        ),
+                      BrunosFooter()
                     ],
                   ),
                 ),
@@ -197,9 +192,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ),
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 15)
-                            .w,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: context.isBiggerThanMobile ? 15 : 5,
+                    ).w,
                     child: Row(
                       children: [
                         Column(

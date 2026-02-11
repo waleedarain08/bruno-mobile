@@ -1,3 +1,5 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
+import 'package:brunos_kitchen/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +16,6 @@ class NewsScreen extends StatefulWidget {
 }
 
 class _NewsScreenState extends State<NewsScreen> {
-
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -25,23 +26,34 @@ class _NewsScreenState extends State<NewsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FaqsBlogsNewsViewModel>(builder: (_, faqsBlogsNewsViewModel, __) {
+    return Consumer<FaqsBlogsNewsViewModel>(
+        builder: (_, faqsBlogsNewsViewModel, __) {
       return SafeArea(
-        child: Scaffold(
+        child: CustomScaffold(
           appBar: const AppBarWithBackWidget(
               heading: 'News Updates', showPuppy: false, showCart: false),
           body: faqsBlogsNewsViewModel.getBlogsNewsResponse.data != null
-              ? ListView.builder(
-               // physics: NeverScrollableScrollPhysics(),
-               // shrinkWrap: true,
-                itemCount: faqsBlogsNewsViewModel.getBlogsNewsResponse.data!.length,
-                padding: const EdgeInsets.symmetric(vertical: 20).w,
-                itemBuilder: (BuildContext context, int index) {
-                  return newsBlogsVerticalListChipWidget(data: faqsBlogsNewsViewModel.getBlogsNewsResponse.data![index]);
-                },
-              )
+              ? Align(
+                  alignment: Alignment.topCenter,
+                  child: SizedBox(
+                    width: context.webSize,
+                    child: ListView.builder(
+                      // physics: NeverScrollableScrollPhysics(),
+                      // shrinkWrap: true,
+                      itemCount: faqsBlogsNewsViewModel
+                          .getBlogsNewsResponse.data!.length,
+                      padding: const EdgeInsets.symmetric(vertical: 20).w,
+                      itemBuilder: (BuildContext context, int index) {
+                        return newsBlogsVerticalListChipWidget(
+                            data: faqsBlogsNewsViewModel
+                                .getBlogsNewsResponse.data![index]);
+                      },
+                    ),
+                  ),
+                )
               : const SizedBox(),
         ),
       );
-    });  }
+    });
+  }
 }

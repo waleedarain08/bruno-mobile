@@ -1,5 +1,6 @@
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
 import 'package:brunos_kitchen/utils/widget_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +23,7 @@ class WebAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!context.isBiggerThanMobile) {
+    if (!kIsWeb) {
       return child;
     }
     return Column(
@@ -41,39 +42,39 @@ class WebAppBar extends StatelessWidget {
                 width: 75.w,
                 height: 75.w,
               ),
-              LocationWidget(),
-              Spacer(),
-              Column(
-                spacing: 10.h,
-                children: [
-                  white12w400(
-                    data: 'Download our APP and serve up happiness!',
-                  ),
-                  Row(
-                    spacing: 30.w,
-                    children: [
-                      InkWell(
-                        onTap: () => _launchUrl(
-                          'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
+              Expanded(child: LocationWidget()),
+              if (context.isBiggerThanMobile)
+                Column(
+                  spacing: 10.h,
+                  children: [
+                    white12w400(
+                      data: 'Download our APP and serve up happiness!',
+                    ),
+                    Row(
+                      spacing: 30.w,
+                      children: [
+                        InkWell(
+                          onTap: () => _launchUrl(
+                            'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
+                          ),
+                          child: Image.asset(
+                            height: 40.h,
+                            playstoreBanner,
+                          ),
                         ),
-                        child: Image.asset(
-                          height: 40.h,
-                          playstoreBanner,
+                        InkWell(
+                          onTap: () => _launchUrl(
+                            'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
+                          ),
+                          child: Image.asset(
+                            height: 40.h,
+                            appstoreBanner,
+                          ),
                         ),
-                      ),
-                      InkWell(
-                        onTap: () => _launchUrl(
-                          'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
-                        ),
-                        child: Image.asset(
-                          height: 40.h,
-                          appstoreBanner,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
+                      ],
+                    ),
+                  ],
+                )
             ],
           ),
         ),

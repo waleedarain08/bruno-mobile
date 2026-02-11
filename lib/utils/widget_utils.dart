@@ -27,4 +27,8 @@ extension ContextUtils on BuildContext {
         !ResponsiveBreakpoints.of(this).isTablet;
     return value;
   }
+
+  double? get webSize {
+    return isBiggerThanMobile ? MediaQuery.widthOf(this) * 0.4 : null;
+  }
 }

@@ -7,7 +7,6 @@ import 'package:brunos_kitchen/widgets/brunos_footer.dart';
 import 'package:brunos_kitchen/widgets/cart_icon_widget.dart';
 import 'package:brunos_kitchen/widgets/custom_scaffold.dart';
 import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -120,7 +119,7 @@ class ShopScreen extends StatelessWidget {
           SizedBox(
             height: 40.h,
           ),
-          if (kIsWeb) BrunosFooter(),
+          BrunosFooter(),
         ],
       ),
     );

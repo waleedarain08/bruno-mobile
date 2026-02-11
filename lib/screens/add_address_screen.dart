@@ -1,4 +1,4 @@
- import 'dart:async';
+import 'dart:async';
 
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 
 import '../utils/custom_buttons.dart';
 import '../utils/custom_colors.dart';
-import '../widgets/app_bar_with_back_widget.dart';
+import '../utils/widget_utils.dart';
 import '../view_models/address_view_model.dart';
+import '../widgets/app_bar_with_back_widget.dart';
 
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});
@@ -20,7 +21,6 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -37,8 +37,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       return SafeArea(
         child: Scaffold(
           appBar: AppBarWithBackWidget(
-            heading:
-                addressViewModel.getIsAddressAdd ? 'Add Address' : 'Edit Address', showPuppy: false, showCart: true,
+            heading: addressViewModel.getIsAddressAdd
+                ? 'Add Address'
+                : 'Edit Address',
+            showPuppy: false,
+            showCart: true,
           ),
           body: Stack(
             children: [
@@ -63,8 +66,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       initialCameraPosition: CameraPosition(
                           target: addressViewModel.getInitialCameraPosition),
                       markers:
-                    //  Set<Marker>.of(addressViewModel.getUserMarker),
-                      <Marker>{
+                          //  Set<Marker>.of(addressViewModel.getUserMarker),
+                          <Marker>{
                         Marker(
                           onDragEnd: ((newPosition) {
                             addressViewModel.updateMapCameraPosition(LatLng(
@@ -73,7 +76,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           draggable: true,
                           markerId: const MarkerId("1"),
                           position: addressViewModel.getInitialCameraPosition,
-                          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueOrange),
                           infoWindow: const InfoWindow(
                             title: '',
                           ),
@@ -92,8 +96,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 20).w,
+                        padding: const EdgeInsets.symmetric(horizontal: 20).w,
                         child: InkWell(
                           onTap: () {
                             /* addressViewModel
@@ -121,12 +124,12 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20).w,
                     child: TextField(
-                      controller:
-                          addressViewModel.getAddressController,
-                      decoration:  InputDecoration(
+                      controller: addressViewModel.getAddressController,
+                      decoration: InputDecoration(
                         fillColor: CustomColors.whiteColor,
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15).w,
+                                horizontal: 20, vertical: 15)
+                            .w,
                         // border: const OutlineInputBorder(),
                         hintText: 'Search Location',
                       ),
@@ -158,19 +161,18 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(10.0.r)),
                           side: const BorderSide(
-                            color:  CustomColors.yellowColor,
+                            color: CustomColors.yellowColor,
                             width: 1.0,
                           ),
                         ),
                         child: ListView.builder(
                             padding: EdgeInsets.symmetric(
-                                horizontal: 5.h, vertical: 5.h).w,
+                                    horizontal: 5.h, vertical: 5.h)
+                                .w,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount:
-                                addressViewModel.getPrediction.length,
-                            itemBuilder:
-                                (BuildContext context, int index) {
+                            itemCount: addressViewModel.getPrediction.length,
+                            itemBuilder: (BuildContext context, int index) {
                               return Card(
                                   elevation: 5,
                                   color: CustomColors.lightGreyColor,
@@ -179,23 +181,22 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(10.0.r)),
                                     side: const BorderSide(
-                                      color:  CustomColors.yellowColor,
+                                      color: CustomColors.yellowColor,
                                       width: 1.0,
                                     ),
                                   ),
                                   child: InkWell(
                                     onTap: () {
-                                      addressViewModel
-                                          .setSelectedPrediction(
-                                              addressViewModel
-                                                  .getPrediction[index]);
+                                      addressViewModel.setSelectedPrediction(
+                                          addressViewModel
+                                              .getPrediction[index]);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          horizontal: 10, vertical: 5).w,
+                                              horizontal: 10, vertical: 5)
+                                          .w,
                                       child: Text(addressViewModel
-                                          .getPrediction[index]
-                                          .description!),
+                                          .getPrediction[index].description!),
                                     ),
                                   ));
                             }),
@@ -205,57 +206,48 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   const Spacer(),
                   Visibility(
                     visible: MediaQuery.of(context).viewInsets.bottom == 0.0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20).w,
-                      child: customButton(
-                          text: addressViewModel.getIsAddressAdd
-                              ? 'Next'
-                              : 'Update',
-                          onPressed: () async {
-                            if (await addressViewModel.validateAddressDetail()) {
-                              if (addressViewModel.getIsAddressAdd) {
-                                Navigator.pushNamed(context, addAddressDetailRoute);
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        width: context.isBiggerThanMobile ? 0.2.sw : null,
+                        padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20)
+                            .w,
+                        child: customButton(
+                            text: addressViewModel.getIsAddressAdd
+                                ? 'Next'
+                                : 'Update',
+                            onPressed: () async {
+                              if (await addressViewModel
+                                  .validateAddressDetail()) {
+                                if (addressViewModel.getIsAddressAdd) {
+                                  Navigator.pushNamed(
+                                      context, addAddressDetailRoute);
+                                } /*else {
+                                await addressViewModel
+                                    .callUpdateAddressApi()
+                                    .then((value) {
+                                  if (value) {
+                                    Navigator.pop(context);
+                                    context
+                                        .read<AuthViewModel>()
+                                        .setSelectedAddress(addressViewModel
+                                            .getAllAddressResponse
+                                            .data!
+                                            .defaultAddress!);
+                                  }
+                                });
+                              }*/
                               } /*else {
-                              await addressViewModel
-                                  .callUpdateAddressApi()
-                                  .then((value) {
-                                if (value) {
-                                  Navigator.pop(context);
-                                  context
-                                      .read<AuthViewModel>()
-                                      .setSelectedAddress(addressViewModel
-                                          .getAllAddressResponse
-                                          .data!
-                                          .defaultAddress!);
-                                }
-                              });
-                            }*/
-                            } /*else {
-                              EasyLoading.showToast('Please Fill All Fields');
-                            }*/
-                          },
-                          colored: true),
-                    ),
-                  ),
-
-                  /*Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: TextField(
-                      controller:
-                          addressViewModel.getFullAddressController,
-                      maxLines: 1,
-                      decoration: const InputDecoration(
-                        fillColor: CustomColors.whiteColor,
-                        contentPadding: EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 15),
-                        // border: const OutlineInputBorder(),
-                        hintText: 'Enter Flat/House Number',
+                                EasyLoading.showToast('Please Fill All Fields');
+                              }*/
+                            },
+                            colored: true),
                       ),
                     ),
-                  ),*/
+                  ),
                 ],
               ),
-
             ],
           ),
         ),

@@ -8,12 +8,14 @@ import '../utils/widget_utils.dart';
 class BottomButton extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
-  const BottomButton({super.key, required this.title, required this.onTap});
+  final bool? visible;
+  const BottomButton(
+      {super.key, required this.title, required this.onTap, this.visible});
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: MediaQuery.of(context).viewInsets.bottom == 0,
+      visible: visible ?? MediaQuery.of(context).viewInsets.bottom == 0,
       child: Align(
         alignment: context.isBiggerThanMobile
             ? Alignment.bottomRight

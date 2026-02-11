@@ -1,4 +1,3 @@
-import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -39,23 +38,16 @@ class LocationWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              if (context.isBiggerThanMobile)
-                yellow10w500(data: 'LOCATION')
-              else
-                purple10w500Centre(data: 'LOCATION'),
+              yellow10w500(data: 'LOCATION'),
               Icon(
                 Icons.keyboard_arrow_down,
-                color: context.isBiggerThanMobile
-                    ? CustomColors.yellowColor
-                    : CustomColors.purpleColor,
+                color: CustomColors.yellowColor,
               )
             ],
           ),
           SizedBox(
             width: 260.w,
-            child: context.isBiggerThanMobile
-                ? white12w400(data: address)
-                : lightBlack14w400Centre(data: address, left: true),
+            child: white12w400(data: address),
           )
         ],
       ),

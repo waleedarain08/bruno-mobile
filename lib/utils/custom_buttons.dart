@@ -13,7 +13,7 @@ Widget customButton(
     double? height,
     String? boldText}) {
   return SizedBox(
-    height: height == null ? 30.h : height.h,
+    height: height == null ? 40.h : height.h,
     width: double.infinity,
     child: ElevatedButton(
       style: ElevatedButton.styleFrom(
@@ -70,7 +70,7 @@ Widget customSquareButton({
   required bool colored,
 }) {
   return SizedBox(
-    height: navigatorKey.currentContext!.isBiggerThanMobile ? 30.h : 40.h,
+    height: 40.h,
     width: navigatorKey.currentContext!.isBiggerThanMobile
         ? null
         : double.infinity,

@@ -1,5 +1,6 @@
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
+import 'package:brunos_kitchen/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,7 +34,7 @@ class _PuppiesListScreenState extends State<PuppiesListScreen> {
   Widget build(BuildContext context) {
     return Consumer<PuppyViewModel>(builder: (_, puppyViewModel, __) {
       return SafeArea(
-        child: Scaffold(
+        child: CustomScaffold(
           appBar: const AppBarWithBackWidget(
             heading: 'My Pets',
             showPuppy: false,

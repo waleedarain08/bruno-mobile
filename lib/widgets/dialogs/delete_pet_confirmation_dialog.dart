@@ -23,9 +23,7 @@ void deletePetConfirmationDialog(
       return Center(
         child: Container(
           height: 170.h,
-          width: context.isBiggerThanMobile
-              ? MediaQuery.widthOf(context) * 0.4
-              : null,
+          width: context.webSize,
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
               color: CustomColors.whiteColor,

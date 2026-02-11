@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,6 +19,9 @@ class BrunosFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (!kIsWeb) {
+      return SizedBox.shrink();
+    }
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
