@@ -10,6 +10,7 @@ class LabeledBottomButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback onTap;
   final bool isButtonVisible;
+  final double? height;
 
   const LabeledBottomButton({
     super.key,
@@ -17,6 +18,7 @@ class LabeledBottomButton extends StatelessWidget {
     required this.buttonText,
     required this.onTap,
     this.isButtonVisible = true,
+    this.height,
   });
 
   @override
@@ -27,6 +29,7 @@ class LabeledBottomButton extends StatelessWidget {
           : Alignment.bottomCenter,
       child: Container(
         width: double.infinity,
+        height: height,
         decoration: const BoxDecoration(
           color: CustomColors.whiteColor,
           borderRadius: BorderRadius.only(

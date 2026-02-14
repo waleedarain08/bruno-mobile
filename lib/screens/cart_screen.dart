@@ -66,7 +66,7 @@ class _CartScreenState extends State<CartScreen> with RouteAware {
     return Stack(
       children: [
         Align(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.topLeft,
           child: SizedBox(
             width: context.isBiggerThanMobile
                 ? MediaQuery.widthOf(context) * 0.5
@@ -89,85 +89,49 @@ class _CartScreenState extends State<CartScreen> with RouteAware {
             ),
           ),
         ),
-        // Align(
-        //   alignment: Alignment.bottomCenter,
-        //   child: Container(
-        //     width: doub,
-        //     decoration: const BoxDecoration(
-        //       color: CustomColors.whiteColor,
-        //       borderRadius: BorderRadius.only(
-        //         topLeft: Radius.circular(30.0),
-        //         topRight: Radius.circular(30.0),
-        //       ),
-        //       boxShadow: [
-        //         BoxShadow(
-        //           offset: Offset(0, 0),
-        //           blurRadius: 5,
-        //           spreadRadius: 2,
-        //           color: Colors.black12,
-        //         ),
-        //       ],
-        //     ),
-        //     child: Container(
-        //       width: context.isBiggerThanMobile ? 0.2.sw : null,
-        //       padding: const EdgeInsets.all(20).w,
-        //       child: Column(
-        //         mainAxisSize: MainAxisSize.min,
-        //         children: [
-        //           orange14w500(
-        //               data:
-        //                   'Total Amount: AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
-        //           SizedBox(
-        //             height: 10.h,
-        //           ),
-        //           customButton(
-        //               text: 'Next',
-        //               onPressed: () {
-        //                 if (!context
-        //                     .read<AuthViewModel>()
-        //                     .getAuthResponse
-        //                     .data!
-        //                     .isGuest!) {
-        //                   Navigator.pushNamed(context, checkOutRoute);
-        //                 } else {
-        //                   context.read<AuthViewModel>().clearFieldsData();
-        //                   context
-        //                       .read<AuthViewModel>()
-        //                       .setRegisterRouteFrom(Screens.cart.text);
-        //                   Navigator.pushNamed(context, registerUserRoute);
-        //                 }
-        //               },
-        //               colored: true),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // ),
-        LabeledBottomButton(
-          label: Column(
-            children: [
-              orange14w500(
-                  data:
-                      'Total Amount: AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
-              SizedBox(
-                height: 10.h,
-              ),
-            ],
-          ),
-          buttonText: 'Next',
-          onTap: () {
-            if (!context.read<AuthViewModel>().getAuthResponse.data!.isGuest!) {
-              Navigator.pushNamed(context, checkOutRoute);
-            } else {
-              context.read<AuthViewModel>().clearFieldsData();
-              context
-                  .read<AuthViewModel>()
-                  .setRegisterRouteFrom(Screens.cart.text);
-              Navigator.pushNamed(context, registerUserRoute);
-            }
-          },
-        ),
+        if (context.isBiggerThanMobile)
+          Positioned.fill(
+            left: 0.5.sw + 20.w,
+            right: 20.w,
+            top: 20.w,
+            bottom: 0,
+            child: _buildBottomButton(context, cartViewModel),
+          )
+        else
+          _buildBottomButton(context, cartViewModel),
       ],
+    );
+  }
+
+  LabeledBottomButton _buildBottomButton(
+    BuildContext context,
+    CartViewModel cartViewModel,
+  ) {
+    return LabeledBottomButton(
+      height: context.isBiggerThanMobile ? double.infinity : null,
+      label: Expanded(
+        flex: context.isBiggerThanMobile ? 1 : 0,
+        child: Column(
+          children: [
+            orange14w500(
+                data:
+                    'Total Amount: AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
+            SizedBox(
+              height: 10.h,
+            ),
+          ],
+        ),
+      ),
+      buttonText: 'Next',
+      onTap: () {
+        if (!context.read<AuthViewModel>().getAuthResponse.data!.isGuest!) {
+          Navigator.pushNamed(context, checkOutRoute);
+        } else {
+          context.read<AuthViewModel>().clearFieldsData();
+          context.read<AuthViewModel>().setRegisterRouteFrom(Screens.cart.text);
+          Navigator.pushNamed(context, registerUserRoute);
+        }
+      },
     );
   }
 }

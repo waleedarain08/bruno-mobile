@@ -53,10 +53,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           body: Stack(
             children: [
               WebSizedBox(
+                width: context.isBiggerThanMobile ? 0.5.sw : null,
+                alignment:
+                    context.isBiggerThanMobile ? Alignment.centerLeft : null,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                          left: 20.0, right: 20, top: 20, bottom: 300)
-                      .w,
+                    left: 20.0,
+                    right: 20,
+                    top: 20,
+                    bottom: 300,
+                  ).w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -704,225 +710,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   ),
                 ),
               ),
-              LabeledBottomButton(
-                isButtonVisible: MediaQuery.of(context).viewInsets.bottom == 0,
-                label: _buildButtonLabel(cartViewModel),
-                buttonText: 'Place Order',
-                onTap: () {
-                  if (context
-                          .read<AuthViewModel>()
-                          .getAuthResponse
-                          .data!
-                          .card ==
-                      null) {
-                    descriptionDialog(
-                        context: context,
-                        description: 'Kindly Select Payment Method',
-                        height: 200.h,
-                        title: 'Alert');
-                  } else if (context
-                          .read<AuthViewModel>()
-                          .getAuthResponse
-                          .data!
-                          .location ==
-                      null) {
-                    descriptionDialog(
-                        context: context,
-                        description: 'Kindly Select Location',
-                        height: 150.h,
-                        title: 'Alert');
-                  } else {
-                    checkOutConfirmationDialog(context: context);
-                  }
-                },
-              ),
-              // Visibility(
-              //   visible: MediaQuery.of(context).viewInsets.bottom == 0,
-              //   child: Align(
-              //     alignment: Alignment.bottomCenter,
-              //     child: Container(
-              //       decoration: const BoxDecoration(
-              //         color: CustomColors.whiteColor,
-              //         borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(30.0),
-              //           topRight: Radius.circular(30.0),
-              //         ),
-              //         boxShadow: [
-              //           BoxShadow(
-              //             offset: Offset(0, 0),
-              //             blurRadius: 5,
-              //             spreadRadius: 2,
-              //             color: Colors.black12,
-              //           ),
-              //         ],
-              //       ),
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(20).w,
-              //         child: Column(
-              //           mainAxisSize: MainAxisSize.min,
-              //           children: [
-              //             /* Row(
-              //               children: [
-              //                 lightBlack14w400Centre(
-              //                     data: 'Points Rewarded Amount'),
-              //                 const Spacer(),
-              //                 black16w500(data: '5')
-              //               ],
-              //             ),*/
-              //
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'Order Total'),
-              //                 SizedBox(
-              //                   width: 2.w,
-              //                 ),
-              //                 lightBlack14w400Centre(
-              //                     data:
-              //                         'AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
-              //               ],
-              //             ),
-              //             if (cartViewModel.getPawSelectedPoints != 0)
-              //               Padding(
-              //                 padding: const EdgeInsets.only(top: 16).w,
-              //                 child: Row(
-              //                   children: [
-              //                     lightBlack14w400Centre(
-              //                         data: 'Loyalty Points Discount'),
-              //                     const Spacer(),
-              //                     orange14w500(
-              //                         data:
-              //                             'AED -${cartViewModel.getPawPointDiscount.toStringAsFixed(2)}')
-              //                   ],
-              //                 ),
-              //               ),
-              //             if (cartViewModel.getPromoCodeDiscount != 0)
-              //               Padding(
-              //                 padding: const EdgeInsets.only(top: 16).w,
-              //                 child: Row(
-              //                   children: [
-              //                     lightBlack14w400Centre(
-              //                         data:
-              //                             'Promo Code Discount${cartViewModel.getPromoCodeResponse.data!.type == 'percentage' ? ' (${cartViewModel.getPromoCodeResponse.data!.discount} %)' : ''}'),
-              //                     const Spacer(),
-              //                     orange14w500(
-              //                         data:
-              //                             'AED -${cartViewModel.getPromoCodeDiscount.toStringAsFixed(2)}')
-              //                   ],
-              //                 ),
-              //               ),
-              //             SizedBox(
-              //               height: 20.h,
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'Subtotal'),
-              //                 SizedBox(
-              //                   width: 2.w,
-              //                 ),
-              //                 lightBlack14w400Centre(
-              //                     data:
-              //                         'AED ${cartViewModel.getSubTotal.toStringAsFixed(2)}'),
-              //               ],
-              //             ),
-              //             SizedBox(
-              //               height: 20.h,
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'Delivery Fee'),
-              //                 SizedBox(
-              //                   width: 2.w,
-              //                 ),
-              //                 lightBlack14w400Centre(
-              //                     data:
-              //                         'AED ${cartViewModel.getDeliveryFee.toStringAsFixed(2)} '),
-              //               ],
-              //             ),
-              //             SizedBox(
-              //               height: 20.h,
-              //             ),
-              //             Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'VAT'),
-              //                 SizedBox(
-              //                   width: 2.w,
-              //                 ),
-              //                 lightBlack14w400Centre(
-              //                     data:
-              //                         'AED ${cartViewModel.getVat.toStringAsFixed(2)} '),
-              //               ],
-              //             ),
-              //             SizedBox(
-              //               height: 20.h,
-              //             ),
-              //             /* Row(
-              //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'VAT (5%)'),
-              //                 SizedBox(
-              //                   width: 2.w,
-              //                 ),
-              //                 lightBlack14w400Centre(
-              //                     data:
-              //                     'AED ${cartViewModel.getVatValue.toStringAsFixed(2)}'),
-              //               ],
-              //             ),
-              //             SizedBox(
-              //               height: 20.h,
-              //             ),*/
-              //             Row(
-              //               children: [
-              //                 lightBlack14w400Centre(data: 'Total'),
-              //                 const Spacer(),
-              //                 black16w500(
-              //                     data:
-              //                         'AED ${cartViewModel.getCheckOutTotal.toStringAsFixed(2)}')
-              //               ],
-              //             ),
-              //             SizedBox(
-              //               height: 30.h,
-              //             ),
-              //             customButton(
-              //                 text: 'Place Order',
-              //                 onPressed: () {
-              //                   if (context
-              //                           .read<AuthViewModel>()
-              //                           .getAuthResponse
-              //                           .data!
-              //                           .card ==
-              //                       null) {
-              //                     descriptionDialog(
-              //                         context: context,
-              //                         description:
-              //                             'Kindly Select Payment Method',
-              //                         height: 200.h,
-              //                         title: 'Alert');
-              //                   } else if (context
-              //                           .read<AuthViewModel>()
-              //                           .getAuthResponse
-              //                           .data!
-              //                           .location ==
-              //                       null) {
-              //                     descriptionDialog(
-              //                         context: context,
-              //                         description: 'Kindly Select Location',
-              //                         height: 150.h,
-              //                         title: 'Alert');
-              //                   } else {
-              //                     checkOutConfirmationDialog(context: context);
-              //                   }
-              //                 },
-              //                 colored: true),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              if (context.isBiggerThanMobile)
+                Positioned.fill(
+                  left: 0.5.sw + 20.w,
+                  right: 20.w,
+                  top: 20.w,
+                  bottom: 0,
+                  child: _buildBottomButton(context, cartViewModel),
+                )
+              else
+                _buildBottomButton(context, cartViewModel)
             ],
           ),
         ),
@@ -930,8 +727,45 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     });
   }
 
+  LabeledBottomButton _buildBottomButton(
+    BuildContext context,
+    CartViewModel cartViewModel,
+  ) {
+    return LabeledBottomButton(
+      height: context.isBiggerThanMobile ? double.infinity : null,
+      isButtonVisible: MediaQuery.of(context).viewInsets.bottom == 0,
+      label: context.isBiggerThanMobile
+          ? Expanded(child: _buildButtonLabel(cartViewModel))
+          : _buildButtonLabel(cartViewModel),
+      buttonText: 'Place Order',
+      onTap: () {
+        if (context.read<AuthViewModel>().getAuthResponse.data!.card == null) {
+          descriptionDialog(
+              context: context,
+              description: 'Kindly Select Payment Method',
+              height: 200.h,
+              title: 'Alert');
+        } else if (context
+                .read<AuthViewModel>()
+                .getAuthResponse
+                .data!
+                .location ==
+            null) {
+          descriptionDialog(
+              context: context,
+              description: 'Kindly Select Location',
+              height: 150.h,
+              title: 'Alert');
+        } else {
+          checkOutConfirmationDialog(context: context);
+        }
+      },
+    );
+  }
+
   Column _buildButtonLabel(CartViewModel cartViewModel) {
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -947,7 +781,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
         if (cartViewModel.getPawSelectedPoints != 0)
           Padding(
-            padding: const EdgeInsets.only(top: 16).w,
+            padding:
+                EdgeInsets.only(top: context.isBiggerThanMobile ? 5 : 16).w,
             child: Row(
               children: [
                 lightBlack14w400Centre(data: 'Loyalty Points Discount'),
@@ -960,7 +795,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ),
         if (cartViewModel.getPromoCodeDiscount != 0)
           Padding(
-            padding: const EdgeInsets.only(top: 16).w,
+            padding:
+                EdgeInsets.only(top: context.isBiggerThanMobile ? 5 : 16).w,
             child: Row(
               children: [
                 lightBlack14w400Centre(
@@ -974,7 +810,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             ),
           ),
         SizedBox(
-          height: 20.h,
+          height: context.isBiggerThanMobile ? 5.h : 20.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -988,7 +824,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
         SizedBox(
-          height: 20.h,
+          height: context.isBiggerThanMobile ? 5.h : 20.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1003,7 +839,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
         SizedBox(
-          height: 20.h,
+          height: context.isBiggerThanMobile ? 5.h : 20.h,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1017,23 +853,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           ],
         ),
         SizedBox(
-          height: 20.h,
+          height: context.isBiggerThanMobile ? 5.h : 20.h,
         ),
-        /* Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            lightBlack14w400Centre(data: 'VAT (5%)'),
-                            SizedBox(
-                              width: 2.w,
-                            ),
-                            lightBlack14w400Centre(
-                                data:
-                                'AED ${cartViewModel.getVatValue.toStringAsFixed(2)}'),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),*/
         Row(
           children: [
             lightBlack14w400Centre(data: 'Total'),
