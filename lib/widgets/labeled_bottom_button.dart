@@ -30,12 +30,16 @@ class LabeledBottomButton extends StatelessWidget {
       child: Container(
         width: double.infinity,
         height: height,
-        decoration: const BoxDecoration(
+        margin:
+            height?.isInfinite ?? false ? EdgeInsets.only(bottom: 10.w) : null,
+        decoration: BoxDecoration(
           color: CustomColors.whiteColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-          ),
+          borderRadius: height?.isInfinite ?? false
+              ? BorderRadius.circular(30)
+              : BorderRadius.only(
+                  topLeft: Radius.circular(30.0),
+                  topRight: Radius.circular(30.0),
+                ),
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 0),

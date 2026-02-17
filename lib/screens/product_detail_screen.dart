@@ -225,7 +225,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   Widget _buildWebDetails(PlansViewModel plansViewModel) {
     return SizedBox(
-      height: 0.6.sh,
+      height: 0.85.sh,
       child: ValueListenableBuilder(
         valueListenable: _selectedImageNotifier,
         builder: (_, selectedIndex, child) {

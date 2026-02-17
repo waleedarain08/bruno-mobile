@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/models/base_response_model.dart';
@@ -7,11 +8,10 @@ import 'package:brunos_kitchen/models/requests/address_radius_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_google_maps_webservices/places.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:google_api_headers/google_api_headers.dart';
-import 'package:location/location.dart' as locator;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_webservice/places.dart';
+import 'package:location/location.dart' as locator;
 import 'package:provider/provider.dart';
 
 import '../models/address_model.dart';
@@ -31,10 +31,13 @@ class AddressViewModel with ChangeNotifier {
   final TextEditingController _streetController = TextEditingController();
   final TextEditingController _areaController = TextEditingController();
   final TextEditingController _floorController = TextEditingController();
-  final TextEditingController _flatHouseNumberController = TextEditingController();
-  final TextEditingController _deliveryInstructionController = TextEditingController();
+  final TextEditingController _flatHouseNumberController =
+      TextEditingController();
+  final TextEditingController _deliveryInstructionController =
+      TextEditingController();
   final TextEditingController _contactNameController = TextEditingController();
-  final TextEditingController _contactNumberController =TextEditingController();
+  final TextEditingController _contactNumberController =
+      TextEditingController();
   GoogleMapsPlaces? _googleMapsPlaces;
   LatLng _initialCameraPosition = const LatLng(20.5937, 78.9629);
   Timer? _debounce;
@@ -57,22 +60,29 @@ class AddressViewModel with ChangeNotifier {
   bool _routeFromHome = true;
 
   TextEditingController get getContactNameController => _contactNameController;
-  TextEditingController get getContactNumberController => _contactNumberController;
+  TextEditingController get getContactNumberController =>
+      _contactNumberController;
   TextEditingController get getStreetController => _streetController;
   TextEditingController get getAreaController => _areaController;
   TextEditingController get getFloorController => _floorController;
-  TextEditingController get getFlatHouseNumberController => _flatHouseNumberController;
-  TextEditingController get getDeliveryInstructionController => _deliveryInstructionController;
-
-
+  TextEditingController get getFlatHouseNumberController =>
+      _flatHouseNumberController;
+  TextEditingController get getDeliveryInstructionController =>
+      _deliveryInstructionController;
 
   void setUserNameNumber() {
-    _contactNumberController.text = navigatorKey.currentContext!.read<AuthViewModel>().getAuthResponse.data!.phoneNumber!;
-    _contactNameController.text = navigatorKey.currentContext!.read<AuthViewModel>().getAuthResponse.data!.fullName!;
+    _contactNumberController.text = navigatorKey.currentContext!
+        .read<AuthViewModel>()
+        .getAuthResponse
+        .data!
+        .phoneNumber!;
+    _contactNameController.text = navigatorKey.currentContext!
+        .read<AuthViewModel>()
+        .getAuthResponse
+        .data!
+        .fullName!;
     notifyListeners();
   }
-
-
 
   Timer? get getDebounce => _debounce;
 
@@ -140,7 +150,7 @@ class AddressViewModel with ChangeNotifier {
     //  _fullAddressController.text = _editAddress.flatHouseNumber!;
     _addressController.text = _editAddress.address!;
     _selectedLabel = _editAddress.label!;
-    _isDefault = _editAddress.isDefault?? true;
+    _isDefault = _editAddress.isDefault ?? true;
     notifyListeners();
   }
 
@@ -280,18 +290,18 @@ class AddressViewModel with ChangeNotifier {
     _addressController.text =
     ' ${locationData.name},${locationData.subLocality},${locationData.locality},${locationData.country}';*/
     await getMapMovement();
-   // notifyListeners();
+    // notifyListeners();
   }
 
-  Future <void> getMapMovement ()async  {
-    Placemark locationData = await convertCoordinatesToPlaces(latitude: _initialCameraPosition.latitude,  longitude: _initialCameraPosition.longitude);
+  Future<void> getMapMovement() async {
+    Placemark locationData = await convertCoordinatesToPlaces(
+        latitude: _initialCameraPosition.latitude,
+        longitude: _initialCameraPosition.longitude);
     _addressController.text =
-    '${locationData.name},${locationData.subLocality},${locationData.locality},${locationData.country}';
+        '${locationData.name},${locationData.subLocality},${locationData.locality},${locationData.country}';
     _mapCountry = locationData.country!;
     notifyListeners();
   }
-
-
 
   Future<void> getPredictionLatLng(Prediction p) async {
     PlacesDetailsResponse detail =
@@ -310,7 +320,7 @@ class AddressViewModel with ChangeNotifier {
       EasyLoading.show(status: 'Searching');
       _googleMapsPlaces = GoogleMapsPlaces(
         apiKey: kGoogleApiKey,
-        apiHeaders: await const GoogleApiHeaders().getHeaders(),
+        // apiHeaders: await const GoogleApiHeaders().getHeaders(),
       );
       PlacesAutocompleteResponse result = await _googleMapsPlaces!.autocomplete(
           value,
@@ -320,22 +330,25 @@ class AddressViewModel with ChangeNotifier {
           components: [Component(Component.country, "AE")]);
       setPredictionList(result.predictions);
       EasyLoading.dismiss();
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
       EasyLoading.showToast(e.toString());
     }
   }
-
 
   Future<bool> callValidateAddressRadius() async {
     EasyLoading.show(status: 'Please wait...');
     try {
       final AddressRadiusResponse response =
-      await _addressApiServices.checkRadius(addressRadiusRequest: AddressRadiusRequest(lat: _selectedAddressLat,long:_selectedAddressLng ));
+          await _addressApiServices.checkRadius(
+              addressRadiusRequest: AddressRadiusRequest(
+                  lat: _selectedAddressLat, long: _selectedAddressLng));
       if (response.withinRadius!) {
         EasyLoading.dismiss();
         return true;
       } else {
-        EasyLoading.showToast('Sorry, this address is outside of the delivery range');
+        EasyLoading.showToast(
+            'Sorry, this address is outside of the delivery range');
         return false;
       }
     } catch (e) {
@@ -379,7 +392,9 @@ class AddressViewModel with ChangeNotifier {
         street: _streetController.text,
         area: _areaController.text,
         floor: _floorController.text,
-        deliveryInstruction: _deliveryInstructionController.text, contactName: _contactNameController.text, contactNumber: _contactNumberController.text);
+        deliveryInstruction: _deliveryInstructionController.text,
+        contactName: _contactNameController.text,
+        contactNumber: _contactNumberController.text);
     try {
       final BaseResponseModel response = await _addressApiServices
           .createAddress(addAddressRequest: addAddressRequest);

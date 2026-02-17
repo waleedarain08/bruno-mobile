@@ -28,6 +28,11 @@ extension ContextUtils on BuildContext {
     return value;
   }
 
+  bool get isTablet {
+    log('TABLET: ${ResponsiveBreakpoints.of(this).breakpoint.name}');
+    return ResponsiveBreakpoints.of(this).isTablet;
+  }
+
   double? get webSize {
     return isBiggerThanMobile ? MediaQuery.widthOf(this) * 0.4 : null;
   }
