@@ -143,9 +143,13 @@ class ShopScreen extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (_) => Center(
-                      child: SizedBox(
+                      child: Container(
                         width: 0.6.sw,
                         height: 0.7.sh,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
                         child: ProfileScreen(),
                       ),
                     ),
@@ -213,7 +217,7 @@ class ShopScreen extends StatelessWidget {
                   children: List.generate(plansViewModel.getProductList.length,
                       (index) {
                     return SizedBox(
-                      width: 157.w,
+                      width: context.isBiggerThanMobile ? 157.w : 150.w,
                       child: productGridChipWidget(
                         recipeData: plansViewModel.getProductList[index],
                         showInformationIcon: false,
@@ -312,8 +316,8 @@ class ShopScreen extends StatelessWidget {
                 maxCrossAxisExtent:
                     navigatorKey.currentContext!.isBiggerThanMobile
                         ? 180.w
-                        : 157.w,
-                mainAxisSpacing: 10.w,
+                        : 150.w,
+                // mainAxisSpacing: 10.w,
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisSpacing: 10.w,

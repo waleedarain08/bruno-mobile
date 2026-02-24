@@ -150,7 +150,8 @@ enum EndPoints {
   deleteCard('card/'),
   allCards('card'),
   promoIsValid('promo-code/name/'),
-  deleteAddress('user/location/');
+  deleteAddress('user/location/'),
+  placesSearch('user/search-locations');
 
   final String url;
 

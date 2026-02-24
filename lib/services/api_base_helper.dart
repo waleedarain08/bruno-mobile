@@ -8,7 +8,8 @@ import 'package:universal_io/io.dart';
 import '../utils/enums.dart';
 import '../utils/shared_pref .dart';
 
-const kGoogleApiKey = "AIzaSyAqSG21c-JPaavmPIx9qqDDVGajMyPsW7w";
+// const kGoogleApiKey = "AIzaSyAqSG21c-JPaavmPIx9qqDDVGajMyPsW7w";
+const kGoogleApiKey = 'AIzaSyB4UUuXu0y6o9f6R6AZYoDxr0qPoHxvwCs';
 
 class ApiBaseHelper {
   SharedPref sharedPref = SharedPref();

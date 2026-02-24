@@ -5,20 +5,22 @@ import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/models/base_response_model.dart';
 import 'package:brunos_kitchen/models/requests/add_address_request.dart';
 import 'package:brunos_kitchen/models/requests/address_radius_request.dart';
+import 'package:brunos_kitchen/services/api_base_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:google_geocoding_api/google_geocoding_api.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_places_sdk_plus/google_places_sdk_plus.dart'
+    as places_api;
 import 'package:location/location.dart' as locator;
 import 'package:provider/provider.dart';
 
 import '../models/address_model.dart';
 import '../models/responses/address_radius_response.dart';
 import '../models/responses/all_address_reponse.dart';
+import '../models/responses/places_api_response.dart';
 import '../services/address_api_services.dart';
-import '../services/api_base_helper.dart';
 import '../utils/conversions.dart';
 import '../utils/enums.dart';
 import '../utils/images.dart';
@@ -38,11 +40,10 @@ class AddressViewModel with ChangeNotifier {
   final TextEditingController _contactNameController = TextEditingController();
   final TextEditingController _contactNumberController =
       TextEditingController();
-  GoogleMapsPlaces? _googleMapsPlaces;
   LatLng _initialCameraPosition = const LatLng(20.5937, 78.9629);
   Timer? _debounce;
   String _mapCountry = '';
-  List<Prediction> _predictionList = [];
+  List<Place> _predictionList = [];
   double? _selectedAddressLat;
   double? _selectedAddressLng;
   final List<Marker> _markers = [];
@@ -108,9 +109,9 @@ class AddressViewModel with ChangeNotifier {
 
   //Prediction? get getSelectedPrediction => _selectedPrediction;
 
-  Future<void> setSelectedPrediction(Prediction value) async {
+  Future<void> setSelectedPrediction(Place value) async {
     EasyLoading.show(status: 'Please Wait');
-    _addressController.text = value.description!;
+    _addressController.text = value.text?.text ?? '';
     await getPredictionLatLng(value);
     notifyListeners();
   }
@@ -119,7 +120,7 @@ class AddressViewModel with ChangeNotifier {
 
   GoogleMapController get getGoogleMapController => _googleMapController!;
 
-  List<Prediction> get getPrediction => _predictionList;
+  List<Place> get getPrediction => _predictionList;
 
   TextEditingController get getAddressController => _addressController;
 
@@ -140,7 +141,7 @@ class AddressViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void setPredictionList(List<Prediction> value) {
+  void setPredictionList(List<Place> value) {
     _predictionList = value;
     notifyListeners();
   }
@@ -279,56 +280,65 @@ class AddressViewModel with ChangeNotifier {
     }
   }
 
-  void updateMapCameraPosition(LatLng location) async {
+  Future<void> updateMapCameraPosition(LatLng location) async {
+    log('CONTROLLER: ${_googleMapController != null} $location');
     _googleMapController?.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(target: location, zoom: 15),
       ),
     );
-    setInitialCameraPosition(LatLng(location.latitude, location.longitude));
+    setInitialCameraPosition(location);
     /*Placemark locationData = await convertCoordinatesToPlaces(latitude: _initialCameraPosition.latitude,  longitude: _initialCameraPosition.longitude);
     _addressController.text =
     ' ${locationData.name},${locationData.subLocality},${locationData.locality},${locationData.country}';*/
-    await getMapMovement();
+    await getMapMovement(location);
     // notifyListeners();
   }
 
-  Future<void> getMapMovement() async {
-    Placemark locationData = await convertCoordinatesToPlaces(
-        latitude: _initialCameraPosition.latitude,
-        longitude: _initialCameraPosition.longitude);
-    _addressController.text =
-        '${locationData.name},${locationData.subLocality},${locationData.locality},${locationData.country}';
-    _mapCountry = locationData.country!;
+  Future<void> getMapMovement([LatLng? location]) async {
+    location ??= _initialCameraPosition;
+    final result = await convertCoordinatesToPlaces(
+      latitude: location.latitude,
+      longitude: location.longitude,
+    );
+    final locationData = result?.mapToPretty();
+    if (locationData == null) {
+      return;
+    }
+    _addressController.text = result!.formattedAddress;
+    _mapCountry = locationData.country;
     notifyListeners();
   }
 
-  Future<void> getPredictionLatLng(Prediction p) async {
-    PlacesDetailsResponse detail =
-        await _googleMapsPlaces!.getDetailsByPlaceId(p.placeId!);
-    _selectedAddressLat = detail.result.geometry!.location.lat;
-    _selectedAddressLng = detail.result.geometry!.location.lng;
-    updateMapCameraPosition(
-      LatLng(_selectedAddressLat!, _selectedAddressLng!),
+  Future<void> getPredictionLatLng(Place p) async {
+    final detail =
+        await places_api.FlutterGooglePlacesSdk(kGoogleApiKey).fetchPlace(
+      p.placeId!,
+      fields: [places_api.PlaceField.Location],
     );
-    EasyLoading.dismiss();
-    _predictionList.clear();
+    _selectedAddressLat = detail.place?.latLng?.lat;
+    _selectedAddressLng = detail.place?.latLng?.lng;
+    log('DETAILS: ${detail.place?.latLng}');
+    if (_selectedAddressLat != null && _selectedAddressLng != null) {
+      updateMapCameraPosition(
+        LatLng(_selectedAddressLat!, _selectedAddressLng!),
+      );
+      EasyLoading.dismiss();
+      _predictionList.clear();
+    } else {
+      EasyLoading.showError('Coordinates not found in selected place');
+    }
   }
 
   void autoCompleteSearch(String value) async {
     try {
       EasyLoading.show(status: 'Searching');
-      _googleMapsPlaces = GoogleMapsPlaces(
-        apiKey: kGoogleApiKey,
-        // apiHeaders: await const GoogleApiHeaders().getHeaders(),
-      );
-      PlacesAutocompleteResponse result = await _googleMapsPlaces!.autocomplete(
-          value,
-          types: [],
-          strictbounds: false,
-          language: "en",
-          components: [Component(Component.country, "AE")]);
-      setPredictionList(result.predictions);
+      final result = await _addressApiServices.placesSearch(query: value);
+      //   types: [],
+      // strictbounds: false,
+      // language: "en",
+      // components: [Component(Component.country, "AE")]
+      setPredictionList(result.data ?? []);
       EasyLoading.dismiss();
     } catch (e, s) {
       log(e.toString(), stackTrace: s);

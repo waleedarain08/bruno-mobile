@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:geocoding/geocoding.dart';
+import 'package:google_geocoding_api/google_geocoding_api.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
@@ -173,11 +173,16 @@ class AuthViewModel with ChangeNotifier {
   }
 
   void setDeliveryCity() async {
-    final Placemark locationCity = await convertCoordinatesToPlaces(
-        latitude: double.parse(_authResponse.data!.location!.coordinates![0]),
-        longitude: double.parse(_authResponse.data!.location!.coordinates![1]));
+    final result = await convertCoordinatesToPlaces(
+      latitude: double.parse(_authResponse.data!.location!.coordinates![0]),
+      longitude: double.parse(_authResponse.data!.location!.coordinates![1]),
+    );
+    if (result == null) {
+      return;
+    }
+    final locationCity = result.mapToPretty();
     navigatorKey.currentContext!.read<CartViewModel>().setDeliveryFee(
-        locationCity.locality == 'Abu Dhabi'
+        locationCity.city == 'Abu Dhabi'
             ? _authResponse.data!.discounts![1].aggregate!.toInt()
             : _authResponse.data!.discounts![0].aggregate!.toInt());
     notifyListeners();

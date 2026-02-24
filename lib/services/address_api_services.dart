@@ -1,10 +1,9 @@
-
-
 import 'dart:convert';
 
 import 'package:brunos_kitchen/models/base_response_model.dart';
 import 'package:brunos_kitchen/models/requests/add_address_request.dart';
 import 'package:brunos_kitchen/models/responses/address_radius_response.dart';
+import 'package:brunos_kitchen/models/responses/places_api_response.dart';
 
 import '../models/requests/address_radius_request.dart';
 import '../models/responses/all_address_reponse.dart';
@@ -30,7 +29,8 @@ class AddressApiServices {
         requestBody: addressRadiusRequest,
         params: '');
     final parsed = json.decode(response.body);
-    AddressRadiusResponse addressRadiusResponse = AddressRadiusResponse.fromJson(parsed);
+    AddressRadiusResponse addressRadiusResponse =
+        AddressRadiusResponse.fromJson(parsed);
     return addressRadiusResponse;
   }
 
@@ -65,5 +65,18 @@ class AddressApiServices {
     final parsed = json.decode(response.body);
     BaseResponseModel baseResponseModel = BaseResponseModel.fromJson(parsed);
     return baseResponseModel;
+  }
+
+  Future<PlacesApiResponse> placesSearch({required String query}) async {
+    final response = await _httpService.httpRequest(
+      endPoint: EndPoints.placesSearch,
+      requestType: 'GET',
+      params: '/$query',
+    );
+    final parsed = PlacesApiResponse.fromJson(json.decode(response.body));
+    if (!(parsed.isSuccess ?? false)) {
+      throw Exception(parsed.message);
+    }
+    return parsed;
   }
 }

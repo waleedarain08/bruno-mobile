@@ -94,7 +94,6 @@ class _CartScreenState extends State<CartScreen> with RouteAware {
             left: 0.5.sw + 20.w,
             right: 20.w,
             top: 20.w,
-            bottom: 0,
             child: _buildBottomButton(context, cartViewModel),
           )
         else
@@ -108,19 +107,17 @@ class _CartScreenState extends State<CartScreen> with RouteAware {
     CartViewModel cartViewModel,
   ) {
     return LabeledBottomButton(
-      height: context.isBiggerThanMobile ? double.infinity : null,
-      label: Expanded(
-        flex: context.isBiggerThanMobile ? 1 : 0,
-        child: Column(
-          children: [
-            orange14w500(
-                data:
-                    'Total Amount: AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
-            SizedBox(
-              height: 10.h,
-            ),
-          ],
-        ),
+      height: null, //context.isBiggerThanMobile ? double.infinity : null,
+      alignment: context.isBiggerThanMobile ? Alignment.topCenter : null,
+      label: Column(
+        children: [
+          orange14w500(
+              data:
+                  'Total Amount: AED ${cartViewModel.getCartTotalPrice.toStringAsFixed(2)}'),
+          SizedBox(
+            height: 10.h,
+          ),
+        ],
       ),
       buttonText: 'Next',
       onTap: () {

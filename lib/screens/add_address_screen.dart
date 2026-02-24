@@ -166,40 +166,45 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           ),
                         ),
                         child: ListView.builder(
-                            padding: EdgeInsets.symmetric(
-                                    horizontal: 5.h, vertical: 5.h)
-                                .w,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: addressViewModel.getPrediction.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Card(
-                                  elevation: 5,
-                                  color: CustomColors.lightGreyColor,
-                                  borderOnForeground: false,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(10.0.r)),
-                                    side: const BorderSide(
-                                      color: CustomColors.yellowColor,
-                                      width: 1.0,
-                                    ),
+                          padding: EdgeInsets.symmetric(
+                                  horizontal: 5.h, vertical: 5.h)
+                              .w,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          itemCount: addressViewModel.getPrediction.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Card(
+                              elevation: 5,
+                              color: CustomColors.lightGreyColor,
+                              borderOnForeground: false,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0.r),
+                                ),
+                                side: const BorderSide(
+                                  color: CustomColors.yellowColor,
+                                  width: 1.0,
+                                ),
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  addressViewModel.setSelectedPrediction(
+                                      addressViewModel.getPrediction[index]);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 5)
+                                      .w,
+                                  child: Text(
+                                    addressViewModel
+                                            .getPrediction[index].text?.text ??
+                                        'N/A',
                                   ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      addressViewModel.setSelectedPrediction(
-                                          addressViewModel
-                                              .getPrediction[index]);
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 5)
-                                          .w,
-                                      child: Text(addressViewModel
-                                          .getPrediction[index].description!),
-                                    ),
-                                  ));
-                            }),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ),

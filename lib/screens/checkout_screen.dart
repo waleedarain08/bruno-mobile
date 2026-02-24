@@ -715,7 +715,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   left: 0.5.sw + 20.w,
                   right: 20.w,
                   top: 20.w,
-                  bottom: 0,
                   child: _buildBottomButton(context, cartViewModel),
                 )
               else
@@ -732,11 +731,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     CartViewModel cartViewModel,
   ) {
     return LabeledBottomButton(
-      height: context.isBiggerThanMobile ? double.infinity : null,
       isButtonVisible: MediaQuery.of(context).viewInsets.bottom == 0,
-      label: context.isBiggerThanMobile
-          ? Expanded(child: _buildButtonLabel(cartViewModel))
-          : _buildButtonLabel(cartViewModel),
+      label: _buildButtonLabel(cartViewModel),
       buttonText: 'Place Order',
       onTap: () {
         if (context.read<AuthViewModel>().getAuthResponse.data!.card == null) {

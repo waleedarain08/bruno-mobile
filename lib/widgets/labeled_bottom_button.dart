@@ -10,6 +10,7 @@ class LabeledBottomButton extends StatelessWidget {
   final String buttonText;
   final VoidCallback onTap;
   final bool isButtonVisible;
+  final Alignment? alignment;
   final double? height;
 
   const LabeledBottomButton({
@@ -19,14 +20,16 @@ class LabeledBottomButton extends StatelessWidget {
     required this.onTap,
     this.isButtonVisible = true,
     this.height,
+    this.alignment,
   });
 
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: context.isBiggerThanMobile
-          ? Alignment.bottomRight
-          : Alignment.bottomCenter,
+      alignment: alignment ??
+          (context.isBiggerThanMobile
+              ? Alignment.topCenter
+              : Alignment.bottomCenter),
       child: Container(
         width: double.infinity,
         height: height,
@@ -34,7 +37,7 @@ class LabeledBottomButton extends StatelessWidget {
             height?.isInfinite ?? false ? EdgeInsets.only(bottom: 10.w) : null,
         decoration: BoxDecoration(
           color: CustomColors.whiteColor,
-          borderRadius: height?.isInfinite ?? false
+          borderRadius: context.isBiggerThanMobile ?? false
               ? BorderRadius.circular(30)
               : BorderRadius.only(
                   topLeft: Radius.circular(30.0),
