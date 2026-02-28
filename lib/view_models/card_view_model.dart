@@ -243,8 +243,13 @@ class CardViewModel with ChangeNotifier {
     }
   }
 
-  Future<SetupIntentUrls?> callSetupIntentApi(String stripeCustomerId) async {
+  Future<SetupIntentUrls?> callSetupIntentApi() async {
     try {
+      final stripeCustomerId =
+          await SharedPref().read(SharedPreferencesKeys.stripeId.text);
+      if (stripeCustomerId == null || stripeCustomerId.isEmpty) {
+        return null;
+      }
       EasyLoading.show(status: 'Please Wait...');
       final response = await _cardApiServices.setupIntentApi(stripeCustomerId);
       if (!(response.isSuccess ?? false)) {

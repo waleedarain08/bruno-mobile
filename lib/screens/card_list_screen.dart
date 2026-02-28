@@ -1,6 +1,5 @@
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
-import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:brunos_kitchen/view_models/card_view_model.dart';
 import 'package:brunos_kitchen/widgets/web_sized_box.dart';
 import 'package:flutter/foundation.dart';
@@ -37,14 +36,9 @@ class _CardListScreenState extends State<CardListScreen> {
     cardViewModel.clearCardData();
     cardViewModel.setIsCardAdd(true);
     if (kIsWeb) {
-      final stripeId =
-          context.read<AuthViewModel>().getAuthResponse.data!.stripeId;
-      if (stripeId == null) {
-        EasyLoading.showError('Stripe customer not found!');
-        return;
-      }
-      final data = await cardViewModel.callSetupIntentApi(stripeId);
+      final data = await cardViewModel.callSetupIntentApi();
       if (data == null) {
+        EasyLoading.showError('Could not generate setup intent!');
         return;
       }
       await launchUrl(Uri.parse(data.url), webOnlyWindowName: '_self');
