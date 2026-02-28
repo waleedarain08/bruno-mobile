@@ -1,13 +1,19 @@
+import 'dart:developer';
+
 import 'package:brunos_kitchen/models/base_response_model.dart';
 import 'package:brunos_kitchen/models/card_model.dart';
 import 'package:brunos_kitchen/models/requests/add_card_request.dart';
 import 'package:brunos_kitchen/models/responses/cards_response.dart';
 import 'package:brunos_kitchen/services/card_api_services.dart';
+import 'package:brunos_kitchen/utils/enums.dart';
+import 'package:brunos_kitchen/utils/shared_pref%20.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+
+typedef SetupIntentUrls = ({String url, String successUrl});
 
 class CardViewModel with ChangeNotifier {
   final CardApiServices _cardApiServices = CardApiServices();
@@ -19,7 +25,7 @@ class CardViewModel with ChangeNotifier {
   String _cvvCode = '';
   bool _isDefaultCard = false;
 
-   CardModel? _cardDetailData;
+  CardModel? _cardDetailData;
 //  final CardApiServices _cardApiServices = CardApiServices();
   bool _isCvvFocused = false;
   String _cardType = '';
@@ -31,7 +37,7 @@ class CardViewModel with ChangeNotifier {
 
   CardsResponse get getCardResponse => _cardsResponse;
 
-  void setCardResponse (CardsResponse value){
+  void setCardResponse(CardsResponse value) {
     _cardsResponse = value;
     notifyListeners();
   }
@@ -69,7 +75,7 @@ class CardViewModel with ChangeNotifier {
     notifyListeners();
   }
 
- /* void setPrimaryCard(bool value) {
+  /* void setPrimaryCard(bool value) {
     _isPrimaryCard = value;
     notifyListeners();
   }*/
@@ -89,7 +95,7 @@ class CardViewModel with ChangeNotifier {
     _cardNumber = '0000 0000 0000 ${_cardDetailData!.last4}';
     _cardHolderName = ' ';
     _cardType = _cardDetailData!.brand!;
-   // _cvvCode = _cardDetailData!.cvc!;
+    // _cvvCode = _cardDetailData!.cvc!;
     setIsDefaultCard(_cardDetailData!.isDefault!);
     notifyListeners();
   }
@@ -100,7 +106,7 @@ class CardViewModel with ChangeNotifier {
     _cardHolderName = creditCardModel.cardHolderName;
     _cvvCode = creditCardModel.cvvCode;
     _isCvvFocused = creditCardModel.isCvvFocused;
-   /* if (_cardNumber.startsWith('5')) {
+    /* if (_cardNumber.startsWith('5')) {
       _cardTypeVisa = false;
     } else {
       _cardTypeVisa = true;
@@ -156,7 +162,8 @@ class CardViewModel with ChangeNotifier {
       );
 
       print(payment.id);
-      AddCardRequest addCardRequest = AddCardRequest(paymentMethodId: payment.id);
+      AddCardRequest addCardRequest =
+          AddCardRequest(paymentMethodId: payment.id);
 
       final BaseResponseModel response =
           await _cardApiServices.addCardApi(addCardRequest: addCardRequest);
@@ -192,11 +199,71 @@ class CardViewModel with ChangeNotifier {
     }
   }
 
+  Future<void> addStripeCardsToUser() async {
+    try {
+      final stripeCustomerId =
+          await SharedPref().read(SharedPreferencesKeys.stripeId.text);
+      log('CUSTOMER ID: $stripeCustomerId ${stripeCustomerId == null}');
+      if (stripeCustomerId == null || stripeCustomerId.isEmpty) {
+        return;
+      }
+      EasyLoading.show(status: 'Please Wait...');
+      final response =
+          await _cardApiServices.allStripeCardsApi(stripeCustomerId);
+      if (!(response.isSuccess ?? false)) {
+        throw Exception(response.message ?? 'Something went wrong!');
+      }
+      final cards = _cardsResponse.data ?? <CardModel>[];
+      final newCardIds = response.data.where((cardId) {
+        return cards.every((card) => card.paymentMethodId != cardId);
+      }).toList();
+      log('NEW CARDS: $newCardIds');
+      for (final cardId in newCardIds) {
+        try {
+          final response = await _cardApiServices.addCardApi(
+            addCardRequest: AddCardRequest(
+              paymentMethodId: cardId,
+            ),
+          );
+          if (!(response.isSuccess ?? false)) {
+            throw Exception('Could not add card: $cardId');
+          }
+          log('CARD ADDED $cardId');
+        } catch (e, s) {
+          log(e.toString(), stackTrace: s);
+        }
+      }
+      if (newCardIds.isNotEmpty) {
+        await callAllCardsApi();
+      } else {
+        EasyLoading.dismiss();
+      }
+    } catch (e) {
+      EasyLoading.showError(e.toString());
+    }
+  }
+
+  Future<SetupIntentUrls?> callSetupIntentApi(String stripeCustomerId) async {
+    try {
+      EasyLoading.show(status: 'Please Wait...');
+      final response = await _cardApiServices.setupIntentApi(stripeCustomerId);
+      if (!(response.isSuccess ?? false)) {
+        throw Exception(response.message ?? 'Something went wrong!');
+      }
+      EasyLoading.dismiss();
+      return (url: response.data!.url!, successUrl: response.data!.successUrl!);
+    } catch (e, s) {
+      log(e.toString(), stackTrace: s);
+      EasyLoading.showError(e.toString());
+      return null;
+    }
+  }
+
   Future<bool> callDeleteCard({required String cardId}) async {
     try {
       EasyLoading.show(status: 'Please Wait...');
       final BaseResponseModel response =
-      await _cardApiServices.deleteCardApi(cardId: cardId);
+          await _cardApiServices.deleteCardApi(cardId: cardId);
       if (response.isSuccess!) {
         EasyLoading.dismiss();
         await callAllCardsApi();
@@ -214,8 +281,8 @@ class CardViewModel with ChangeNotifier {
   Future<bool> callDefaultCardApi() async {
     EasyLoading.show(status: 'Please wait...');
     try {
-      final BaseResponseModel response = await _cardApiServices
-          .defaultCardApi(cardId: _cardDetailData!.sId!);
+      final BaseResponseModel response =
+          await _cardApiServices.defaultCardApi(cardId: _cardDetailData!.sId!);
       if (response.isSuccess!) {
         EasyLoading.dismiss();
         callAllCardsApi();
@@ -229,5 +296,4 @@ class CardViewModel with ChangeNotifier {
       return false;
     }
   }
-
 }

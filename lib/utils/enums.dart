@@ -109,7 +109,8 @@ enum OtpTypes {
 }
 
 enum SharedPreferencesKeys {
-  authToken("auth_token");
+  authToken("auth_token"),
+  stripeId("stripe_id");
 
   const SharedPreferencesKeys(this.text);
 
@@ -149,6 +150,8 @@ enum EndPoints {
   addCard('card/'),
   deleteCard('card/'),
   allCards('card'),
+  allStripeCards('card/get_stripe_cards/'),
+  setupIntent('card/setup_intent/'),
   promoIsValid('promo-code/name/'),
   deleteAddress('user/location/'),
   placesSearch('user/search-locations');

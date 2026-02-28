@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_io/io.dart';
@@ -15,15 +16,18 @@ class ApiBaseHelper {
   SharedPref sharedPref = SharedPref();
   static const _baseURL =
       // 'http://10.120.10.159:8000/api/';
-      'https://api.brunos.kitchen/bruno/api/v1/';
+      kDebugMode
+          ? 'https://gecko-pure-gator.ngrok-free.app/bruno/api/v1/'
+          : 'https://api.brunos.kitchen/bruno/api/v1/';
   String? autToken;
 
-  Future<dynamic> httpRequest(
-      {required EndPoints endPoint,
-      required String requestType,
-      var requestBody,
-      required String params,
-      String? imagePath}) async {
+  Future<dynamic> httpRequest({
+    required EndPoints endPoint,
+    required String requestType,
+    var requestBody,
+    required String params,
+    String? imagePath,
+  }) async {
     autToken = await sharedPref.read(SharedPreferencesKeys.authToken.text);
     print(autToken);
     try {
@@ -78,6 +82,7 @@ class ApiBaseHelper {
   Map<String, String> getHeaders() {
     Map<String, String> headers = {};
     headers.putIfAbsent('Content-Type', () => 'application/json');
+    headers.putIfAbsent('ngrok-skip-browser-warning', () => 'true');
     headers.putIfAbsent('Accept', () => 'application/json');
     headers.putIfAbsent('Authorization', () => 'Bearer ${autToken ?? ''}');
     return headers;

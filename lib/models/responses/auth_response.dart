@@ -37,6 +37,7 @@ class AuthData {
   CardModel? card;
   int? availablePoints;
   String? media;
+  String? stripeId;
   int? petsCount;
   PuppyModel? pet;
   AddressModel? location;
@@ -45,24 +46,26 @@ class AuthData {
   List<Discounts>? discounts;
   List<Greetings>? greetings;
 
-  AuthData(
-      {this.sId,
-      this.createdOnDate,
-      this.fullName,
-      this.email,
-      this.phoneNumber,
-      this.isVerified,
-      this.media,
-      this.petsCount,
-      this.pet,
-      this.card,
-      this.isGuest,
-      this.location,
-      this.availablePoints,
-      this.refreshToken,
-      this.discounts,
-      this.clientToken,
-      this.greetings});
+  AuthData({
+    this.sId,
+    this.createdOnDate,
+    this.fullName,
+    this.email,
+    this.phoneNumber,
+    this.isVerified,
+    this.media,
+    this.stripeId,
+    this.petsCount,
+    this.pet,
+    this.card,
+    this.isGuest,
+    this.location,
+    this.availablePoints,
+    this.refreshToken,
+    this.discounts,
+    this.clientToken,
+    this.greetings,
+  });
 
   AuthData.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -72,6 +75,7 @@ class AuthData {
     phoneNumber = json['phoneNumber'];
     isVerified = json['isVerified'];
     media = json['media'];
+    stripeId = json['stripeId'];
     isGuest = json['isGuest'];
     card = json['card'] != null ? CardModel.fromJson(json['card']) : null;
     availablePoints = (json['availablePoints']).round();
@@ -107,6 +111,7 @@ class AuthData {
     data['isVerified'] = isVerified;
     data['availablePoints'] = availablePoints;
     data['media'] = media;
+    data['stripeId'] = stripeId;
     if (card != null) {
       data['card'] = card!.toJson();
     }

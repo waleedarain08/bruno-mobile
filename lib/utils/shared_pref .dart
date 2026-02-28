@@ -13,7 +13,7 @@ class SharedPref {
     prefs.setString(key, json.encode(value));
   }
 
-  read(String key) async {
+  Future<String?> read(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }

@@ -31,21 +31,22 @@ class AuthApiServices {
     if (authResponse.isSuccess!) {
       _sharedPref.save(
           SharedPreferencesKeys.authToken.text, authResponse.data!.clientToken);
+      _sharedPref.save(
+          SharedPreferencesKeys.stripeId.text, authResponse.data!.stripeId);
     }
     return authResponse;
   }
 
   Future<BannersResponse> bannersApi() async {
     final response = await _httpService.httpRequest(
-        endPoint: EndPoints.banners,
-        requestType: 'GET',
-        params: '');
+        endPoint: EndPoints.banners, requestType: 'GET', params: '');
     final parsed = json.decode(response.body);
     BannersResponse bannersResponse = BannersResponse.fromJson(parsed);
     return bannersResponse;
   }
 
-  Future<AuthResponse> userRegisterApi({required UserRegisterRequest userRegisterRequest}) async {
+  Future<AuthResponse> userRegisterApi(
+      {required UserRegisterRequest userRegisterRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.signUp,
         requestType: 'POST',
@@ -56,11 +57,14 @@ class AuthApiServices {
     if (authResponse.isSuccess!) {
       _sharedPref.save(
           SharedPreferencesKeys.authToken.text, authResponse.data!.clientToken);
+      _sharedPref.save(
+          SharedPreferencesKeys.stripeId.text, authResponse.data!.stripeId);
     }
     return authResponse;
   }
 
-  Future<AuthResponse> guestUserRegisterApi({required UserRegisterRequest userRegisterRequest}) async {
+  Future<AuthResponse> guestUserRegisterApi(
+      {required UserRegisterRequest userRegisterRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.guest,
         requestType: 'POST',
@@ -71,11 +75,14 @@ class AuthApiServices {
     if (authResponse.isSuccess!) {
       _sharedPref.save(
           SharedPreferencesKeys.authToken.text, authResponse.data!.clientToken);
+      _sharedPref.save(
+          SharedPreferencesKeys.stripeId.text, authResponse.data!.stripeId);
     }
     return authResponse;
   }
 
-  Future<BaseResponseModel> forgotPasswordApi({required ForgotPasswordRequest forgotPasswordRequest}) async {
+  Future<BaseResponseModel> forgotPasswordApi(
+      {required ForgotPasswordRequest forgotPasswordRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.forgotPassword,
         requestType: 'POST',
@@ -86,7 +93,8 @@ class AuthApiServices {
     return baseResponseModel;
   }
 
-  Future<BaseResponseModel> checkPhoneNumberApi({required String phoneNumber}) async {
+  Future<BaseResponseModel> checkPhoneNumberApi(
+      {required String phoneNumber}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.checkPhoneNumber,
         requestType: 'GET',
@@ -97,7 +105,8 @@ class AuthApiServices {
     return baseResponseModel;
   }
 
-  Future<BaseResponseModel> checkEmailApi({required String emailAddress}) async {
+  Future<BaseResponseModel> checkEmailApi(
+      {required String emailAddress}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.checkEmail,
         requestType: 'GET',
@@ -108,7 +117,8 @@ class AuthApiServices {
     return baseResponseModel;
   }
 
-  Future<AuthResponse> socialMediaLoginApi({required SocialSignInRequest socialSignInRequest}) async {
+  Future<AuthResponse> socialMediaLoginApi(
+      {required SocialSignInRequest socialSignInRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.socialLogin,
         requestType: 'POST',
@@ -121,15 +131,15 @@ class AuthApiServices {
     if (authResponse.isSuccess!) {
       _sharedPref.save(
           SharedPreferencesKeys.authToken.text, authResponse.data!.clientToken);
+      _sharedPref.save(
+          SharedPreferencesKeys.stripeId.text, authResponse.data!.stripeId);
     }
     return authResponse;
   }
 
   Future<AuthResponse> splashApi() async {
     final response = await _httpService.httpRequest(
-        endPoint: EndPoints.splash,
-        requestType: 'GET',
-        params: '');
+        endPoint: EndPoints.splash, requestType: 'GET', params: '');
     final parsed = json.decode(response.body);
     AuthResponse authResponse = AuthResponse.fromJson(parsed);
     return authResponse;
@@ -146,7 +156,8 @@ class AuthApiServices {
     return otpResponse;
   }
 
-  Future<BaseResponseModel> verifyOtp({required OtpVerifyRequest otpVerifyRequest}) async {
+  Future<BaseResponseModel> verifyOtp(
+      {required OtpVerifyRequest otpVerifyRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.verifyOtp,
         requestType: 'POST',
@@ -157,9 +168,8 @@ class AuthApiServices {
     return baseResponseModel;
   }
 
-
-
-  Future<AuthResponse> editUserProfileApi({required EditUserProfileRequest editUserProfileRequest}) async {
+  Future<AuthResponse> editUserProfileApi(
+      {required EditUserProfileRequest editUserProfileRequest}) async {
     final response = await _httpService.httpRequest(
         endPoint: EndPoints.editUserProfile,
         requestType: 'PUT',
@@ -169,6 +179,4 @@ class AuthApiServices {
     AuthResponse authResponse = AuthResponse.fromJson(parsed);
     return authResponse;
   }
-
-
 }

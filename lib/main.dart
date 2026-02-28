@@ -14,11 +14,13 @@ import 'package:brunos_kitchen/view_models/puppy_view_model.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -58,8 +60,12 @@ final double screenHeightWithAppBar =
 // }
 
 Future<void> main() async {
-  // HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
+  if (!kIsWeb) {
+    // HttpOverrides.global = MyHttpOverrides();
+    Stripe.publishableKey =
+        "pk_live_51O6BroGm97cexwqwVYot0mnw9MgdK1qBOCTJ35dxF6582pfptbKcHGsnZbfDR7CbtlR6YxayCNiuArS3DWOvNGH300JR8PSnHM";
+  }
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -71,8 +77,6 @@ Future<void> main() async {
     systemNavigationBarIconBrightness:
         Brightness.dark, // color of navigation controls
   ));
-  // Stripe.publishableKey =
-  //     "pk_live_51O6BroGm97cexwqwVYot0mnw9MgdK1qBOCTJ35dxF6582pfptbKcHGsnZbfDR7CbtlR6YxayCNiuArS3DWOvNGH300JR8PSnHM";
   configLoading();
   runApp(MultiProvider(
     providers: [

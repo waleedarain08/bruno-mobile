@@ -383,16 +383,16 @@ class AuthViewModel with ChangeNotifier {
     final authToken =
         await _sharedPref.read(SharedPreferencesKeys.authToken.text);
     await Future.delayed(const Duration(seconds: 4), () {});
-    if (kIsWeb) {
-      final success = await callGuestUserRegisterApi();
-      if (success) {
-        return const BottomNavigationScreen();
-      }
-    }
     if (authToken == null) {
+      if (kIsWeb) {
+        final success = await callGuestUserRegisterApi();
+        if (success) {
+          return const BottomNavigationScreen();
+        }
+      }
       return const IntroSlidesScreen();
     } else {
-      Widget routeTo = const LoginScreen();
+      late Widget routeTo;
       await callSplash(showLoader: false).then((value) async {
         if (value) {
           routeTo = const BottomNavigationScreen();

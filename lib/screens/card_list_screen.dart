@@ -1,10 +1,14 @@
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
+import 'package:brunos_kitchen/view_models/auth_view_model.dart';
 import 'package:brunos_kitchen/view_models/card_view_model.dart';
 import 'package:brunos_kitchen/widgets/web_sized_box.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/custom_colors.dart';
 import '../widgets/app_bar_with_back_widget.dart';
@@ -21,10 +25,36 @@ class CardListScreen extends StatefulWidget {
 class _CardListScreenState extends State<CardListScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<CardViewModel>().callAllCardsApi();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await context.read<CardViewModel>().callAllCardsApi();
+      await context.read<CardViewModel>().addStripeCardsToUser();
     });
     super.initState();
+  }
+
+  Future<void> _onAddCardTap() async {
+    final cardViewModel = context.read<CardViewModel>();
+    cardViewModel.clearCardData();
+    cardViewModel.setIsCardAdd(true);
+    if (kIsWeb) {
+      final stripeId =
+          context.read<AuthViewModel>().getAuthResponse.data!.stripeId;
+      if (stripeId == null) {
+        EasyLoading.showError('Stripe customer not found!');
+        return;
+      }
+      final data = await cardViewModel.callSetupIntentApi(stripeId);
+      if (data == null) {
+        return;
+      }
+      await launchUrl(Uri.parse(data.url), webOnlyWindowName: '_self');
+      // final params = await CardSetupScreen.authorize(
+      //   url: data.url,
+      //   successUrl: data.successUrl,
+      // );
+    } else {
+      Navigator.pushNamed(context, addCardRoute);
+    }
   }
 
   @override
@@ -44,11 +74,7 @@ class _CardListScreenState extends State<CardListScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   InkWell(
-                    onTap: () {
-                      context.read<CardViewModel>().clearCardData();
-                      cardViewModel.setIsCardAdd(true);
-                      Navigator.pushNamed(context, addCardRoute);
-                    },
+                    onTap: _onAddCardTap,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
                       child: Container(
