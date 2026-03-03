@@ -29,6 +29,9 @@ class BottomNavigationViewModel extends ChangeNotifier {
   int get getHomeViewIndex => _homeViewIndex;
 
   void setHomeViewIndex(int value) {
+    if (kIsWeb) {
+      return;
+    }
     _homeViewIndex = value;
     if (_homeViewIndex == 1) {
       navigatorKey.currentContext!

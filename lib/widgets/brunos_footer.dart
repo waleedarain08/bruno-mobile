@@ -85,13 +85,6 @@ class BrunosFooter extends StatelessWidget {
         ),
         const SizedBox(width: 40),
 
-        // Quick Links
-        Expanded(
-          flex: 2,
-          child: _buildQuickLinks(),
-        ),
-        const SizedBox(width: 40),
-
         // Get Started Section
         Expanded(
           flex: 3,
@@ -125,8 +118,6 @@ class BrunosFooter extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildQuickLinks()),
-            const SizedBox(width: 30),
             Expanded(child: _buildGetStartedSection()),
             const SizedBox(width: 30),
             Expanded(child: _buildQRCode()),
@@ -145,8 +136,6 @@ class BrunosFooter extends StatelessWidget {
         _buildOfficeAddress(),
         SizedBox(height: 30.h),
         _buildCustomerService(),
-        SizedBox(height: 30.h),
-        _buildQuickLinks(),
         SizedBox(height: 30.h),
         _buildGetStartedSection(),
         SizedBox(height: 30.h),
@@ -302,44 +291,6 @@ class BrunosFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickLinks() {
-    final links = [
-      {'name': 'Orders', 'url': 'https://brunos.kitchen/'},
-      {'name': 'My Pets', 'url': 'https://brunos.kitchen/about-us/'},
-      {'name': 'Shipping', 'url': 'https://brunos.kitchen/our-services/'},
-      {'name': 'Feedback', 'url': 'https://brunos.kitchen/recipes/'},
-      {'name': 'FAQs', 'url': 'https://brunos.kitchen/faq/'},
-      {'name': 'Contact', 'url': 'https://brunos.kitchen/contact/'},
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Quick Links',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        SizedBox(height: 16.h),
-        ...links.map(
-          (link) => Padding(
-            padding: const EdgeInsets.only(bottom: 8).h,
-            child: Text(
-              link['name']!,
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 14.sp,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildGetStartedSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -420,8 +371,8 @@ class BrunosFooter extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  "© 2024 – Bruno's Kitchen LTD",
+                 Text(
+                  "© ${DateTime.now().year} – Bruno's Kitchen LTD",
                   style: TextStyle(
                     color: Colors.white70,
                     fontSize: 14,

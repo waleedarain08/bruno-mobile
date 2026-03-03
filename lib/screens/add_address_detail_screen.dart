@@ -88,7 +88,7 @@ class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
                               keyboardType: TextInputType.streetAddress,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(20.0).w,
-                                hintText: 'Flat/House No#',
+                                hintText: 'Building Name/No',
                               ),
                             ),
                           ),

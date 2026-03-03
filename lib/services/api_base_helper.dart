@@ -16,9 +16,10 @@ class ApiBaseHelper {
   SharedPref sharedPref = SharedPref();
   static const _baseURL =
       // 'http://10.120.10.159:8000/api/';
-      kDebugMode
-          ? 'https://gecko-pure-gator.ngrok-free.app/bruno/api/v1/'
-          : 'https://api.brunos.kitchen/bruno/api/v1/';
+      // kDebugMode
+      //     ? 'https://gecko-pure-gator.ngrok-free.app/bruno/api/v1/'
+      //     :
+      'https://api.brunos.kitchen/bruno/api/v1/';
   String? autToken;
 
   Future<dynamic> httpRequest({
