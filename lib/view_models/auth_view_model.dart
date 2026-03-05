@@ -429,7 +429,7 @@ class AuthViewModel with ChangeNotifier {
     try {
       final SignInRequest signInRequest = SignInRequest(
           password: _passwordController.text,
-          email: _emailController.text,
+          email: _emailController.text.trim().toLowerCase(),
           deviceToken: _fcmToken ?? 'token',
           deviceType: _operatingSystem);
 
@@ -614,7 +614,7 @@ class AuthViewModel with ChangeNotifier {
       EasyLoading.show(status: 'Please Wait ...');
       final ForgotPasswordRequest forgotPasswordRequest = ForgotPasswordRequest(
           password: _passwordController.text,
-          phoneNumber: _emailController.text);
+          phoneNumber: _emailController.text.trim().toLowerCase());
 
       final BaseResponseModel response = await _authApiServices
           .forgotPasswordApi(forgotPasswordRequest: forgotPasswordRequest);
@@ -671,7 +671,7 @@ class AuthViewModel with ChangeNotifier {
         SendGridPref sendGrid = SendGridPref();
         final UserRegisterRequest userRegisterRequest = UserRegisterRequest(
             password: _passwordController.text,
-            email: _emailController.text,
+            email: _emailController.text.trim().toLowerCase(),
             deviceToken: _fcmToken ?? 'token',
             deviceType: _operatingSystem,
             fullName: _nameController.text,
