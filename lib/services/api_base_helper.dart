@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_io/io.dart';
@@ -16,9 +15,10 @@ class ApiBaseHelper {
   SharedPref sharedPref = SharedPref();
   static const _baseURL =
       // 'http://10.120.10.159:8000/api/';
-      kDebugMode
-          ? 'https://gecko-pure-gator.ngrok-free.app/bruno/api/v1/'
-          : 'https://api.brunos.kitchen/bruno/api/v1/';
+      // kDebugMode
+      //     ? 'https://gecko-pure-gator.ngrok-free.app/bruno/api/v1/'
+      //     :
+      'https://api.brunos.kitchen/bruno/api/v1/';
   String? autToken;
 
   Future<dynamic> httpRequest({

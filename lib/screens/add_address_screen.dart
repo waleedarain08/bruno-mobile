@@ -65,9 +65,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       },
                       initialCameraPosition: CameraPosition(
                           target: addressViewModel.getInitialCameraPosition),
-                      markers:
-                          //  Set<Marker>.of(addressViewModel.getUserMarker),
-                          <Marker>{
+                      markers: <Marker>{
                         Marker(
                           onDragEnd: ((newPosition) {
                             addressViewModel.updateMapCameraPosition(LatLng(

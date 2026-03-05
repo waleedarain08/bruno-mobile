@@ -10,6 +10,7 @@ import 'package:brunos_kitchen/widgets/gridChip/product_grid_chip_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import '../route_generator.dart';
@@ -22,6 +23,7 @@ import '../utils/navigations_validation.dart';
 import '../view_models/auth_view_model.dart';
 import '../view_models/plans_view_model.dart';
 import '../view_models/puppy_view_model.dart';
+import '../widgets/dialogs/discription_dialog.dart';
 
 class ShopScreen extends StatelessWidget {
   const ShopScreen({super.key});
@@ -52,30 +54,56 @@ class ShopScreen extends StatelessWidget {
           ),
           if (context.isBiggerThanMobile)
             Center(
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.widthOf(context) * 0.35,
-                padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
-                child: InkWell(
-                  onTap: () {
-                    if (context
-                            .read<AuthViewModel>()
-                            .getAuthResponse
-                            .data!
-                            .petsCount ==
-                        0) {
-                      context
-                          .read<PuppyViewModel>()
-                          .setRouteToPuppyFrom(Screens.shop.text);
-                      context.read<PuppyViewModel>().clearPuppyData();
-                      Navigator.pushNamed(context, puppyCreationRoute);
-                    } else {
-                      navigateToMonthlyPlans(context: context);
-                    }
-                  },
-                  child: ClipRRect(
-                    borderRadius: BorderRadiusGeometry.circular(40.r),
-                    child: Image.asset(dogBannerMonthly),
-                  ),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0).w,
+                      child: InkWell(
+                        onTap: () {
+                          if (context
+                                  .read<AuthViewModel>()
+                                  .getAuthResponse
+                                  .data!
+                                  .petsCount ==
+                              0) {
+                            context
+                                .read<PuppyViewModel>()
+                                .setRouteToPuppyFrom(Screens.shop.text);
+                            context.read<PuppyViewModel>().clearPuppyData();
+                            Navigator.pushNamed(context, puppyCreationRoute);
+                          } else {
+                            navigateToMonthlyPlans(context: context);
+                          }
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadiusGeometry.circular(40.r),
+                          child: Image.asset(dogBannerMonthly),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 20.h,
+                      right: 40.w,
+                      child: InkWell(
+                        customBorder: CircleBorder(),
+                        onTap: () {
+                          descriptionDialog(
+                            context: context,
+                            description:
+                                'The BIG SAVER option, you can choose any two recipes for up to 30 days of food supply. Ensuring you have enough food for your pup to enjoy for the entire month at a special discounted price. We prepare and portion the food for you for a hassle-free feeding experience.',
+                            height: 230.h,
+                            title: 'Monthly Order',
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          informationButton,
+                          color: CustomColors.whiteColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             )
