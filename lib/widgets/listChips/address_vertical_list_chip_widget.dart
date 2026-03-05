@@ -130,7 +130,7 @@ Widget addressVerticalListChipWidget({required AddressModel addressDetail}) {
                           ),
                           grey14w400(
                               data:
-                                  'Flat/House: ${addressDetail.flatHouseNumber!}'),
+                                  'Building Name/No: ${addressDetail.flatHouseNumber!}'),
                         ],
                       ),
                     ),

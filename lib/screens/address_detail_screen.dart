@@ -259,7 +259,7 @@ class AddressDetailScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      black14w500(data: 'Flat/House Number:'),
+                      black14w500(data: 'Building Name/Number:'),
                       SizedBox(
                         width: 40.w,
                       ),
