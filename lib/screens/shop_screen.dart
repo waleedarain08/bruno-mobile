@@ -65,6 +65,15 @@ class ShopScreen extends StatelessWidget {
                           if (context
                                   .read<AuthViewModel>()
                                   .getAuthResponse
+                                  .data
+                                  ?.isGuest ??
+                              false) {
+                            Navigator.pushNamed(context, loginRoute);
+                            return;
+                          }
+                          if (context
+                                  .read<AuthViewModel>()
+                                  .getAuthResponse
                                   .data!
                                   .petsCount ==
                               0) {
