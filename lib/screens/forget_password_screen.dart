@@ -87,16 +87,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                           });
                         }
                       });
-
-                      /* if (phoneExist) {
-                              authViewModel
-                                  .verifyNumber()
-
-                              */ /* .then((value) => {
-                                        if (value)
-                                          {Navigator.pushNamed(context, otpRoute)}
-                                      })*/ /*;
-                            }*/
                     }
                   },
                   colored: true,

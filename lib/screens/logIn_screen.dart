@@ -179,53 +179,49 @@ class LoginScreen extends StatelessWidget {
                           height: 12.h,
                         ),
                         Align(
-                            alignment: Alignment.centerRight,
-                            child: InkWell(
-                                onTap: () {
-                                  authViewModel.clearFieldsData();
-                                  context.read<AuthViewModel>().setOtpRouteFrom(
-                                      Screens.forgetPassword.text);
-                                  Navigator.pushNamed(
-                                      context, forgetPasswordRoute);
-                                },
-                                child:
-                                    orange14w400(data: 'Forget Password ?'))),
+                          alignment: Alignment.centerRight,
+                          child: InkWell(
+                            onTap: () {
+                              authViewModel.clearFieldsData();
+                              context
+                                  .read<AuthViewModel>()
+                                  .setOtpRouteFrom(Screens.forgetPassword.text);
+                              Navigator.pushNamed(context, forgetPasswordRoute);
+                            },
+                            child: orange14w400(
+                              data: 'Forget Password ?',
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           height: 40.h,
                         ),
                         customButton(
-                            text: 'Login',
-                            onPressed: () {
-                              FocusScopeNode currentFocus =
-                                  FocusScope.of(context);
+                          text: 'Login',
+                          onPressed: () {
+                            FocusScopeNode currentFocus =
+                                FocusScope.of(context);
 
-                              if (!currentFocus.hasPrimaryFocus) {
-                                currentFocus.unfocus();
-                              }
-                              if (authViewModel.signInValidation()) {
-                                authViewModel.callSignInApi().then(
-                                      (value) => {
-                                        if (value)
-                                          {
-                                            Navigator.pushNamedAndRemoveUntil(
-                                              context,
-                                              bottomNavigationRoute,
-                                              (route) => false,
-                                            )
-                                          }
-                                      },
-                                    );
-                              }
-                            },
-                            colored: true),
-                        /* SizedBox(
-                              height: 20.h,
-                            ),
-                            Center(child: grey14w400(data: 'Or continue with')),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            googleFacebookButtonWidget(context: context),*/
+                            if (!currentFocus.hasPrimaryFocus) {
+                              currentFocus.unfocus();
+                            }
+                            if (authViewModel.signInValidation()) {
+                              authViewModel.callSignInApi().then(
+                                    (value) => {
+                                      if (value)
+                                        {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            bottomNavigationRoute,
+                                            (route) => false,
+                                          )
+                                        }
+                                    },
+                                  );
+                            }
+                          },
+                          colored: true,
+                        ),
                         SizedBox(
                           height: 40.h,
                         ),

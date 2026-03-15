@@ -12,8 +12,21 @@ import '../utils/widget_utils.dart';
 import '../view_models/auth_view_model.dart';
 import '../widgets/user_form_fields_widget.dart';
 
-class RegisterUserScreen extends StatelessWidget {
+class RegisterUserScreen extends StatefulWidget {
   const RegisterUserScreen({super.key});
+
+  @override
+  State<RegisterUserScreen> createState() => _RegisterUserScreenState();
+}
+
+class _RegisterUserScreenState extends State<RegisterUserScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<AuthViewModel>().setOtpRouteFrom(Screens.registerUser.text);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +44,7 @@ class RegisterUserScreen extends StatelessWidget {
             body: SingleChildScrollView(
               child: Center(
                 child: Container(
-                  width: getIsBiggerThanMobile(context) ? 0.4.sw : null,
+                  width: context.isBiggerThanMobile ? 0.4.sw : null,
                   padding: const EdgeInsets.only(
                           top: 30, bottom: 20, left: 20, right: 20)
                       .w,

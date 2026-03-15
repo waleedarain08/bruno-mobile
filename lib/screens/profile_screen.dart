@@ -20,6 +20,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isGuest =
+        context.read<AuthViewModel>().getAuthResponse.data!.isGuest!;
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -128,6 +130,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 ListTile(
                     onTap: () {
+                      if (isGuest) {
+                        Navigator.pushNamed(context, loginRoute);
+                        return;
+                      }
                       Navigator.pushNamed(context, ordersRoute);
                     },
                     leading: SvgPicture.asset(
@@ -149,6 +155,10 @@ class ProfileScreen extends StatelessWidget {
                     )),
                 ListTile(
                     onTap: () {
+                      if (isGuest) {
+                        Navigator.pushNamed(context, loginRoute);
+                        return;
+                      }
                       context
                           .read<PuppyViewModel>()
                           .setRouteToPuppyFrom(Screens.profile.text);
@@ -173,6 +183,10 @@ class ProfileScreen extends StatelessWidget {
                     )),
                 ListTile(
                     onTap: () {
+                      if (isGuest) {
+                        Navigator.pushNamed(context, loginRoute);
+                        return;
+                      }
                       Navigator.pushNamed(context, chooseCardRoute);
                     },
                     leading: SvgPicture.asset(
@@ -194,6 +208,10 @@ class ProfileScreen extends StatelessWidget {
                     )),
                 ListTile(
                     onTap: () {
+                      if (isGuest) {
+                        Navigator.pushNamed(context, loginRoute);
+                        return;
+                      }
                       if (context
                               .read<AuthViewModel>()
                               .getAuthResponse
