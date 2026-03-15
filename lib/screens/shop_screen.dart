@@ -124,6 +124,15 @@ class ShopScreen extends StatelessWidget {
                 /* boldText: 'Tap Here',*/
                 onPressed: () {
                   if (context
+                                  .read<AuthViewModel>()
+                                  .getAuthResponse
+                                  .data
+                                  ?.isGuest ??
+                              false) {
+                            Navigator.pushNamed(context, loginRoute);
+                            return;
+                          }
+                  if (context
                           .read<AuthViewModel>()
                           .getAuthResponse
                           .data!
