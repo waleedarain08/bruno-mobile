@@ -182,7 +182,7 @@ class AuthViewModel with ChangeNotifier {
     }
     final locationCity = result.mapToPretty();
     navigatorKey.currentContext!.read<CartViewModel>().setDeliveryFee(
-        locationCity.city == 'Abu Dhabi'
+        locationCity.city == 'Abu Dhabi' || locationCity.state == 'Abu Dhabi'
             ? _authResponse.data!.discounts![1].aggregate!.toInt()
             : _authResponse.data!.discounts![0].aggregate!.toInt());
     notifyListeners();
