@@ -33,14 +33,15 @@ class _HomeCarouselWidgetState extends State<HomeCarouselWidget> {
             for (var banner in context.read<AuthViewModel>().getBannerList)
               CachedNetworkImage(
                 imageUrl: banner.media![0],
-                fit: BoxFit.fill,
+                fit: context.isBiggerThanMobile ? BoxFit.fill : null,
               )
           ],
           carouselController: _controller,
           options: CarouselOptions(
-              // height: 200,
+              //
+              // // height: 200,
               autoPlay: true,
-              viewportFraction: isBiggerThanMobile ? 1.w : 0.85.w,
+              viewportFraction: isBiggerThanMobile ? 1.w : 0.7.w,
               enlargeCenterPage: true,
               aspectRatio: isBiggerThanMobile ? 2.5 : 2.0,
               onPageChanged: (index, reason) {

@@ -1,3 +1,4 @@
+import 'package:brunos_kitchen/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +48,9 @@ class LocationWidget extends StatelessWidget {
           ),
           SizedBox(
             width: 260.w,
-            child: white12w400(data: address),
+            child: context.isBiggerThanMobile
+                ? white12w400(data: address)
+                : black12w500Centre(data: address),
           )
         ],
       ),

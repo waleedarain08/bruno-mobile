@@ -23,6 +23,7 @@ import '../utils/navigations_validation.dart';
 import '../view_models/auth_view_model.dart';
 import '../view_models/plans_view_model.dart';
 import '../view_models/puppy_view_model.dart';
+import '../widgets/deafult_puppy_icon_widget.dart';
 import '../widgets/dialogs/discription_dialog.dart';
 
 class ShopScreen extends StatelessWidget {
@@ -124,14 +125,14 @@ class ShopScreen extends StatelessWidget {
                 /* boldText: 'Tap Here',*/
                 onPressed: () {
                   if (context
-                                  .read<AuthViewModel>()
-                                  .getAuthResponse
-                                  .data
-                                  ?.isGuest ??
-                              false) {
-                            Navigator.pushNamed(context, loginRoute);
-                            return;
-                          }
+                          .read<AuthViewModel>()
+                          .getAuthResponse
+                          .data
+                          ?.isGuest ??
+                      false) {
+                    Navigator.pushNamed(context, loginRoute);
+                    return;
+                  }
                   if (context
                           .read<AuthViewModel>()
                           .getAuthResponse
@@ -217,7 +218,8 @@ class ShopScreen extends StatelessWidget {
               ),
             ),
           ),
-          cartIconWidget()
+          cartIconWidget(),
+          if (context.isBiggerThanMobile) defaultPuppyIconWidget(),
         ],
       ),
     );

@@ -49,8 +49,7 @@ class HomeScreen extends StatelessWidget {
                   child: Row(
                     spacing: 20.w,
                     children: [
-                      LocationWidget(),
-                      Spacer(),
+                      Expanded(child: LocationWidget()),
                       cartIconWidget(),
                       defaultPuppyIconWidget(),
                     ],

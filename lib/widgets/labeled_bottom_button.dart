@@ -37,7 +37,7 @@ class LabeledBottomButton extends StatelessWidget {
             height?.isInfinite ?? false ? EdgeInsets.only(bottom: 10.w) : null,
         decoration: BoxDecoration(
           color: CustomColors.whiteColor,
-          borderRadius: context.isBiggerThanMobile ?? false
+          borderRadius: context.isBiggerThanMobile
               ? BorderRadius.circular(30)
               : BorderRadius.only(
                   topLeft: Radius.circular(30.0),
@@ -67,7 +67,9 @@ class LabeledBottomButton extends StatelessWidget {
                   visible: isButtonVisible,
                   child: Container(
                     width: context.isBiggerThanMobile ? 0.2.sw : null,
-                    padding: const EdgeInsets.only(top: 20.0).w,
+                    padding: context.isBiggerThanMobile
+                        ? const EdgeInsets.only(top: 20.0).w
+                        : null,
                     child: customButton(
                       text: buttonText,
                       onPressed: onTap,

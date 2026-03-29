@@ -12,8 +12,8 @@ import '../../models/cart_model.dart';
 import '../../utils/custom_colors.dart';
 import '../../utils/enums.dart';
 import '../../utils/images.dart';
-import 'cart_dish_vertical_list_chip.dart';
 import '../circular_network_image_widget.dart';
+import 'cart_dish_vertical_list_chip.dart';
 
 Widget cartVerticalListChipWidget(
     {required CartModel cartDetail, required int itemIndex}) {
@@ -42,7 +42,8 @@ Widget cartVerticalListChipWidget(
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15).w,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15).w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -58,7 +59,8 @@ Widget cartVerticalListChipWidget(
                       onTap: () {
                         navigatorKey.currentContext!
                             .read<CartViewModel>()
-                            .setViewCartItemDetail(false);                        navigatorKey.currentContext!
+                            .setViewCartItemDetail(false);
+                        navigatorKey.currentContext!
                             .read<CartViewModel>()
                             .setSelectedIndex(itemIndex);
                         navigatorKey.currentContext!
@@ -75,14 +77,15 @@ Widget cartVerticalListChipWidget(
                                     navigatorKey.currentContext!,
                                     transitionPlanRoute)
                                 :
-                        //TODO: REMOVE ONETIME ORDER
-                        /*cartDetail.planType == Plans.oneTime.text
+                                //TODO: REMOVE ONETIME ORDER
+                                /*cartDetail.planType == Plans.oneTime.text
                                     ? Navigator.pushNamed(
                                         navigatorKey.currentContext!,
                                         oneTimePlanRoute)
-                                    :*/ Navigator.pushNamed(
-                                        navigatorKey.currentContext!,
-                                        productDetailRoute);
+                                    :*/
+                                Navigator.pushNamed(
+                                    navigatorKey.currentContext!,
+                                    productDetailRoute);
                       },
                       child: Container(
                         decoration: ShapeDecoration(
@@ -94,7 +97,7 @@ Widget cartVerticalListChipWidget(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child:  Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(10).w,
                           child: const Icon(
                             Icons.edit,
@@ -123,7 +126,7 @@ Widget cartVerticalListChipWidget(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child:  Padding(
+                        child: Padding(
                           padding: const EdgeInsets.all(10).w,
                           child: const Icon(
                             Icons.delete_outline,
@@ -181,7 +184,10 @@ Widget cartVerticalListChipWidget(
                     return cartDishVerticalListChipWidget(
                         cartRecipeModel: cartDetail.recipes[index],
                         planType: cartDetail.planType,
-                        petName: cartDetail.pet?.name!, totalWeight: cartDetail.totalWeight.isNotEmpty? cartDetail.totalWeight[index]: 0);
+                        petName: cartDetail.pet?.name!,
+                        totalWeight: cartDetail.totalWeight.isNotEmpty
+                            ? cartDetail.totalWeight[index]
+                            : 0);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(
@@ -195,7 +201,8 @@ Widget cartVerticalListChipWidget(
                 Align(
                     alignment: Alignment.centerRight,
                     child: black14w500(
-                        data: 'Payable: AED ${cartDetail.planType == Plans.monthly.text? cartDetail.planDiscountedPrice.toStringAsFixed(2): cartDetail.planTotal.toStringAsFixed(2)}'))
+                        data:
+                            'Payable: AED ${cartDetail.planType == Plans.monthly.text ? cartDetail.planDiscountedPrice.toStringAsFixed(2) : cartDetail.planTotal.toStringAsFixed(2)}'))
               ],
             ),
           ),
