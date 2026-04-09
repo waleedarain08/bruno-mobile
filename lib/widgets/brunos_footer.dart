@@ -1,9 +1,11 @@
+import 'package:brunos_kitchen/route_generator.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:web/web.dart' as web;
 
 import '../utils/images.dart';
 
@@ -38,9 +40,9 @@ class BrunosFooter extends StatelessWidget {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 if (constraints.maxWidth > 1200) {
-                  return _buildDesktopLayout();
+                  return _buildDesktopLayout(context);
                 } else if (constraints.maxWidth > 768) {
-                  return _buildTabletLayout();
+                  return _buildTabletLayout(context);
                 } else {
                   return _buildMobileLayout();
                 }
@@ -60,7 +62,7 @@ class BrunosFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopLayout() {
+  Widget _buildDesktopLayout(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -84,6 +86,11 @@ class BrunosFooter extends StatelessWidget {
           child: _buildCustomerService(),
         ),
         const SizedBox(width: 40),
+        Expanded(
+          flex: 2,
+          child: _buildQuickLinks(context),
+        ),
+        const SizedBox(width: 40),
 
         // Get Started Section
         Expanded(
@@ -101,7 +108,7 @@ class BrunosFooter extends StatelessWidget {
     );
   }
 
-  Widget _buildTabletLayout() {
+  Widget _buildTabletLayout(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -112,6 +119,8 @@ class BrunosFooter extends StatelessWidget {
             Expanded(child: _buildOfficeAddress()),
             const SizedBox(width: 30),
             Expanded(child: _buildCustomerService()),
+            const SizedBox(width: 30),
+            Expanded(child: _buildQuickLinks(context)),
           ],
         ),
         const SizedBox(height: 40),
@@ -151,6 +160,101 @@ class BrunosFooter extends StatelessWidget {
       child: Center(
         child: SvgPicture.asset(logoImage),
       ),
+    );
+  }
+
+  Widget _buildQuickLinks(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Quick Links',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 16.h),
+        TextButton(
+          onPressed: () {
+            web.window.location.href = 'https://brunos.kitchen/';
+          },
+          child: Text(
+            'Home',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            web.window.location.href = 'https://brunos.kitchen/about-us/';
+          },
+          child: Text(
+            'About us',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            web.window.location.href = 'https://brunos.kitchen/our-services/';
+          },
+          child: Text(
+            'Our Services',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            web.window.location.href = 'https://brunos.kitchen/recipes/';
+          },
+          child: Text(
+            'Our Recipes',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, faqRoute);
+          },
+          child: Text(
+            'FAQs',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            web.window.location.href = 'https://brunos.kitchen/contact/';
+          },
+          child: Text(
+            'Contact Us',
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 14.sp,
+              height: 1.6,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -371,7 +475,7 @@ class BrunosFooter extends StatelessWidget {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
+                Text(
                   "© ${DateTime.now().year} – Bruno's Kitchen LTD",
                   style: TextStyle(
                     color: Colors.white70,
