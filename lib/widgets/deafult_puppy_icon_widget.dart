@@ -14,9 +14,13 @@ import '../view_models/puppy_view_model.dart';
 import 'circular_network_image_widget.dart';
 
 Widget defaultPuppyIconWidget() {
-  return Consumer<AuthViewModel>(builder: (_, authViewModel, __) {
+  return Consumer<AuthViewModel>(builder: (context, authViewModel, __) {
     return InkWell(
       onTap: () {
+        if (authViewModel.getAuthResponse.data!.isGuest ?? false) {
+          Navigator.pushNamed(context, loginRoute);
+          return;
+        }
         if (authViewModel.getAuthResponse.data!.pet == null) {
           navigatorKey.currentContext!.read<PuppyViewModel>().clearPuppyData();
           Navigator.pushNamed(navigatorKey.currentContext!, puppyCreationRoute);
