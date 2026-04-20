@@ -37,7 +37,7 @@ class PlansViewModel with ChangeNotifier {
   //final List<String> _pouchesDetail = [];
 
   //bool _showDaysRangeValidation = false;
-  String _planType = Plans.transitional.text;
+  Plans _planType = Plans.transitional;
   RecipesListResponse _recipesListResponse = RecipesListResponse();
   RecipeModel _selectedRecipe = RecipeModel();
   final List<String> _productImages = [];
@@ -222,7 +222,7 @@ class PlansViewModel with ChangeNotifier {
 /*
     _selectedDay = DateFormat('dd MMM yyyy').parse(cartData.deliveryDate);
 */
-    if (_planType == Plans.monthly.text) {
+    if (_planType == Plans.monthly) {
       if (data.recipes.length == 1) {
         _monthlyEmptyTile1 = data.recipes[0];
       } else if (data.recipes.length == 2) {
@@ -245,7 +245,7 @@ class PlansViewModel with ChangeNotifier {
     final List<RecipeModel> recipeList = [];
     List<num> totalWeightData = [];
     List<String> pouchesData = [];
-    if (_planType == Plans.monthly.text) {
+    if (_planType == Plans.monthly) {
       if (_monthlyEmptyTile1 != null) {
         recipeList.add(_monthlyEmptyTile1!);
       }
@@ -255,7 +255,7 @@ class PlansViewModel with ChangeNotifier {
       if (_monthlyEmptyTile3 != null) {
         recipeList.add(_monthlyEmptyTile3!);
       }
-    } else if (_planType == Plans.transitional.text) {
+    } else if (_planType == Plans.transitional) {
       setTransitionalDishModel();
       recipeList.add(_selectedRecipe);
     }
@@ -269,7 +269,7 @@ class PlansViewModel with ChangeNotifier {
       recipeList.add(_selectedRecipe);
     }
 
-    if (_planType != Plans.product.text) {
+    if (_planType != Plans.product) {
       totalWeightData = calculateTotalWight(recipes: recipeList, pet: petData);
       pouchesData =
           generatePouchesDetailList(recipes: recipeList, pet: petData);
@@ -307,7 +307,7 @@ class PlansViewModel with ChangeNotifier {
               puppyActualWeight: pet.actualWeight!) *
           (recipes[index].totalDays!);
       final num transitionalPlanTotalQuantity = getTotalTransitionalGrams();
-      final num weight = _planType == Plans.transitional.text
+      final num weight = _planType == Plans.transitional
           ? transitionalPlanTotalQuantity
           : totalPlanQuantity;
       totalWeight.add(weight);
@@ -328,7 +328,7 @@ class PlansViewModel with ChangeNotifier {
       final num perPouchQuantity =
           calculateFeedingPlan(recipeModel: recipes[index], puppyModel: pet);
 
-      if (_planType == Plans.transitional.text) {
+      if (_planType == Plans.transitional) {
         final num transitional1to3PerPouchQty = calculateFeedingPlan(
             recipeModel: recipes[index],
             puppyModel: pet,
@@ -571,9 +571,9 @@ class PlansViewModel with ChangeNotifier {
 
   RecipeModel? get getMonthlyEmptyTile3 => _monthlyEmptyTile3;
 
-  String get getPlanType => _planType;
+  Plans get getPlanType => _planType;
 
-  void setPlanType(String value) {
+  void setPlanType(Plans value) {
     _planType = value;
     notifyListeners();
   }

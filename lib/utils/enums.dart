@@ -29,7 +29,6 @@ enum Contact {
 enum Plans {
   transitional("Transitional"),
   monthly("Monthly"),
-  //oneTime("OneTime"),
   product("Product");
 
   const Plans(this.text);

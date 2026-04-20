@@ -9,7 +9,7 @@ import '../circular_network_image_widget.dart';
 
 Widget cartDishVerticalListChipWidget(
     {required RecipeModel cartRecipeModel,
-    required String planType,
+    required Plans planType,
     String? petName,
     required num totalWeight}) {
   return InkWell(
@@ -48,9 +48,9 @@ Widget cartDishVerticalListChipWidget(
                                   'Option: ${cartRecipeModel.selectedItemSize!.name!}'),
                         )
                       : const SizedBox(),
-                  planType == Plans.monthly.text
+                  planType == Plans.monthly
                       ? black14w500(data: 'Days: ${cartRecipeModel.totalDays}')
-                      : planType == Plans.transitional.text
+                      : planType == Plans.transitional
                           ? const SizedBox()
                           :
                           //TODO: REMOVE ONETIME ORDER
@@ -75,7 +75,7 @@ Widget cartDishVerticalListChipWidget(
                   /*petName != null ? orange14w500(
                       data: 'AED ${cartRecipeModel
                           .finalPrice}${planType == Plans.oneTime.text?'':' / Order'}'):*/
-                  planType == Plans.product.text
+                  planType == Plans.product
                       ? orange14w500(
                           data:
                               'AED ${cartRecipeModel.pricePerKG!.toStringAsFixed(2)} / Item')
@@ -83,7 +83,7 @@ Widget cartDishVerticalListChipWidget(
                   const SizedBox(
                     height: 2,
                   ),
-                  planType == Plans.monthly.text
+                  planType == Plans.monthly
                       ? orange14w500(
                           data:
                               'Sub Total: AED ${cartRecipeModel.finalPrice!.toStringAsFixed(2)}')

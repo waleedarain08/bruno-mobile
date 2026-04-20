@@ -36,7 +36,7 @@ class BottomNavigationViewModel extends ChangeNotifier {
     if (_homeViewIndex == 1) {
       navigatorKey.currentContext!
           .read<PlansViewModel>()
-          .setPlanType(Plans.product.text);
+          .setPlanType(Plans.product);
     }
     notifyListeners();
   }
