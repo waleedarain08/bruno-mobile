@@ -27,7 +27,7 @@ Widget cartVerticalListChipWidget(
           navigatorKey.currentContext!
               .read<PlansViewModel>()
               .setDataToFeedingPlan(data: cartDetail);
-          if (cartDetail.planType == Plans.product.text) {
+          if (cartDetail.planType == Plans.product) {
             Navigator.pushNamed(
                 navigatorKey.currentContext!, productDetailRoute);
           } else {
@@ -53,7 +53,7 @@ Widget cartVerticalListChipWidget(
                     Expanded(
                       child: orange18w500(
                           data:
-                              '${cartDetail.planType} ${cartDetail.pet == null ? '' : 'Plan'}'),
+                              '${cartDetail.planType.text} ${cartDetail.pet == null ? '' : 'Plan'}'),
                     ),
                     InkWell(
                       onTap: () {
@@ -66,13 +66,13 @@ Widget cartVerticalListChipWidget(
                         navigatorKey.currentContext!
                             .read<PlansViewModel>()
                             .setDataToFeedingPlan(data: cartDetail);
-                        cartDetail.planType == Plans.monthly.text
+                        cartDetail.planType == Plans.monthly
                             ? {
                                 Navigator.pushNamed(
                                     navigatorKey.currentContext!,
                                     monthlyPlanRoute)
                               }
-                            : cartDetail.planType == Plans.transitional.text
+                            : cartDetail.planType == Plans.transitional
                                 ? Navigator.pushNamed(
                                     navigatorKey.currentContext!,
                                     transitionPlanRoute)
@@ -202,7 +202,7 @@ Widget cartVerticalListChipWidget(
                     alignment: Alignment.centerRight,
                     child: black14w500(
                         data:
-                            'Payable: AED ${cartDetail.planType == Plans.monthly.text ? cartDetail.planDiscountedPrice.toStringAsFixed(2) : cartDetail.planTotal.toStringAsFixed(2)}'))
+                            'Payable: AED ${cartDetail.planType == Plans.monthly ? cartDetail.planDiscountedPrice.toStringAsFixed(2) : cartDetail.planTotal.toStringAsFixed(2)}'))
               ],
             ),
           ),

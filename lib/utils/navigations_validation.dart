@@ -9,12 +9,11 @@ import '../view_models/plans_view_model.dart';
 import '../widgets/dialogs/discription_dialog.dart';
 import 'enums.dart';
 
-navigateToMonthlyPlans({required BuildContext context}){
-  if (context.read<CartViewModel>().checkCartForPlanValidation(
-      planType: Plans.monthly.text)) {
-    context
-        .read<PlansViewModel>()
-        .setPlanType(Plans.monthly.text);
+navigateToMonthlyPlans({required BuildContext context}) {
+  if (context
+      .read<CartViewModel>()
+      .checkCartForPlanValidation(planType: Plans.monthly.text)) {
+    context.read<PlansViewModel>().setPlanType(Plans.monthly);
     context.read<PlansViewModel>().clearPlanData();
     Navigator.pushNamed(context, monthlyPlanRoute);
   } else {
@@ -22,7 +21,7 @@ navigateToMonthlyPlans({required BuildContext context}){
     descriptionDialog(
         context: context,
         description:
-        'To add new plan for ${context.read<AuthViewModel>().getAuthResponse.data!.pet!.name} you have to remove current ${context.read<AuthViewModel>().getAuthResponse.data!.pet!.name} plan from shopping bag',
+            'To add new plan for ${context.read<AuthViewModel>().getAuthResponse.data!.pet!.name} you have to remove current ${context.read<AuthViewModel>().getAuthResponse.data!.pet!.name} plan from shopping bag',
         height: 180.h,
         title: 'New Plan Creation');
   }

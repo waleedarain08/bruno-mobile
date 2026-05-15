@@ -46,21 +46,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             calculateProductWeightTotal(listOfItems: recipeList);
         context.read<CartViewModel>().addToCartList(
               CartModel(
-                  recipes: recipeList,
-                  pet: null,
-                  /*
-                        deliveryDate: '03 Oct 2023',
-              */
-                  planType: plansViewModel.getPlanType,
-                  planTotal: planTotalPrice,
-                  pouchesDetail: [],
-                  totalWeight: [planTotalWeight],
-                  planDiscountedPrice: planTotalPrice,
-                  planDiscountPer: 0),
+                recipes: recipeList,
+                pet: null,
+                planType: plansViewModel.getPlanType,
+                planTotal: planTotalPrice,
+                pouchesDetail: [],
+                totalWeight: [planTotalWeight],
+                planDiscountedPrice: planTotalPrice,
+                planDiscountPer: 0,
+              ),
             );
 
         Navigator.pushNamedAndRemoveUntil(
-            context, bottomNavigationRoute, (route) => false);
+          context,
+          bottomNavigationRoute,
+          (route) => false,
+        );
 
         /* EasyLoading.showToast(
                       '${plansViewModel.getPlanType} Successfully Added To\nShopping Bag',

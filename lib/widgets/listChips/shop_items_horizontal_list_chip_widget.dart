@@ -14,10 +14,15 @@ import '../../view_models/plans_view_model.dart';
 Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
   return InkWell(
     onTap: () {
-      navigatorKey.currentContext!.read<CartViewModel>().setViewCartItemDetail(false);
-      navigatorKey.currentContext!.read<PlansViewModel>().setPlanType(Plans.product.text);
-      navigatorKey.currentContext!.read<PlansViewModel>().setSelectedRecipe(
-          productDetail);
+      navigatorKey.currentContext!
+          .read<CartViewModel>()
+          .setViewCartItemDetail(false);
+      navigatorKey.currentContext!
+          .read<PlansViewModel>()
+          .setPlanType(Plans.product);
+      navigatorKey.currentContext!
+          .read<PlansViewModel>()
+          .setSelectedRecipe(productDetail);
       navigatorKey.currentContext!.read<PlansViewModel>().clearPlanData();
       Navigator.pushNamed(navigatorKey.currentContext!, productDetailRoute);
     },
@@ -35,7 +40,7 @@ Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 108.h,
+                  height: 108.h,
                   width: double.infinity,
                   decoration: ShapeDecoration(
                     color: CustomColors.lightGreyColor,
@@ -47,7 +52,8 @@ Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
                     padding: const EdgeInsets.all(15).w,
                     child: Center(
                       child: Image.network(
-                        productDetail.media![0], height: 108.h,
+                        productDetail.media![0],
+                        height: 108.h,
                         loadingBuilder: (BuildContext context, Widget child,
                             ImageChunkEvent? loadingProgress) {
                           if (loadingProgress == null) return child;
@@ -56,9 +62,10 @@ Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
                             width: 70.w,
                             child: Center(
                               child: LinearProgressIndicator(
-                                value: loadingProgress.expectedTotalBytes != null
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
                                     ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
+                                        loadingProgress.expectedTotalBytes!
                                     : null,
                               ),
                             ),
@@ -73,7 +80,8 @@ Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: productDetail.lifeStage!.isNotEmpty? 20.h : 40.h,
+                        height:
+                            productDetail.lifeStage!.isNotEmpty ? 20.h : 40.h,
                         child: black14w400(data: productDetail.name!)),
                     Visibility(
                       visible: productDetail.lifeStage!.isNotEmpty,
@@ -82,7 +90,9 @@ Widget shopItemsHorizontalListChipWidget({required RecipeModel productDetail}) {
                     SizedBox(
                       height: 6.h,
                     ),
-                    brown12w500Centre(data: 'AED ${productDetail.pricePerKG!.toStringAsFixed(2)}'),
+                    brown12w500Centre(
+                        data:
+                            'AED ${productDetail.pricePerKG!.toStringAsFixed(2)}'),
                     SizedBox(
                       height: 18.h,
                     ),

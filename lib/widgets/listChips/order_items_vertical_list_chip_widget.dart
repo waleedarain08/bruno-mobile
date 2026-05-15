@@ -14,8 +14,8 @@ import '../../utils/enums.dart';
 import '../../utils/images.dart';
 import '../../view_models/cart_view_model.dart';
 import '../../view_models/plans_view_model.dart';
-import 'cart_dish_vertical_list_chip.dart';
 import '../circular_network_image_widget.dart';
+import 'cart_dish_vertical_list_chip.dart';
 
 Widget orderItemsVerticalListChipWidget(
     {required OrderItems orderItems,
@@ -31,7 +31,7 @@ Widget orderItemsVerticalListChipWidget(
           navigatorKey.currentContext!
               .read<PlansViewModel>()
               .setDataToFeedingPlan(data: orderItems);
-          if (orderItems.planType == Plans.product.text) {
+          if (orderItems.planType == Plans.product) {
             Navigator.pushNamed(
                 navigatorKey.currentContext!, productDetailRoute);
           } else {
@@ -46,7 +46,8 @@ Widget orderItemsVerticalListChipWidget(
             ),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15).w,
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15).w,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -65,7 +66,7 @@ Widget orderItemsVerticalListChipWidget(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      child:  Padding(
+                      child: Padding(
                         padding: const EdgeInsets.all(10).w,
                         child: const Icon(
                           Icons.sticky_note_2_outlined,
@@ -152,7 +153,9 @@ Widget orderItemsVerticalListChipWidget(
                   itemBuilder: (BuildContext context, int index) {
                     return cartDishVerticalListChipWidget(
                         cartRecipeModel: orderItems.recipes![index],
-                        totalWeight : orderItems.totalWeight!.isNotEmpty?orderItems.totalWeight![index]:0,
+                        totalWeight: orderItems.totalWeight!.isNotEmpty
+                            ? orderItems.totalWeight![index]
+                            : 0,
                         planType: orderItems.planType!,
                         petName: orderItems.pet != null
                             ? orderItems.pet!.name!
@@ -170,7 +173,8 @@ Widget orderItemsVerticalListChipWidget(
                 Align(
                     alignment: Alignment.centerRight,
                     child: black14w500(
-                        data: 'Total: AED ${orderItems.planDiscountedPrice!.toStringAsFixed(2)}'))
+                        data:
+                            'Total: AED ${orderItems.planDiscountedPrice!.toStringAsFixed(2)}'))
               ],
             ),
           ),

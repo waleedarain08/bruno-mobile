@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:brunos_kitchen/main.dart';
 import 'package:brunos_kitchen/route_generator.dart';
 import 'package:brunos_kitchen/utils/custom_font_style.dart';
@@ -19,8 +21,10 @@ Widget productGridChipWidget(
   return Consumer<PlansViewModel>(builder: (context, plansViewModel, child) {
     return InkWell(
       onTap: () {
-        if (plansViewModel.getPlanType == Plans.monthly.text) {
-          plansViewModel.setPlanType(Plans.product.text);
+        log('PLAN: ${plansViewModel.getPlanType.text}');
+        if (plansViewModel.getPlanType == Plans.monthly ||
+            plansViewModel.getPlanType == Plans.transitional) {
+          plansViewModel.setPlanType(Plans.product);
         }
         plansViewModel.setSelectedRecipe(recipeData);
         //TODO: REMOVE ONETIME ORDER

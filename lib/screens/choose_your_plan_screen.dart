@@ -52,11 +52,13 @@ class ChooseYourPlanScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    if (context.read<CartViewModel>().checkCartForPlanValidation(
-                        planType: Plans.transitional.text)) {
+                    if (context
+                        .read<CartViewModel>()
+                        .checkCartForPlanValidation(
+                            planType: Plans.transitional.text)) {
                       context
                           .read<PlansViewModel>()
-                          .setPlanType(Plans.transitional.text);
+                          .setPlanType(Plans.transitional);
                       context.read<PlansViewModel>().clearPlanData();
                       Navigator.pushNamed(context, transitionPlanRoute);
                     } else {
@@ -190,8 +192,16 @@ class ChooseYourPlanScreen extends StatelessWidget {
                                       child: Align(
                                           alignment: Alignment.centerRight,
                                           child: orange14w500(
-                                              data:
-                                                  context.watch<AuthViewModel>().getAuthResponse.data!.discounts![3].aggregate != 0 ? 'Save upto ${context.watch<AuthViewModel>().getAuthResponse.data!.discounts![3].aggregate}%' : 'Order for up to a month and save!')),
+                                              data: context
+                                                          .watch<
+                                                              AuthViewModel>()
+                                                          .getAuthResponse
+                                                          .data!
+                                                          .discounts![3]
+                                                          .aggregate !=
+                                                      0
+                                                  ? 'Save upto ${context.watch<AuthViewModel>().getAuthResponse.data!.discounts![3].aggregate}%'
+                                                  : 'Order for up to a month and save!')),
                                     )
                                   ],
                                 ),
@@ -209,11 +219,11 @@ class ChooseYourPlanScreen extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     //TODO: REMOVE ONETIME ORDER
-                    if (context.read<CartViewModel>().checkCartForPlanValidation(
-                        planType: Plans.product /*oneTime*/ .text)) {
-                      context
-                          .read<PlansViewModel>()
-                          .setPlanType(Plans.product /*oneTime*/ .text);
+                    if (context
+                        .read<CartViewModel>()
+                        .checkCartForPlanValidation(
+                            planType: Plans.product.text)) {
+                      context.read<PlansViewModel>().setPlanType(Plans.product);
                       context.read<PlansViewModel>().clearPlanData();
                       Navigator.pushNamed(context, oneTimePlanRoute);
                     } else {

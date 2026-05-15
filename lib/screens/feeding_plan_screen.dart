@@ -57,9 +57,9 @@ class _FeedingPlanScreenState extends State<FeedingPlanScreen> {
         return SafeArea(
           child: CustomScaffold(
             appBar: AppBarWithBackWidget(
-                heading: plansViewModel.getPlanType == Plans.transitional.text
+                heading: plansViewModel.getPlanType == Plans.transitional
                     ? 'Transitional Feeding Plan'
-                    : plansViewModel.getPlanType == Plans.monthly.text
+                    : plansViewModel.getPlanType == Plans.monthly
                         ? 'Monthly Feeding Plan'
                         : 'One time Feeding Order',
                 showPuppy: false,
@@ -78,92 +78,97 @@ class _FeedingPlanScreenState extends State<FeedingPlanScreen> {
           Expanded(
             child: _buildFeedingPlan(plansViewModel),
           ),
-          Expanded(child: Padding(
-            padding: EdgeInsets.only(top: 30.h, bottom: 30.h, right: 20.w),
-            child: LabeledBottomButton(
-              label: Column(
-                children: [
-                  Visibility(
-                    visible: plansViewModel.getPlanType == Plans.monthly.text &&
-                        context
-                            .watch<AuthViewModel>()
-                            .getAuthResponse
-                            .data!
-                            .discounts![3]
-                            .aggregate !=
-                            0,
-                    child: Column(
-                      children: [
-                        orange14w500(
-                            data:
-                            'Total Price = ${plansViewModel.getFeedingPlan!.planTotal} AED'),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        orange14w500(
-                            data:
-                            'Discount = ${context.watch<AuthViewModel>().getAuthResponse.data!.discounts![3].aggregate} %'),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                      ],
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(top: 30.h, bottom: 30.h, right: 20.w),
+              child: LabeledBottomButton(
+                label: Column(
+                  children: [
+                    Visibility(
+                      visible: plansViewModel.getPlanType == Plans.monthly &&
+                          context
+                                  .watch<AuthViewModel>()
+                                  .getAuthResponse
+                                  .data!
+                                  .discounts![3]
+                                  .aggregate !=
+                              0,
+                      child: Column(
+                        children: [
+                          orange14w500(
+                              data:
+                                  'Total Price = ${plansViewModel.getFeedingPlan!.planTotal} AED'),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          orange14w500(
+                              data:
+                                  'Discount = ${context.watch<AuthViewModel>().getAuthResponse.data!.discounts![3].aggregate} %'),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  orange14w500(
-                      data:
-                      'Total ${plansViewModel.getPlanType} Plan = ${plansViewModel.getPlanType == Plans.monthly.text ? plansViewModel.getFeedingPlan!.planDiscountedPrice.toStringAsFixed(2) : plansViewModel.getFeedingPlan!.planTotal.toStringAsFixed(2)} AED'),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  SizedBox(
-                      width: context.isBiggerThanMobile ? null : 250.w,
-                      child: black12w500Centre(
-                          data:
-                          'The above plan is calculated based on \n${plansViewModel.getFeedingPlan!.pet!.name!}\'s profile data',
-                          centre: true)),
-                ],
-              ),
-              isButtonVisible:
-              context.read<CartViewModel>().getViewCartItemDetail == false,
-              buttonText: 'Add to Shopping Cart',
-              onTap: () {
-                if (!context.read<CartViewModel>().getViewCartItemDetail) {
-                  context.read<CartViewModel>().addToCartList(
-                    CartModel(
-                        recipes: plansViewModel.getFeedingPlan!.recipes,
-                        pet: plansViewModel.getFeedingPlan!.pet,
-                        /*
+                    orange14w500(
+                        data:
+                            'Total ${plansViewModel.getPlanType} Plan = ${plansViewModel.getPlanType == Plans.monthly ? plansViewModel.getFeedingPlan!.planDiscountedPrice.toStringAsFixed(2) : plansViewModel.getFeedingPlan!.planTotal.toStringAsFixed(2)} AED'),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    SizedBox(
+                        width: context.isBiggerThanMobile ? null : 250.w,
+                        child: black12w500Centre(
+                            data:
+                                'The above plan is calculated based on \n${plansViewModel.getFeedingPlan!.pet!.name!}\'s profile data',
+                            centre: true)),
+                  ],
+                ),
+                isButtonVisible:
+                    context.read<CartViewModel>().getViewCartItemDetail ==
+                        false,
+                buttonText: 'Add to Shopping Cart',
+                onTap: () {
+                  if (!context.read<CartViewModel>().getViewCartItemDetail) {
+                    context.read<CartViewModel>().addToCartList(
+                          CartModel(
+                              recipes: plansViewModel.getFeedingPlan!.recipes,
+                              pet: plansViewModel.getFeedingPlan!.pet,
+                              /*
                                           deliveryDate: deliveryDate,
                                 */
-                        planType: plansViewModel.getFeedingPlan!.planType,
-                        planTotal: plansViewModel.getFeedingPlan!.planTotal,
-                        pouchesDetail:
-                        plansViewModel.getFeedingPlan!.pouchesDetail,
-                        totalWeight:
-                        plansViewModel.getFeedingPlan!.totalWeight,
-                        planDiscountedPrice: plansViewModel
-                            .getFeedingPlan!.planDiscountedPrice,
-                        planDiscountPer:
-                        plansViewModel.getFeedingPlan!.planDiscountPer),
-                  );
-                  if (context.read<CartViewModel>().getSelectedIndex == null) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, bottomNavigationRoute, (route) => false);
-                  } else {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, cartRoute, (Route route) => route.isFirst);
-                  }
+                              planType: plansViewModel.getFeedingPlan!.planType,
+                              planTotal:
+                                  plansViewModel.getFeedingPlan!.planTotal,
+                              pouchesDetail:
+                                  plansViewModel.getFeedingPlan!.pouchesDetail,
+                              totalWeight:
+                                  plansViewModel.getFeedingPlan!.totalWeight,
+                              planDiscountedPrice: plansViewModel
+                                  .getFeedingPlan!.planDiscountedPrice,
+                              planDiscountPer: plansViewModel
+                                  .getFeedingPlan!.planDiscountPer),
+                        );
+                    if (context.read<CartViewModel>().getSelectedIndex ==
+                        null) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, bottomNavigationRoute, (route) => false);
+                    } else {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, cartRoute, (Route route) => route.isFirst);
+                    }
 
-                  /*EasyLoading.showToast(
+                    /*EasyLoading.showToast(
                                             '${plansViewModel.getPlanType} Plan Successfully Added To\nShopping Bag',
                                             toastPosition:
                                                 EasyLoadingToastPosition.center);*/
-                } else {
-                  Navigator.pop(context);
-                }
-              },
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
             ),
-          ),),
+          ),
         ],
       );
     }
@@ -179,7 +184,7 @@ class _FeedingPlanScreenState extends State<FeedingPlanScreen> {
             label: Column(
               children: [
                 Visibility(
-                  visible: plansViewModel.getPlanType == Plans.monthly.text &&
+                  visible: plansViewModel.getPlanType == Plans.monthly &&
                       context
                               .watch<AuthViewModel>()
                               .getAuthResponse
@@ -206,7 +211,7 @@ class _FeedingPlanScreenState extends State<FeedingPlanScreen> {
                 ),
                 orange14w500(
                     data:
-                        'Total ${plansViewModel.getPlanType} Plan = ${plansViewModel.getPlanType == Plans.monthly.text ? plansViewModel.getFeedingPlan!.planDiscountedPrice.toStringAsFixed(2) : plansViewModel.getFeedingPlan!.planTotal.toStringAsFixed(2)} AED'),
+                        'Total ${plansViewModel.getPlanType} Plan = ${plansViewModel.getPlanType == Plans.monthly ? plansViewModel.getFeedingPlan!.planDiscountedPrice.toStringAsFixed(2) : plansViewModel.getFeedingPlan!.planTotal.toStringAsFixed(2)} AED'),
                 SizedBox(
                   height: 10.h,
                 ),
@@ -351,13 +356,13 @@ class _FeedingPlanScreenState extends State<FeedingPlanScreen> {
                     alignment: Alignment.centerRight,
                     child: orange14w500(
                         data:
-                            '${plansViewModel.getPlanType == Plans.transitional.text ? transitionalPlanTotalQuantity : totalPlanQuantity} Grams/Plan'),
+                            '${plansViewModel.getPlanType == Plans.transitional ? transitionalPlanTotalQuantity : totalPlanQuantity} Grams/Plan'),
                   ),
                   black14w500(data: 'You will receive:'),
                   SizedBox(
                     height: 5.h,
                   ),
-                  plansViewModel.getPlanType == Plans.transitional.text
+                  plansViewModel.getPlanType == Plans.transitional
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
