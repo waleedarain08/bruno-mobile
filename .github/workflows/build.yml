@@ -25,6 +25,7 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web --release
 
+
       - name: Install Vercel CLI
         run: npm i -g vercel@latest
 
