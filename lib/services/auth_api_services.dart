@@ -8,6 +8,7 @@ import 'package:brunos_kitchen/models/requests/otp_verify_request.dart';
 import 'package:brunos_kitchen/models/requests/social_sign_in_request.dart';
 import 'package:brunos_kitchen/models/requests/user_register_request.dart';
 import 'package:brunos_kitchen/models/responses/banners_response.dart';
+import 'package:brunos_kitchen/models/responses/shop_detail_response.dart';
 
 import '../models/requests/sign_in_request.dart';
 import '../models/responses/auth_response.dart';
@@ -35,6 +36,14 @@ class AuthApiServices {
           SharedPreferencesKeys.stripeId.text, authResponse.data!.stripeId);
     }
     return authResponse;
+  }
+
+  Future<ShopDetails> getShopDetails() async {
+    final response = await _httpService.httpRequest(
+        endPoint: EndPoints.shopDetails, requestType: 'GET', params: '');
+    final parsed = json.decode(response.body);
+    final shopResponse = ShopDetailResponse.fromJson(parsed);
+    return shopResponse.data!.first;
   }
 
   Future<BannersResponse> bannersApi() async {

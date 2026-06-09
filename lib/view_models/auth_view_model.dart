@@ -1,9 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:google_geocoding_api/google_geocoding_api.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
 
@@ -25,7 +25,6 @@ import '../screens/bottom_navigation_screen.dart';
 import '../screens/intro_slides_screen.dart';
 import '../screens/logIn_screen.dart';
 import '../services/auth_api_services.dart';
-import '../utils/conversions.dart';
 import '../utils/enums.dart';
 import '../utils/send_grid_pref.dart';
 import '../utils/shared_pref .dart';
@@ -168,21 +167,31 @@ class AuthViewModel with ChangeNotifier {
 
   Future<void> setAddress(AddressModel value) async {
     _authResponse.data!.location = value;
-    setDeliveryCity();
+    await setDeliveryCity();
     // notifyListeners();
   }
 
-  void setDeliveryCity() async {
-    final result = await convertCoordinatesToPlaces(
-      latitude: double.parse(_authResponse.data!.location!.coordinates![0]),
-      longitude: double.parse(_authResponse.data!.location!.coordinates![1]),
-    );
-    if (result == null) {
-      return;
-    }
-    final locationCity = result.mapToPretty();
+  Future<void> setDeliveryCity() async {
+    // final result = await convertCoordinatesToPlaces(
+    //   latitude: double.parse(_authResponse.data!.location!.coordinates![0]),
+    //   longitude: double.parse(_authResponse.data!.location!.coordinates![1]),
+    // );
+    // if (result == null) {
+    //   return;
+    // }
+    final shopDetails = await _authApiServices.getShopDetails();
+    log('SHOP: $shopDetails');
+    // final locationCity = result.mapToPretty();
+    final latitude =
+        double.parse(_authResponse.data!.location!.coordinates![0]);
+    final longitude =
+        double.parse(_authResponse.data!.location!.coordinates![1]);
+    final isWithinRange =
+        shopDetails.isUserLocationWithinRadius(latitude, longitude);
+    log('Is Within Range: $isWithinRange');
     navigatorKey.currentContext!.read<CartViewModel>().setDeliveryFee(
-        locationCity.city == 'Abu Dhabi' || locationCity.state == 'Abu Dhabi'
+        // locationCity.city == 'Abu Dhabi' || locationCity.state == 'Abu Dhabi'
+        isWithinRange
             ? _authResponse.data!.discounts![1].aggregate!.toInt()
             : _authResponse.data!.discounts![0].aggregate!.toInt());
     notifyListeners();

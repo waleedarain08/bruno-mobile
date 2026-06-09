@@ -153,7 +153,8 @@ enum EndPoints {
   setupIntent('card/setup_intent/'),
   promoIsValid('promo-code/name/'),
   deleteAddress('user/location/'),
-  placesSearch('user/search-locations');
+  placesSearch('user/search-locations'),
+  shopDetails('shop-details');
 
   final String url;
 
