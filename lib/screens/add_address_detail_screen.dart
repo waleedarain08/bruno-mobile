@@ -20,6 +20,7 @@ class AddAddressDetailScreen extends StatefulWidget {
 
   @override
   State<AddAddressDetailScreen> createState() => _AddAddressDetailScreenState();
+
 }
 
 class _AddAddressDetailScreenState extends State<AddAddressDetailScreen> {
