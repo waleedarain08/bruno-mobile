@@ -150,7 +150,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           data: plansViewModel.getSelectedRecipe.description!,
                         ),
                       ),
-                      BrunosFooter()
+                      BrunosFooter(),
+                      if (!context.isBiggerThanMobile)
+                        SizedBox(
+                          height: 100.h,
+                        ),
                     ],
                   ),
                 ),
@@ -192,30 +196,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: context.isBiggerThanMobile ? 15 : 5,
-                    ).w,
-                    child: Row(
-                      children: [
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            white18w500(
-                                data:
-                                    'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            whiteTint14w400(data: 'Total Price')
-                          ],
-                        ),
-                        const Spacer(),
-                        white18w500(data: 'Add to shopping bag')
-                      ],
-                    ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: context.isBiggerThanMobile ? 15 : 10,
+                  ).w,
+                  child: Row(
+                    children: [
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          white18w500(
+                              data:
+                                  'AED ${(plansViewModel.getSelectedRecipe.pricePerKG! * plansViewModel.getQuantity).toStringAsFixed(2)}'),
+                          SizedBox(
+                            height: 5.h,
+                          ),
+                          whiteTint14w400(data: 'Total Price')
+                        ],
+                      ),
+                      const Spacer(),
+                      white18w500(data: 'Add to shopping bag')
+                    ],
                   )),
             ),
           ),

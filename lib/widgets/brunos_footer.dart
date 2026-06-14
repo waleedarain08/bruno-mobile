@@ -5,16 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:web/web.dart' as web;
 
 import '../utils/images.dart';
 
 class BrunosFooter extends StatelessWidget {
   const BrunosFooter({super.key});
 
-  Future<void> _launchUrl(String url) async {
+  Future<void> _launchUrl(String url, {String? window}) async {
     final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri)) {
+    if (!await launchUrl(uri, webOnlyWindowName: window)) {
       throw Exception('Could not launch $url');
     }
   }
@@ -178,7 +177,8 @@ class BrunosFooter extends StatelessWidget {
         SizedBox(height: 16.h),
         TextButton(
           onPressed: () {
-            web.window.location.href = 'https://brunos.kitchen/';
+            _launchUrl('https://brunos.kitchen/', window: '_self');
+            // web.window.location.href = 'https://brunos.kitchen/';
           },
           child: Text(
             'Home',
@@ -191,7 +191,8 @@ class BrunosFooter extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            web.window.location.href = 'https://brunos.kitchen/about-us/';
+            _launchUrl('https://brunos.kitchen/about-us/', window: '_self');
+            // web.window.location.href = 'https://brunos.kitchen/about-us/';
           },
           child: Text(
             'About us',
@@ -204,7 +205,8 @@ class BrunosFooter extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            web.window.location.href = 'https://brunos.kitchen/our-services/';
+            _launchUrl('https://brunos.kitchen/our-services/', window: '_self');
+            // web.window.location.href = 'https://brunos.kitchen/our-services/';
           },
           child: Text(
             'Our Services',
@@ -217,7 +219,8 @@ class BrunosFooter extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            web.window.location.href = 'https://brunos.kitchen/recipes/';
+            _launchUrl('https://brunos.kitchen/recipes/', window: '_self');
+            // web.window.location.href = 'https://brunos.kitchen/recipes/';
           },
           child: Text(
             'Our Recipes',
@@ -243,7 +246,8 @@ class BrunosFooter extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            web.window.location.href = 'https://brunos.kitchen/contact/';
+            _launchUrl('https://brunos.kitchen/contact/', window: '_self');
+            // web.window.location.href = 'https://brunos.kitchen/contact/';
           },
           child: Text(
             'Contact Us',

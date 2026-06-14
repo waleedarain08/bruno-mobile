@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:brunos_kitchen/models/cart_model.dart';
 import 'package:brunos_kitchen/models/requests/order_request.dart';
 import 'package:brunos_kitchen/models/responses/order_response.dart';
@@ -31,11 +33,11 @@ class OrderViewModel with ChangeNotifier {
 
   OrderData get getSelectedOrder => _selectedOrder;
 
- // List<OrderItems> get getMonthlyOrders => _monthlyOrders;
+  // List<OrderItems> get getMonthlyOrders => _monthlyOrders;
 
   //List<OrderData> get getCompletedOrders => _completedOrders;
 
- // List<OrderData> get getInProcessOrders => _inProcessOrders;
+  // List<OrderData> get getInProcessOrders => _inProcessOrders;
 
   void setSelectedOrder(OrderData value) {
     _selectedOrder = value;
@@ -52,7 +54,8 @@ class OrderViewModel with ChangeNotifier {
         pouchesDetail: _selectedOrder.orderItems![index].pouchesDetail!,
         planType: _selectedOrder.orderItems![index].planType!,
         planDiscountPer: _selectedOrder.orderItems![index].planDiscountPer!,
-        planDiscountedPrice: _selectedOrder.orderItems![index].planDiscountedPrice!,
+        planDiscountedPrice:
+            _selectedOrder.orderItems![index].planDiscountedPrice!,
         totalWeight: _selectedOrder.orderItems![index].totalWeight!);
     return cartItem;
   }
@@ -96,7 +99,8 @@ class OrderViewModel with ChangeNotifier {
         EasyLoading.showError('${response.message}');
         return false;
       }
-    } catch (e) {
+    } catch (e, s) {
+      log('ERROR: $e', stackTrace: s);
       EasyLoading.showError(e.toString());
       return false;
     }

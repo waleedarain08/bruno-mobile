@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 import 'package:universal_io/io.dart';
 
@@ -21,7 +22,7 @@ class ApiBaseHelper {
       'https://api.brunos.kitchen/bruno/api/v1/';
   String? autToken;
 
-  Future<dynamic> httpRequest({
+  Future<http.Response> httpRequest({
     required EndPoints endPoint,
     required String requestType,
     var requestBody,
@@ -64,18 +65,28 @@ class ApiBaseHelper {
               .add(await http.MultipartFile.fromPath('image', imagePath!));
           request.headers.addAll(getHeaders());
           final responseJson = await request.send();
-          return responseJson;
+          return http.Response.fromStream(responseJson);
+        default:
+          throw Exception('$requestType not supported!');
       }
     } on SocketException {
       EasyLoading.showError('No Internet          Connection');
+      rethrow;
     } on HttpException {
       EasyLoading.showError('No Internet Connection');
+      rethrow;
     } on FormatException {
       EasyLoading.showError('Invalid Format');
+      rethrow;
     } on TimeoutException {
       EasyLoading.showError('Request TimeOut');
+      rethrow;
+    } on StripeException catch (e) {
+      EasyLoading.showError(e.error.localizedMessage!);
+      rethrow;
     } catch (e) {
       EasyLoading.showError(e.toString());
+      rethrow;
     }
   }
 
