@@ -217,20 +217,20 @@ class BrunosFooter extends StatelessWidget {
             ),
           ),
         ),
-        TextButton(
-          onPressed: () {
-            _launchUrl('https://brunos.kitchen/recipes/', window: '_self');
-            // web.window.location.href = 'https://brunos.kitchen/recipes/';
-          },
-          child: Text(
-            'Our Recipes',
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 14.sp,
-              height: 1.6,
-            ),
-          ),
-        ),
+        // TextButton(
+        //   onPressed: () {
+        //     _launchUrl('https://brunos.kitchen/recipes/', window: '_self');
+        //     // web.window.location.href = 'https://brunos.kitchen/recipes/';
+        //   },
+        //   child: Text(
+        //     'Our Recipes',
+        //     style: TextStyle(
+        //       color: Colors.white70,
+        //       fontSize: 14.sp,
+        //       height: 1.6,
+        //     ),
+        //   ),
+        // ),
         TextButton(
           onPressed: () {
             Navigator.pushNamed(context, faqRoute);
