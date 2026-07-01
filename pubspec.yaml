@@ -60,6 +60,7 @@ dependencies:
   firebase_messaging: ^16.3.0
   country_code_picker: ^3.4.1
   flutter_localization: ^0.4.0
+
 #  flutter_google_places: ^0.3.0
   location: ^8.0.1
   badges: ^3.2.0
