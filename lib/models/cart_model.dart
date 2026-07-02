@@ -30,7 +30,7 @@ class CartModel {
       data['pet'] = pet!.toJson();
     }
     data['pouchesDetail'] = pouchesDetail;
-    data['planType'] = planType.name;
+    data['planType'] = planType.text;
     data['planTotal'] = planTotal;
     data['planDiscountPer'] = planDiscountPer;
     data['planDiscountedPrice'] = planDiscountedPrice;
