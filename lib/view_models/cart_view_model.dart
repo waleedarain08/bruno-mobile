@@ -287,7 +287,7 @@ class CartViewModel with ChangeNotifier {
                     .data!
                     .pet!
                     .sId! &&
-            element.planType == planType;
+            element.planType.text == planType;
       } else {
         return false;
       }

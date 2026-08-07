@@ -34,6 +34,16 @@ enum Plans {
   const Plans(this.text);
 
   final String text;
+
+  static Plans? fromText(String? text) {
+    return switch (text) {
+      'Transitional' => Plans.transitional,
+      'Monthly' => Plans.monthly,
+      'Product' => Plans.product,
+      null => null,
+      String() => null,
+    };
+  }
 }
 
 enum ProductCategories {

@@ -102,7 +102,7 @@ class OrderItems {
     pet = json['pet'] != null ? PuppyModel.fromJson(json['pet']) : null;
     pouchesDetail = json['pouchesDetail'].cast<String>();
     planType =
-        json['planType'] != null ? Plans.values.byName(json['planType']) : null;
+        json['planType'] != null ? Plans.fromText(json['planType']) : null;
     planTotal = json['planTotal'];
     planDiscountPer = json['planDiscountPer'];
     planDiscountedPrice = json['planDiscountedPrice'];
