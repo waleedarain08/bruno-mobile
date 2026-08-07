@@ -56,7 +56,7 @@ Widget orderItemsVerticalListChipWidget(
                   children: [
                     orange18w500(
                         data:
-                            '${orderItems.planType} ${orderItems.pet == null ? '' : 'Plan'}'),
+                            '${orderItems.planType?.text ?? ''} ${orderItems.pet == null ? '' : 'Plan'}'),
                     Container(
                       decoration: ShapeDecoration(
                         color: CustomColors.whiteColor,
