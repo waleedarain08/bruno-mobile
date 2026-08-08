@@ -32,19 +32,6 @@ class _PuppyCreationAdditionalScreenState
     extends State<PuppyCreationAdditionalScreen> {
   final FocusNode _nodeText1 = FocusNode();
 
-  KeyboardActionsConfig _buildConfig(BuildContext context) {
-    return KeyboardActionsConfig(
-      keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-      keyboardBarColor: Colors.grey[200],
-      nextFocus: false,
-      actions: [
-        KeyboardActionsItem(
-          focusNode: _nodeText1,
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<PuppyViewModel>(builder: (_, puppyViewModel, __) {
@@ -61,7 +48,18 @@ class _PuppyCreationAdditionalScreenState
           body: Stack(
             children: [
               KeyboardActions(
-                config: _buildConfig(context),
+                theme: KeyboardActionsThemeData(
+                  barColor: Colors.grey[200],
+                ),
+
+                // keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+                // nextFocus: false,
+                // actions: [
+                //   KeyboardActionsItem(
+                //     focusNode: _nodeText1,
+                //   ),
+                // ],
+                // config: _buildConfig(context),
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.only(
                     top: 40,
