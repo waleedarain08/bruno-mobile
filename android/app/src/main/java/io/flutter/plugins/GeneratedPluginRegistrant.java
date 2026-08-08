@@ -86,6 +86,11 @@ public final class GeneratedPluginRegistrant {
       Log.e(TAG, "Error registering plugin image_picker_android, io.flutter.plugins.imagepicker.ImagePickerPlugin", e);
     }
     try {
+      flutterEngine.getPlugins().add(new tech.axions.in_app_update_flutter.InAppUpdateFlutterPlugin());
+    } catch (Exception e) {
+      Log.e(TAG, "Error registering plugin in_app_update_flutter, tech.axions.in_app_update_flutter.InAppUpdateFlutterPlugin", e);
+    }
+    try {
       flutterEngine.getPlugins().add(new com.lyokone.location.LocationPlugin());
     } catch (Exception e) {
       Log.e(TAG, "Error registering plugin location, com.lyokone.location.LocationPlugin", e);
