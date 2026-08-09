@@ -69,13 +69,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>APP wants to access camera to capture the pet profile pictures.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Needed GPS to track your location</string>
+	<string>Needed GPS to track your current location to setup your delivery address.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App want's to access your current location to setup your delivery address.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>App want's to access your current location to setup your delivery address.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This app does not require access to the microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>APP wants to access Photo Library to upload pet profile picture.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
