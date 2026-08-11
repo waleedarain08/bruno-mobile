@@ -18,11 +18,13 @@ class EditProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: const AppBarWithBackWidget(heading: 'Edit Profile', showPuppy: false,showCart: true),
+        appBar: const AppBarWithBackWidget(
+            heading: 'Edit Profile', showPuppy: false, showCart: true),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(
-                top: 30, bottom: 20, left: 20, right: 20).w,
+            padding:
+                const EdgeInsets.only(top: 30, bottom: 20, left: 20, right: 20)
+                    .w,
             child: Stack(
               children: [
                 Column(
@@ -33,7 +35,8 @@ class EditProfileScreen extends StatelessWidget {
                       height: 16.h,
                     ),
                     TextField(
-                      controller: context.watch<AuthViewModel>().getEmailController,
+                      controller:
+                          context.watch<AuthViewModel>().getEmailController,
                       onChanged: (text) {},
                       readOnly: true,
                       keyboardType: TextInputType.emailAddress,
@@ -51,31 +54,39 @@ class EditProfileScreen extends StatelessWidget {
                     SizedBox(
                       height: 16.h,
                     ),*/
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextField(
-                  controller: context.watch<AuthViewModel>().getPhoneController,
-                  onChanged: (text) {},
-                  keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                      hintText: 'Phone Number',
-                      prefixIcon: Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                        child: IntrinsicHeight(
-                          child: SvgPicture.asset(phoneIcon),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TextField(
+                          controller:
+                              context.watch<AuthViewModel>().getPhoneController,
+                          onChanged: (text) {},
+                          keyboardType: TextInputType.phone,
+                          decoration: InputDecoration(
+                            hintText: 'Phone Number',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 4),
+                              child: IntrinsicHeight(
+                                child: SvgPicture.asset(phoneIcon),
+                              ),
+                            ),
+                          ),
                         ),
-                      )),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                Visibility(
-                    visible: context.watch<AuthViewModel>().getPhoneFieldError.isNotEmpty,
-                    child: orange14w400(data: context.watch<AuthViewModel>().getPhoneFieldError)),
-              ],
-            ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Visibility(
+                            visible: context
+                                .watch<AuthViewModel>()
+                                .getPhoneFieldError
+                                .isNotEmpty,
+                            child: orange14w400(
+                                data: context
+                                    .watch<AuthViewModel>()
+                                    .getPhoneFieldError)),
+                      ],
+                    ),
                     SizedBox(
                       height: 16.h,
                     ),
@@ -85,13 +96,17 @@ class EditProfileScreen extends StatelessWidget {
                   height: screenHeightWithAppBar,
                   child: Align(
                     alignment: Alignment.bottomCenter,
-                    child: customButton(text: 'Save', onPressed: () {
-                      context.read<AuthViewModel>().editUserProfileApi().then((
-                          value) => {
-                      if(value){
-                          Navigator.pop(context)
-                    }});
-                    }, colored: true),
+                    child: customButton(
+                        text: 'Save',
+                        onPressed: () {
+                          context
+                              .read<AuthViewModel>()
+                              .editUserProfileApi()
+                              .then((value) => {
+                                    if (value) {Navigator.pop(context)}
+                                  });
+                        },
+                        colored: true),
                   ),
                 ),
               ],

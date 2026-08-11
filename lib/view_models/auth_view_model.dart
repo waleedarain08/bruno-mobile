@@ -315,15 +315,15 @@ class AuthViewModel with ChangeNotifier {
     }
   }
 
-  bool phoneValidation() {
-    if (_phoneController.text.isEmpty) {
-      setPhoneFieldError('Please Enter Phone Number');
-      return false;
-    } else {
-      setPhoneFieldError('');
-      return true;
-    }
-  }
+  // bool phoneValidation() {
+  //   if (_phoneController.text.isEmpty) {
+  //     setPhoneFieldError('Please Enter Phone Number');
+  //     return false;
+  //   } else {
+  //     setPhoneFieldError('');
+  //     return true;
+  //   }
+  // }
 
   bool passwordValidation() {
     if (_passwordController.text.isEmpty) {
@@ -362,7 +362,7 @@ class AuthViewModel with ChangeNotifier {
   bool userRegistrationValidation() {
     if (nameValidation() &&
         emailValidation() &&
-        phoneValidation() &&
+        // phoneValidation() &&
         passwordValidation() &&
         confirmPasswordValidation()) {
       return true;

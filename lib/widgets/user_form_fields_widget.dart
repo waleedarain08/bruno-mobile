@@ -64,8 +64,11 @@ class PhoneFieldWidget extends StatelessWidget {
             height: 5.h,
           ),
           Visibility(
-              visible: authViewModel.getPhoneFieldError.isNotEmpty,
-              child: orange14w400(data: authViewModel.getPhoneFieldError)),
+            visible: authViewModel.getPhoneFieldError.isNotEmpty,
+            child: orange14w400(
+              data: authViewModel.getPhoneFieldError,
+            ),
+          ),
         ],
       );
     });
@@ -153,26 +156,30 @@ class PasswordFieldWidget extends StatelessWidget {
             obscureText: authViewModel.getSecurePassword,
             keyboardType: TextInputType.visiblePassword,
             decoration: InputDecoration(
-                suffixIcon: IconButton(
-                  icon: authViewModel.getSecurePassword
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                  onPressed: () {
-                    authViewModel.setSecurePassword();
-                  },
-                ),
-                hintText: hint,
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: SvgPicture.asset(lockIcon),
-                )),
+              suffixIcon: IconButton(
+                icon: authViewModel.getSecurePassword
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
+                onPressed: () {
+                  authViewModel.setSecurePassword();
+                },
+              ),
+              hintText: hint,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.all(16),
+                child: SvgPicture.asset(lockIcon),
+              ),
+            ),
           ),
           SizedBox(
             height: 5.h,
           ),
           Visibility(
-              visible: authViewModel.getPasswordFieldError.isNotEmpty,
-              child: orange14w400(data: authViewModel.getPasswordFieldError)),
+            visible: authViewModel.getPasswordFieldError.isNotEmpty,
+            child: orange14w400(
+              data: authViewModel.getPasswordFieldError,
+            ),
+          ),
         ],
       );
     });
