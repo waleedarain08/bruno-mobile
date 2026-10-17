@@ -228,4 +228,13 @@ class RecipeModel {
     }
     return data;
   }
+
+  int get stock {
+    if (sizes == null) {
+      return 0;
+    }
+    return sizes!.fold(0, (total, next) {
+      return total + (next.stock ?? 0);
+    });
+  }
 }

@@ -26,60 +26,63 @@ class WebAppBar extends StatelessWidget {
     if (!kIsWeb) {
       return child;
     }
-    return Column(
-      children: [
-        Container(
-          color: CustomColors.orangeColor,
-          padding: EdgeInsets.symmetric(
-            horizontal: 0.03.sw,
-            vertical: 10.h,
+    return Material(
+      type: MaterialType.transparency,
+      child: Column(
+        children: [
+          Container(
+            color: CustomColors.orangeColor,
+            padding: EdgeInsets.symmetric(
+              horizontal: 0.03.sw,
+              vertical: 10.h,
+            ),
+            child: Row(
+              spacing: 20.w,
+              children: [
+                SvgPicture.asset(
+                  logoImage,
+                  width: 75.w,
+                  height: 75.w,
+                ),
+                Expanded(child: LocationWidget()),
+                if (context.isBiggerThanMobile)
+                  Column(
+                    spacing: 10.h,
+                    children: [
+                      white12w400(
+                        data: 'Download our APP and serve up happiness!',
+                      ),
+                      Row(
+                        spacing: 30.w,
+                        children: [
+                          InkWell(
+                            onTap: () => _launchUrl(
+                              'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
+                            ),
+                            child: Image.asset(
+                              height: 40.h,
+                              playstoreBanner,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => _launchUrl(
+                              'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
+                            ),
+                            child: Image.asset(
+                              height: 40.h,
+                              appstoreBanner,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+              ],
+            ),
           ),
-          child: Row(
-            spacing: 20.w,
-            children: [
-              SvgPicture.asset(
-                logoImage,
-                width: 75.w,
-                height: 75.w,
-              ),
-              Expanded(child: LocationWidget()),
-              if (context.isBiggerThanMobile)
-                Column(
-                  spacing: 10.h,
-                  children: [
-                    white12w400(
-                      data: 'Download our APP and serve up happiness!',
-                    ),
-                    Row(
-                      spacing: 30.w,
-                      children: [
-                        InkWell(
-                          onTap: () => _launchUrl(
-                            'https://play.google.com/store/apps/details?id=com.brunoskitchen.brunos_kitchen',
-                          ),
-                          child: Image.asset(
-                            height: 40.h,
-                            playstoreBanner,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () => _launchUrl(
-                            'https://apps.apple.com/us/app/brunos-kitchen/id6474792206',
-                          ),
-                          child: Image.asset(
-                            height: 40.h,
-                            appstoreBanner,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-            ],
-          ),
-        ),
-        Expanded(child: child),
-      ],
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }
