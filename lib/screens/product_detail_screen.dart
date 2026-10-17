@@ -188,13 +188,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ? EdgeInsets.zero
                 : const EdgeInsets.symmetric(horizontal: 20).w,
             child: InkWell(
-              onTap: stock <= 0 ? null : () => _onAddToCart(context, plansViewModel),
+              onTap: stock <= 0
+                  ? null
+                  : () => _onAddToCart(context, plansViewModel),
               child: Container(
                   // height: context.isBiggerThanMobile ? null : 90.h,
                   margin: EdgeInsets.only(bottom: 10.h),
                   width: double.infinity,
                   decoration: ShapeDecoration(
-                    color: stock <= 0 ? CustomColors.greyColor :CustomColors.orangeColor,
+                    color: stock <= 0
+                        ? CustomColors.greyColor
+                        : CustomColors.orangeColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -219,7 +223,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ],
                       ),
                       const Spacer(),
-                      white18w500(data: 'Add to shopping bag')
+                      if (stock <= 0)
+                        white18w500(data: 'Out of Stock')
+                      else
+                        white18w500(data: 'Add to shopping bag')
                     ],
                   )),
             ),
@@ -452,14 +459,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           SizedBox(
             height: 10.h,
           ),
-          if (plansViewModel.getSelectedRecipe.selectedItemSize != null && plansViewModel.getSelectedRecipe.stock > 0)
+          if (plansViewModel.getSelectedRecipe.selectedItemSize != null &&
+              plansViewModel.getSelectedRecipe.stock > 0)
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: 20.h,
                 ),
-
                 context.read<CartViewModel>().getViewCartItemDetail
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -486,7 +493,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                       ),
-
                 Visibility(
                   visible:
                       context.read<CartViewModel>().getViewCartItemDetail ==
